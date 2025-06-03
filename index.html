@@ -412,6 +412,74 @@
                 flex-direction: column;
             }
         }
+
+        /* Styles for the cleaner file input button */
+        .file-upload-wrapper {
+            position: relative;
+            /* For potential future absolute positioning of elements inside */
+            display: flex;
+            flex-direction: column;
+            /* Stack button and file name */
+            align-items: center;
+            gap: 8px;
+            /* Space between button and file name text */
+            width: 100%;
+            max-width: 300px;
+            /* Match other inputs */
+            margin: 5px 0;
+            /* Match other inputs */
+        }
+
+        .hidden-file-input {
+            display: none;
+            /* Hide the default file input */
+        }
+
+        .custom-file-upload-button {
+            display: inline-block;
+            /* Allows padding and other block-like properties */
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: 1px solid #1976D2;
+            /* Or use a background color */
+            background: #2d2d2d;
+            /* Darker background for contrast or match inputs */
+            color: #1976D2;
+            /* Text color, can be white if background is #1976D2 */
+            font-size: 16px;
+            font-weight: normal;
+            /* Or bold if you prefer */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+            /* Make it full-width within its container */
+            box-sizing: border-box;
+            /* Ensure padding doesn't overflow width */
+        }
+
+        .custom-file-upload-button:hover {
+            background: #3a3a3a;
+            /* Slightly lighter on hover if background is dark */
+            border-color: #1565C0;
+            color: #1565C0;
+            /* Or adjust hover text color */
+        }
+
+        .file-name-display {
+            font-size: 14px;
+            color: #aaa;
+            /* Lighter text for the file name */
+            margin-top: 5px;
+            white-space: nowrap;
+            /* Prevent wrapping */
+            overflow: hidden;
+            /* Hide overflow */
+            text-overflow: ellipsis;
+            /* Add ellipsis if text is too long */
+            max-width: 100%;
+            /* Ensure it doesn't overflow its container */
+        }
     </style>
 </head>
 
@@ -540,7 +608,11 @@
                 <option value="Swim">Swimming</option>
             </select>
             <input type="number" id="points-input" placeholder="Points">
-            <input type="file" id="photo-upload" accept="image/*">
+            <div class="file-upload-wrapper">
+                <input type="file" id="photo-upload" accept="image/*" class="hidden-file-input">
+                <label for="photo-upload" class="custom-file-upload-button">Choose Photo</label>
+                <span id="file-name-display" class="file-name-display">No file chosen</span>
+            </div>
             <div class="button-group">
                 <button id="confirm-points-button">Submit</button>
                 <button class="back-to-menu">Cancel</button>
@@ -572,19 +644,19 @@
                     <div class="stat-box">
                         <h3>Highest Scores</h3>
                         <div id="highest-scores">
-                            </div>
+                        </div>
                     </div>
 
                     <div class="stat-box">
                         <h3>Recent Activities</h3>
                         <div id="recent-activities">
-                            </div>
+                        </div>
                     </div>
 
                     <div class="stat-box">
-                        <h3>Activity Totals</h3>
+                        <h3>Activity <br>Totals</h3>
                         <div id="activity-totals">
-                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -850,7 +922,7 @@
 
             const highestPoints = {};
             const totalsByActivity = {};
-            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim', 'Admin'];
+            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim'];
 
             allActivityTypes.forEach(activity => {
                 highestPoints[activity] = 0;
@@ -1074,6 +1146,19 @@
 
                 const points = parseInt(document.getElementById('points-input').value);
                 const activity = document.getElementById('activity-select').value;
+
+                const photoUploadInput = document.getElementById('photo-upload');
+                const fileNameDisplay = document.getElementById('file-name-display');
+
+                if (photoUploadInput && fileNameDisplay) {
+                    photoUploadInput.addEventListener('change', function() {
+                        if (this.files && this.files.length > 0) {
+                            fileNameDisplay.textContent = this.files[0].name;
+                        } else {
+                            fileNameDisplay.textContent = 'No file chosen';
+                        }
+                    });
+                }
                 const fileInput = document.getElementById('photo-upload');
                 const file = fileInput.files[0];
 
@@ -1273,4 +1358,5 @@
         });
     </script>
 </body>
+
 </html>
