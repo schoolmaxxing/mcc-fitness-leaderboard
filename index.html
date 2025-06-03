@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Leaderboard</title>
+    <style>
+        /* Dark Theme with Centered Content */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            text-align: center;
+        }
+
+        h1, h2, h3 {
+            color: #ffffff;
+            margin-top: 0;
+        }
+
+        /* Panel System */
+        .panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Leaderboard Styles */
+        .leaderboard {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .leaderboard li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #2d2d2d;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+        }
+
+        .leaderboard li.gold {
+            background: linear-gradient(90deg, rgba(212,175,55,0.3) 0%, #2d2d2d 30%);
+            border-left: 5px solid #D4AF37;
+        }
+
+        .leaderboard li.silver {
+            background: linear-gradient(90deg, rgba(192,192,192,0.3) 0%, #2d2d2d 30%);
+            border-left: 5px solid #C0C0C0;
+        }
+
+        .leaderboard li.bronze {
+            background: linear-gradient(90deg, rgba(205,127,50,0.3) 0%, #2d2d2d 30%);
+            border-left: 5px solid #CD7F32;
+        }
+
+        /* Buttons */
+        button {
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: none;
+            background: #1976D2;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin: 5px 0;
+        }
+
+        button:hover {
+            background: #1565C0;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .button-group.vertical {
+            gap: 15px;
+        }
+
+        /* Forms */
+        input, select, textarea {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #2d2d2d;
+            color: #ffffff;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .error {
+            color: #f44336;
+            margin: 10px 0;
+        }
+
+        /* Rules */
+        .rules-content {
+            text-align: center;
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            line-height: 2;
+            width: 100%;
+        }
+
+        .rules-content p {
+            margin: 15px 0;
+        }
+
+        .note {
+            font-style: italic;
+            color: #aaa;
+            margin-top: 25px !important;
+        }
+
+        /* Chat Styles */
+        .chat-container {
+            height: 400px;
+            width: 100%;
+            overflow-y: auto;
+            border: 1px solid #333;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #2d2d2d;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            flex-grow: 1;
+            list-style: none;
+            padding: 0;
+        }
+
+        #chat-messages li {
+            background: #3d3d3d;
+            padding: 15px;
+            border-radius: 8px;
+            word-wrap: break-word;
+            max-width: 100%;
+            font-size: 16px;
+        }
+
+        .message-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1976D2;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .message-sender {
+            font-weight: bold;
+        }
+
+        .message-time {
+            color: #aaa;
+            font-size: 0.8em;
+        }
+
+        .message-body {
+            padding: 8px 0;
+            font-size: 16px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            align-items: flex-end;
+        }
+
+        #chat-input {
+            flex: 1;
+            min-height: 80px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #2d2d2d;
+            color: #ffffff;
+            font-size: 16px;
+            resize: vertical;
+            line-height: 1.5;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #chat-input:focus {
+            outline: none;
+            border-color: #1976D2;
+        }
+
+        #send-button {
+            height: 50px;
+            width: 80px;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Profile View Styles */
+        .profile-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            padding: 20px;
+            background: #2d2d2d;
+            border-radius: 8px;
+        }
+
+        .profile-stats-container {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .profile-stats-container {
+                flex-direction: row;
+            }
+        }
+
+        .stat-box {
+            flex: 1;
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .stat-box h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .stat-item {
+            background: #3d3d3d;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* Image Styling */
+        .message-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .message-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Image Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Leaderboard Name Links */
+        .leaderboard .name {
+            cursor: pointer;
+            color: #1976D2;
+            text-decoration: underline;
+        }
+
+        .leaderboard .name:hover {
+            color: #1565C0;
+        }
+
+        /* Profile Activity Types */
+        .activity-type {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .activity-points {
+            font-weight: bold;
+        }
+
+        .activity-date {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+
+        /* View Profile Button */
+        #view-profile-button {
+            margin-top: 20px;
+            background: #4CAF50;
+        }
+
+        #view-profile-button:hover {
+            background: #3e8e41;
+        }
+
+        /* Admin Styles */
+        .admin-button {
+            background: #f44336;
+        }
+
+        .admin-button:hover {
+            background: #d32f2f;
+        }
+
+        .click-counter {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 500px) {
+            .container {
+                padding: 15px;
+            }
+           
+            .chat-container {
+                height: 350px;
+                padding: 15px;
+            }
+           
+            .rules-content {
+                padding: 15px;
+                font-size: 16px;
+            }
+           
+            .leaderboard li {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .profile-stats-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <div class="container">
+        <!-- Password Panel -->
+        <div id="password-panel" class="panel">
+            <h1>Fitness Leaderboard</h1>
+            <div class="form-group">
+                <button id="signup-button">New User Signup</button>
+                <button id="existing-login-button">Existing User Login</button>
+            </div>
+        </div>
+
+        <!-- Signup -->
+        <div id="signup-panel" class="panel hidden">
+            <h2>Sign Up</h2>
+            <input type="text" id="name-input" placeholder="Username">
+            <input type="password" id="password-input" placeholder="Password">
+            <input type="password" id="confirm-password-input" placeholder="Confirm Password">
+            <p id="signup-error-message" class="error"></p>
+            <div class="button-group">
+                <button id="submit-signup-button">Sign Up</button>
+                <button class="back-home">Back</button>
+            </div>
+        </div>
+
+        <!-- User Login -->
+        <div id="user-login-panel" class="panel hidden">
+            <h2>User Login</h2>
+            <input type="text" id="login-name-input" placeholder="Username">
+            <input type="password" id="login-user-password-input" placeholder="Password">
+            <p id="user-login-error-message" class="error"></p>
+            <div class="button-group">
+                <button id="submit-user-login-button">Login</button>
+                <button class="back-home">Back</button>
+            </div>
+        </div>
+
+        <!-- Main Menu -->
+        <div id="menu-panel" class="panel hidden">
+            <h2>Welcome <span id="current-user-display"></span></h2>
+            <div class="button-group vertical">
+                <button id="rules-button">Rules</button>
+                <button id="add-points-button">Add Workout</button>
+                <button id="leaderboard-button">Leaderboards</button>
+                <button id="chat-button">Group Chat</button>
+                <button id="view-profile-button">View My Profile</button>
+                <button class="back-home">Logout</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard Menu -->
+        <div id="leaderboard-menu-panel" class="panel hidden">
+            <h2>Leaderboards</h2>
+            <div class="button-group vertical">
+                <button id="all-workouts-button">All Workouts Leaderboard</button>
+                <button id="erging-button">Erging Leaderboard</button>
+                <button id="running-button">Running Leaderboard</button>
+                <button id="biking-button">Biking Leaderboard</button>
+                <button id="swimming-button">Swimming Leaderboard</button>
+                <button class="back-to-menu">Back</button>
+            </div>
+        </div>
+
+        <!-- Leaderboards -->
+        <div id="all-workouts-panel" class="panel hidden">
+            <h2>All Workouts Leaderboard</h2>
+            <ul id="all-workouts-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+
+        <div id="erging-panel" class="panel hidden">
+            <h2>Erging Leaderboard</h2>
+            <ul id="erging-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+
+        <div id="running-panel" class="panel hidden">
+            <h2>Running Leaderboard</h2>
+            <ul id="running-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+
+        <div id="biking-panel" class="panel hidden">
+            <h2>Biking Leaderboard</h2>
+            <ul id="biking-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+
+        <div id="swimming-panel" class="panel hidden">
+            <h2>Swimming Leaderboard</h2>
+            <ul id="swimming-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+
+        <!-- Rules Panel -->
+        <div id="rules-panel" class="panel hidden">
+            <h2>Competition Rules</h2>
+            <div class="rules-content">
+                <p>1 Meter Erg = 1 Point</p>
+                <p>300 Meter Swim = 1000 points</p>
+                <p>1 Mile Run = 1000 Points</p>
+                <p>1 Mile Bike = 500 Points</p>
+                <p class="note">More will be added soon!</p>
+            </div>
+            <div class="button-group">
+                <button class="back-to-menu">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Add Points -->
+        <div id="points-menu" class="panel hidden">
+            <h2>Add Workout</h2>
+            <select id="activity-select">
+                <option value="">Select Activity</option>
+                <option value="Erg">Erging</option>
+                <option value="Run">Running</option>
+                <option value="Bike">Biking</option>
+                <option value="Swim">Swimming</option>
+            </select>
+            <input type="number" id="points-input" placeholder="Points">
+            <input type="file" id="photo-upload" accept="image/*">
+            <div class="button-group">
+                <button id="confirm-points-button">Submit</button>
+                <button class="back-to-menu">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Chat -->
+        <div id="chat-panel" class="panel hidden">
+            <h2>Group Chat</h2>
+            <div class="chat-container">
+                <ul id="chat-messages"></ul>
+            </div>
+            <div class="chat-input-container">
+                <textarea id="chat-input" placeholder="Type your message here..." rows="4"></textarea>
+                <button id="send-button">Send</button>
+            </div>
+            <div class="button-group">
+                <button class="back-to-menu">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- User Profile Panel -->
+        <div id="profile-panel" class="panel hidden">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <h2 id="profile-username">Username</h2>
+                    <p>Total Points: <span id="profile-total-points">0</span></p>
+                </div>
+               
+                <div class="profile-stats-container">
+                    <div class="stat-box">
+                        <h3>Highest Scores</h3>
+                        <div id="highest-scores">
+                            <div class="stat-item">
+                                <span class="activity-type">Erg:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="activity-type">Run:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="activity-type">Bike:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="activity-type">Swim:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="stat-box">
+                        <h3>Recent Activities</h3>
+                        <div id="recent-activities">
+                            <div class="stat-item">
+                                No activities yet
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="stat-box">
+                        <h3>Activity Totals</h3>
+                        <div id="activity-totals">
+                            <div class="stat-item">
+                                <span class="activity-type">Erg:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="activity-type">Run:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="activity-type">Bike:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="activity-type">Swim:</span>
+                                <span class="activity-points">0 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="button-group">
+                    <button class="back-to-menu">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Password Panel -->
+        <div id="admin-password-panel" class="panel hidden">
+            <h2>Admin Access</h2>
+            <input type="password" id="admin-password-input" placeholder="Enter Admin Password">
+            <p id="admin-error-message" class="error"></p>
+            <div class="button-group">
+                <button id="submit-admin-password-button">Submit</button>
+                <button class="back-to-menu">Back</button>
+            </div>
+        </div>
+
+        <!-- Admin Points Panel -->
+        <div id="admin-points-panel" class="panel hidden">
+            <h2>Admin Points Editor</h2>
+            <input type="text" id="admin-username-input" placeholder="Username">
+            <input type="number" id="admin-points-input" placeholder="Points to add/subtract">
+            <div class="button-group">
+                <button id="admin-add-points-button">Add Points</button>
+                <button id="admin-subtract-points-button">Subtract Points</button>
+                <button class="back-to-menu">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Super Admin Password Panel -->
+        <div id="super-admin-password-panel" class="panel hidden">
+            <h2>Super Admin Access</h2>
+            <input type="password" id="super-admin-password-input" placeholder="Enter Super Admin Password">
+            <p id="super-admin-error-message" class="error"></p>
+            <div class="button-group">
+                <button id="submit-super-admin-password-button">Submit</button>
+                <button class="back-to-menu">Back</button>
+            </div>
+        </div>
+
+        <!-- Super Admin Panel -->
+        <div id="super-admin-panel" class="panel hidden">
+            <h2>Super Admin Controls</h2>
+            <div class="click-counter">Clicks: <span id="click-count">0</span>/100</div>
+            <div class="button-group vertical">
+                <button id="wipe-confirm-button" class="hidden admin-button">Wipe All Points</button>
+                <button id="undo-wipe-button" class="hidden">Undo Wipe</button>
+                <button id="click-button">Click Me</button>
+                <button class="back-to-menu">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('fitnessUsers')) || {};
+        let messages = JSON.parse(localStorage.getItem('fitnessMessages')) || [];
+        let backupUsers = null;
+        let clickCount = 0;
+        let typedWord = '';
+
+        // Initialize from localStorage
+        function initStorage() {
+            if (localStorage.getItem('fitnessUsers')) {
+                users = JSON.parse(localStorage.getItem('fitnessUsers'));
+            }
+            if (localStorage.getItem('fitnessMessages')) {
+                messages = JSON.parse(localStorage.getItem('fitnessMessages'));
+            }
+            if (localStorage.getItem('clickCount')) {
+                clickCount = parseInt(localStorage.getItem('clickCount'));
+                document.getElementById('click-count').textContent = clickCount;
+            }
+        }
+
+        // Save data
+        function saveData() {
+            localStorage.setItem('fitnessUsers', JSON.stringify(users));
+            localStorage.setItem('fitnessMessages', JSON.stringify(messages));
+            localStorage.setItem('clickCount', clickCount.toString());
+        }
+
+        // Image Modal functionality
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on an image, open the modal
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('message-image')) {
+                modal.style.display = "flex";
+                modalImg.src = e.target.src;
+            }
+        });
+
+        // When the user clicks on (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Panel Navigation
+        function show(panelId) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+            const panel = document.getElementById(panelId);
+            if (panel) {
+                panel.classList.remove('hidden');
+            }
+           
+            // Special handling for chat panel
+            if (panelId === 'chat-panel') {
+                renderMessages();
+                // Auto-scroll to bottom
+                const chatContainer = document.querySelector('.chat-container');
+                if (chatContainer) {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            }
+        }
+
+        // Update all leaderboards
+        function updateAllLeaderboards() {
+            updateLeaderboard('all-workouts-list', 'total');
+            updateLeaderboard('erging-list', 'Erg');
+            updateLeaderboard('running-list', 'Run');
+            updateLeaderboard('biking-list', 'Bike');
+            updateLeaderboard('swimming-list', 'Swim');
+        }
+
+        // Update specific leaderboard
+        function updateLeaderboard(listId, activityType) {
+            const leaderboard = Object.entries(users)
+                .map(([name, data]) => {
+                    let points = 0;
+                    if (activityType === 'total') {
+                        points = data.activities.reduce((sum, a) => sum + a.points, 0);
+                    } else {
+                        points = data.activities
+                            .filter(a => a.activity === activityType)
+                            .reduce((sum, a) => sum + a.points, 0);
+                    }
+                    return { name, points };
+                })
+                .filter(user => user.points > 0)
+                .sort((a, b) => b.points - a.points);
+
+            const list = document.getElementById(listId);
+            if (!list) return;
+           
+            list.innerHTML = '';
+           
+            leaderboard.forEach((user, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="name" data-username="${user.name}">${user.name}</span>
+                    <span class="points">${user.points} pts</span>
+                `;
+               
+                // Add medal classes for top 3
+                if (index === 0) li.classList.add('gold');
+                else if (index === 1) li.classList.add('silver');
+                else if (index === 2) li.classList.add('bronze');
+               
+                list.appendChild(li);
+            });
+           
+            // Add click handlers to names
+            document.querySelectorAll(`#${listId} .name`).forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const username = e.target.getAttribute('data-username');
+                    showUserProfile(username);
+                });
+            });
+        }
+
+        // Show user profile
+        function showUserProfile(username) {
+            const user = users[username];
+            if (!user) return;
+
+            // Update profile header
+            document.getElementById('profile-username').textContent = username;
+           
+            // Calculate stats
+            const totalPoints = user.activities.reduce((sum, a) => sum + a.points, 0);
+            document.getElementById('profile-total-points').textContent = totalPoints;
+           
+            // Calculate highest points per activity
+            const highestPoints = {};
+            const totalsByActivity = {};
+            const allActivities = ['Erg', 'Run', 'Bike', 'Swim'];
+           
+            allActivities.forEach(activity => {
+                highestPoints[activity] = 0;
+                totalsByActivity[activity] = 0;
+            });
+           
+            user.activities.forEach(workout => {
+                if (workout.points > highestPoints[workout.activity]) {
+                    highestPoints[workout.activity] = workout.points;
+                }
+                totalsByActivity[workout.activity] += workout.points;
+            });
+           
+            // Update highest scores
+            const highestScoresContainer = document.getElementById('highest-scores');
+            highestScoresContainer.innerHTML = allActivities.map(activity => `
+                <div class="stat-item">
+                    <span class="activity-type">${activity}:</span>
+                    <span class="activity-points">${highestPoints[activity] || 0} pts</span>
+                </div>
+            `).join('');
+           
+            // Update recent activities
+            const recentActivitiesContainer = document.getElementById('recent-activities');
+            if (user.activities.length > 0) {
+                recentActivitiesContainer.innerHTML = user.activities.slice().reverse().slice(0, 10).map(workout => `
+                    <div class="stat-item">
+                        <div>
+                            <span class="activity-type">${workout.activity}:</span>
+                            <span class="activity-points">${workout.points} pts</span>
+                        </div>
+                        <div class="activity-date">${new Date(workout.date).toLocaleString()}</div>
+                        ${workout.image ? `<img src="${workout.image}" class="message-image">` : ''}
+                    </div>
+                `).join('');
+            } else {
+                recentActivitiesContainer.innerHTML = '<div class="stat-item">No activities yet</div>';
+            }
+           
+            // Update activity totals
+            const activityTotalsContainer = document.getElementById('activity-totals');
+            activityTotalsContainer.innerHTML = allActivities.map(activity => `
+                <div class="stat-item">
+                    <span class="activity-type">${activity}:</span>
+                    <span class="activity-points">${totalsByActivity[activity] || 0} pts</span>
+                </div>
+            `).join('');
+           
+            show('profile-panel');
+        }
+
+        // Render chat messages
+        function renderMessages() {
+            const ul = document.getElementById('chat-messages');
+            if (!ul) return;
+           
+            ul.innerHTML = '';
+           
+            messages.forEach(m => {
+                const li = document.createElement('li');
+               
+                const content = document.createElement('div');
+                content.className = 'message-content';
+               
+                const header = document.createElement('div');
+                header.className = 'message-header';
+                header.innerHTML = `
+                    <span class="message-sender">${m.user}</span>
+                    <span class="message-time">${new Date(m.time).toLocaleString()}</span>
+                `;
+                content.appendChild(header);
+               
+                const body = document.createElement('div');
+                body.className = 'message-body';
+               
+                if (m.text) {
+                    body.textContent = m.text;
+                } else if (m.activity) {
+                    body.innerHTML = `Added <strong>${m.points} points</strong> from <strong>${m.activity}</strong>`;
+                }
+               
+                content.appendChild(body);
+               
+                if (m.image) {
+                    const img = document.createElement('img');
+                    img.src = m.image;
+                    img.className = 'message-image';
+                    content.appendChild(img);
+                }
+               
+                li.appendChild(content);
+                ul.appendChild(li);
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            initStorage();
+           
+            // Navigation
+            document.getElementById('signup-button').addEventListener('click', () => show('signup-panel'));
+            document.getElementById('existing-login-button').addEventListener('click', () => show('user-login-panel'));
+           
+            document.querySelectorAll('.back-home').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentUser = null;
+                    show('password-panel');
+                });
+            });
+           
+            document.querySelectorAll('.back-to-menu').forEach(btn => {
+                btn.addEventListener('click', () => show('menu-panel'));
+            });
+           
+            document.querySelectorAll('.back-to-leaderboard').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (document.querySelector('#leaderboard-menu-panel')) {
+                        show('leaderboard-menu-panel');
+                    } else {
+                        show('all-workouts-panel');
+                    }
+                });
+            });
+
+            // Menu buttons
+            document.getElementById('rules-button').addEventListener('click', () => show('rules-panel'));
+            document.getElementById('add-points-button').addEventListener('click', () => show('points-menu'));
+            document.getElementById('leaderboard-button').addEventListener('click', () => {
+                updateAllLeaderboards();
+                show('leaderboard-menu-panel');
+            });
+            document.getElementById('chat-button').addEventListener('click', () => show('chat-panel'));
+            document.getElementById('view-profile-button').addEventListener('click', () => {
+                if (currentUser) {
+                    showUserProfile(currentUser);
+                }
+            });
+
+            // Leaderboard menu buttons
+            document.getElementById('all-workouts-button').addEventListener('click', () => {
+                updateLeaderboard('all-workouts-list', 'total');
+                show('all-workouts-panel');
+            });
+            document.getElementById('erging-button').addEventListener('click', () => {
+                updateLeaderboard('erging-list', 'Erg');
+                show('erging-panel');
+            });
+            document.getElementById('running-button').addEventListener('click', () => {
+                updateLeaderboard('running-list', 'Run');
+                show('running-panel');
+            });
+            document.getElementById('biking-button').addEventListener('click', () => {
+                updateLeaderboard('biking-list', 'Bike');
+                show('biking-panel');
+            });
+            document.getElementById('swimming-button').addEventListener('click', () => {
+                updateLeaderboard('swimming-list', 'Swim');
+                show('swimming-panel');
+            });
+
+            // User Signup
+            document.getElementById('submit-signup-button').addEventListener('click', () => {
+                const name = document.getElementById('name-input').value.trim();
+                const pw = document.getElementById('password-input').value;
+                const confirm = document.getElementById('confirm-password-input').value;
+
+                if (!name || !pw) {
+                    document.getElementById('signup-error-message').textContent = "Please fill all fields";
+                    return;
+                }
+
+                if (pw !== confirm) {
+                    document.getElementById('signup-error-message').textContent = "Passwords don't match";
+                    return;
+                }
+
+                if (!users[name]) {
+                    users[name] = { password: pw, activities: [] };
+                    currentUser = name;
+                    document.getElementById('current-user-display').textContent = name;
+                    saveData();
+                    show('menu-panel');
+                } else {
+                    document.getElementById('signup-error-message').textContent = "Username already exists";
+                }
+            });
+
+            // User Login
+            document.getElementById('submit-user-login-button').addEventListener('click', () => {
+                const name = document.getElementById('login-name-input').value.trim();
+                const pw = document.getElementById('login-user-password-input').value;
+
+                if (users[name] && users[name].password === pw) {
+                    currentUser = name;
+                    document.getElementById('current-user-display').textContent = name;
+                    show('menu-panel');
+                } else {
+                    document.getElementById('user-login-error-message').textContent = "Invalid username or password";
+                }
+            });
+
+            // Add Workout
+            document.getElementById('confirm-points-button').addEventListener('click', () => {
+                const points = parseInt(document.getElementById('points-input').value);
+                const activity = document.getElementById('activity-select').value;
+                const fileInput = document.getElementById('photo-upload');
+                const file = fileInput.files[0];
+
+                if (!points || points <= 0 || !activity) {
+                    alert("Please select an activity and enter valid points");
+                    return;
+                }
+
+                const workout = {
+                    activity,
+                    points,
+                    date: new Date(),
+                    image: null
+                };
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        workout.image = e.target.result;
+                        addWorkout(workout);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    addWorkout(workout);
+                }
+            });
+
+            function addWorkout(workout) {
+                if (!currentUser) return;
+               
+                if (!users[currentUser]) {
+                    users[currentUser] = { activities: [] };
+                }
+
+                users[currentUser].activities.push(workout);
+               
+                messages.push({
+                    user: currentUser,
+                    activity: workout.activity,
+                    points: workout.points,
+                    image: workout.image,
+                    time: new Date()
+                });
+
+                saveData();
+                updateAllLeaderboards();
+                show('menu-panel');
+            }
+
+            // Chat
+            document.getElementById('send-button').addEventListener('click', () => {
+                const text = document.getElementById('chat-input').value.trim();
+                if (!text) return;
+               
+                messages.push({
+                    user: currentUser,
+                    text,
+                    time: new Date()
+                });
+               
+                document.getElementById('chat-input').value = '';
+                renderMessages();
+                saveData();
+               
+                // Auto-scroll to bottom after sending
+                const chatContainer = document.querySelector('.chat-container');
+                if (chatContainer) {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            });
+
+            // Allow sending messages with Enter key (but allow Shift+Enter for new lines)
+            document.getElementById('chat-input')?.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    document.getElementById('send-button').click();
+                }
+            });
+
+            // Secret word detection for admin access
+            document.addEventListener('keydown', (e) => {
+                // Only check when on password panel or menu panel
+                const currentPanel = document.querySelector('.panel:not(.hidden)');
+                if (!currentPanel ||
+                    (currentPanel.id !== 'password-panel' &&
+                     currentPanel.id !== 'menu-panel' &&
+                     currentPanel.id !== 'admin-points-panel')) {
+                    return;
+                }
+
+                typedWord += e.key.toLowerCase();
+               
+                // Check for "awesome"
+                if (typedWord.includes('awesome')) {
+                    typedWord = '';
+                    if (currentPanel.id === 'password-panel' || currentPanel.id === 'menu-panel') {
+                        show('admin-password-panel');
+                    } else if (currentPanel.id === 'admin-points-panel') {
+                        show('super-admin-password-panel');
+                    }
+                }
+               
+                // Keep the last few characters to prevent memory buildup
+                if (typedWord.length > 10) {
+                    typedWord = typedWord.slice(-10);
+                }
+            });
+
+            // Admin password submit
+            document.getElementById('submit-admin-password-button').addEventListener('click', () => {
+                const password = document.getElementById('admin-password-input').value;
+                if (password === 'McleanCrew2025!') {
+                    document.getElementById('admin-error-message').textContent = '';
+                    show('admin-points-panel');
+                } else {
+                    document.getElementById('admin-error-message').textContent = 'Incorrect password';
+                }
+            });
+
+            // Admin points management
+            document.getElementById('admin-add-points-button').addEventListener('click', () => {
+                const username = document.getElementById('admin-username-input').value.trim();
+                const points = parseInt(document.getElementById('admin-points-input').value);
+               
+                if (!username || !points || points <= 0) {
+                    alert('Please enter a valid username and points');
+                    return;
+                }
+               
+                if (!users[username]) {
+                    users[username] = { activities: [] };
+                }
+               
+                users[username].activities.push({
+                    activity: 'Admin',
+                    points: points,
+                    date: new Date()
+                });
+               
+                saveData();
+                updateAllLeaderboards();
+                alert(`Added ${points} points to ${username}`);
+            });
+
+            document.getElementById('admin-subtract-points-button').addEventListener('click', () => {
+                const username = document.getElementById('admin-username-input').value.trim();
+                const points = parseInt(document.getElementById('admin-points-input').value);
+               
+                if (!username || !points || points <= 0) {
+                    alert('Please enter a valid username and points');
+                    return;
+                }
+               
+                if (!users[username]) {
+                    alert('User not found');
+                    return;
+                }
+               
+                users[username].activities.push({
+                    activity: 'Admin',
+                    points: -points,
+                    date: new Date()
+                });
+               
+                saveData();
+                updateAllLeaderboards();
+                alert(`Subtracted ${points} points from ${username}`);
+            });
+
+            // Super admin password submit
+            document.getElementById('submit-super-admin-password-button').addEventListener('click', () => {
+                const password = document.getElementById('super-admin-password-input').value;
+                if (password === 'LukeHoffman2006!') {
+                    document.getElementById('super-admin-error-message').textContent = '';
+                    show('super-admin-panel');
+                    document.getElementById('click-count').textContent = clickCount;
+                } else {
+                    document.getElementById('super-admin-error-message').textContent = 'Incorrect password';
+                }
+            });
+
+            // Super admin click counter
+            document.getElementById('click-button').addEventListener('click', () => {
+                clickCount++;
+                document.getElementById('click-count').textContent = clickCount;
+                localStorage.setItem('clickCount', clickCount.toString());
+               
+                if (clickCount >= 100) {
+                    document.getElementById('wipe-confirm-button').classList.remove('hidden');
+                    document.getElementById('undo-wipe-button').classList.remove('hidden');
+                }
+            });
+
+            // Wipe all points
+            document.getElementById('wipe-confirm-button').addEventListener('click', () => {
+                if (confirm('Are you sure you want to wipe ALL points for ALL users?')) {
+                    // Create backup before wiping
+                    backupUsers = JSON.parse(JSON.stringify(users));
+                   
+                    // Wipe all activities
+                    Object.keys(users).forEach(username => {
+                        users[username].activities = [];
+                    });
+                   
+                    saveData();
+                    updateAllLeaderboards();
+                    alert('All points have been wiped!');
+                }
+            });
+
+            // Undo wipe
+            document.getElementById('undo-wipe-button').addEventListener('click', () => {
+                if (backupUsers) {
+                    users = JSON.parse(JSON.stringify(backupUsers));
+                    saveData();
+                    updateAllLeaderboards();
+                    alert('Wipe has been undone!');
+                } else {
+                    alert('No backup available to undo');
+                }
+            });
+
+            // Initial view
+            show('password-panel');
+        });
+    </script>
+</body>
+</html>
