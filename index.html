@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +29,9 @@
             text-align: center;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             color: #ffffff;
             margin-top: 0;
         }
@@ -63,17 +66,17 @@
         }
 
         .leaderboard li.gold {
-            background: linear-gradient(90deg, rgba(212,175,55,0.3) 0%, #2d2d2d 30%);
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.3) 0%, #2d2d2d 30%);
             border-left: 5px solid #D4AF37;
         }
 
         .leaderboard li.silver {
-            background: linear-gradient(90deg, rgba(192,192,192,0.3) 0%, #2d2d2d 30%);
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.3) 0%, #2d2d2d 30%);
             border-left: 5px solid #C0C0C0;
         }
 
         .leaderboard li.bronze {
-            background: linear-gradient(90deg, rgba(205,127,50,0.3) 0%, #2d2d2d 30%);
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.3) 0%, #2d2d2d 30%);
             border-left: 5px solid #CD7F32;
         }
 
@@ -110,7 +113,9 @@
         }
 
         /* Forms */
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             width: 100%;
             max-width: 300px;
             padding: 12px;
@@ -312,7 +317,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.9);
+            background-color: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
         }
@@ -387,17 +392,17 @@
             .container {
                 padding: 15px;
             }
-           
+
             .chat-container {
                 height: 350px;
                 padding: 15px;
             }
-           
+
             .rules-content {
                 padding: 15px;
                 font-size: 16px;
             }
-           
+
             .leaderboard li {
                 padding: 12px;
                 font-size: 16px;
@@ -409,15 +414,14 @@
         }
     </style>
 </head>
+
 <body>
-    <!-- Image Modal -->
     <div id="imageModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="modalImage">
     </div>
 
     <div class="container">
-        <!-- Password Panel -->
         <div id="password-panel" class="panel">
             <h1>Fitness Leaderboard</h1>
             <div class="form-group">
@@ -426,7 +430,6 @@
             </div>
         </div>
 
-        <!-- Signup -->
         <div id="signup-panel" class="panel hidden">
             <h2>Sign Up</h2>
             <input type="text" id="name-input" placeholder="Username">
@@ -439,7 +442,6 @@
             </div>
         </div>
 
-        <!-- User Login -->
         <div id="user-login-panel" class="panel hidden">
             <h2>User Login</h2>
             <input type="text" id="login-name-input" placeholder="Username">
@@ -451,7 +453,6 @@
             </div>
         </div>
 
-        <!-- Main Menu -->
         <div id="menu-panel" class="panel hidden">
             <h2>Welcome <span id="current-user-display"></span></h2>
             <div class="button-group vertical">
@@ -460,11 +461,9 @@
                 <button id="leaderboard-button">Leaderboards</button>
                 <button id="chat-button">Group Chat</button>
                 <button id="view-profile-button">View My Profile</button>
-                <button class="back-home">Logout</button>
-            </div>
+                <button class="back-home">Logout</button> </div>
         </div>
 
-        <!-- Leaderboard Menu -->
         <div id="leaderboard-menu-panel" class="panel hidden">
             <h2>Leaderboards</h2>
             <div class="button-group vertical">
@@ -477,7 +476,6 @@
             </div>
         </div>
 
-        <!-- Leaderboards -->
         <div id="all-workouts-panel" class="panel hidden">
             <h2>All Workouts Leaderboard</h2>
             <ul id="all-workouts-list" class="leaderboard"></ul>
@@ -518,7 +516,6 @@
             </div>
         </div>
 
-        <!-- Rules Panel -->
         <div id="rules-panel" class="panel hidden">
             <h2>Competition Rules</h2>
             <div class="rules-content">
@@ -533,7 +530,6 @@
             </div>
         </div>
 
-        <!-- Add Points -->
         <div id="points-menu" class="panel hidden">
             <h2>Add Workout</h2>
             <select id="activity-select">
@@ -551,7 +547,6 @@
             </div>
         </div>
 
-        <!-- Chat -->
         <div id="chat-panel" class="panel hidden">
             <h2>Group Chat</h2>
             <div class="chat-container">
@@ -566,76 +561,39 @@
             </div>
         </div>
 
-        <!-- User Profile Panel -->
         <div id="profile-panel" class="panel hidden">
             <div class="profile-container">
                 <div class="profile-header">
                     <h2 id="profile-username">Username</h2>
                     <p>Total Points: <span id="profile-total-points">0</span></p>
                 </div>
-               
+
                 <div class="profile-stats-container">
                     <div class="stat-box">
                         <h3>Highest Scores</h3>
                         <div id="highest-scores">
-                            <div class="stat-item">
-                                <span class="activity-type">Erg:</span>
-                                <span class="activity-points">0 pts</span>
                             </div>
-                            <div class="stat-item">
-                                <span class="activity-type">Run:</span>
-                                <span class="activity-points">0 pts</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="activity-type">Bike:</span>
-                                <span class="activity-points">0 pts</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="activity-type">Swim:</span>
-                                <span class="activity-points">0 pts</span>
-                            </div>
-                        </div>
                     </div>
-                   
+
                     <div class="stat-box">
                         <h3>Recent Activities</h3>
                         <div id="recent-activities">
-                            <div class="stat-item">
-                                No activities yet
                             </div>
-                        </div>
                     </div>
-                   
+
                     <div class="stat-box">
                         <h3>Activity Totals</h3>
                         <div id="activity-totals">
-                            <div class="stat-item">
-                                <span class="activity-type">Erg:</span>
-                                <span class="activity-points">0 pts</span>
                             </div>
-                            <div class="stat-item">
-                                <span class="activity-type">Run:</span>
-                                <span class="activity-points">0 pts</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="activity-type">Bike:</span>
-                                <span class="activity-points">0 pts</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="activity-type">Swim:</span>
-                                <span class="activity-points">0 pts</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
-               
+
                 <div class="button-group">
                     <button class="back-to-menu">Back to Menu</button>
                 </div>
             </div>
         </div>
 
-        <!-- Admin Password Panel -->
         <div id="admin-password-panel" class="panel hidden">
             <h2>Admin Access</h2>
             <input type="password" id="admin-password-input" placeholder="Enter Admin Password">
@@ -646,7 +604,6 @@
             </div>
         </div>
 
-        <!-- Admin Points Panel -->
         <div id="admin-points-panel" class="panel hidden">
             <h2>Admin Points Editor</h2>
             <input type="text" id="admin-username-input" placeholder="Username">
@@ -658,7 +615,6 @@
             </div>
         </div>
 
-        <!-- Super Admin Password Panel -->
         <div id="super-admin-password-panel" class="panel hidden">
             <h2>Super Admin Access</h2>
             <input type="password" id="super-admin-password-input" placeholder="Enter Super Admin Password">
@@ -669,73 +625,81 @@
             </div>
         </div>
 
-        <!-- Super Admin Panel -->
         <div id="super-admin-panel" class="panel hidden">
             <h2>Super Admin Controls</h2>
             <div class="click-counter">Clicks: <span id="click-count">0</span>/100</div>
             <div class="button-group vertical">
                 <button id="wipe-confirm-button" class="hidden admin-button">Wipe All Points</button>
-                <button id="undo-wipe-button" class="hidden">Undo Wipe</button>
+                <button id="undo-wipe-button" class="hidden">Undo Wipe (Disabled for Cloud)</button>
                 <button id="click-button">Click Me</button>
                 <button class="back-to-menu">Back to Menu</button>
             </div>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc, 
+            addDoc, 
+            collection, 
+            query, 
+            where, 
+            getDocs, 
+            orderBy, 
+            Timestamp, 
+            updateDoc, 
+            arrayUnion,
+            onSnapshot,
+            writeBatch,
+            runTransaction
+        } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+        import { 
+            getStorage, 
+            ref, 
+            uploadBytes, 
+            getDownloadURL 
+        } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo", // Keep your actual API key
+            authDomain: "mcc-summer-leaderboard.firebaseapp.com",
+            projectId: "mcc-summer-leaderboard",
+            storageBucket: "mcc-summer-leaderboard.firebasestorage.app",
+            messagingSenderId: "376614411221",
+            appId: "1:376614411221:web:9afe27edc84cf5de3b7b5c",
+            measurementId: "G-SKPNS56ZDN"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // --- Main App Logic ---
+
         // Data Storage
-        let currentUser = null;
-        let users = JSON.parse(localStorage.getItem('fitnessUsers')) || {};
-        let messages = JSON.parse(localStorage.getItem('fitnessMessages')) || [];
-        let backupUsers = null;
-        let clickCount = 0;
+        let currentFirebaseUser = null; // Firebase auth user object
+        let currentAppUsername = null;  // Application-specific username
+        let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
         let typedWord = '';
-
-        // Initialize from localStorage
-        function initStorage() {
-            if (localStorage.getItem('fitnessUsers')) {
-                users = JSON.parse(localStorage.getItem('fitnessUsers'));
-            }
-            if (localStorage.getItem('fitnessMessages')) {
-                messages = JSON.parse(localStorage.getItem('fitnessMessages'));
-            }
-            if (localStorage.getItem('clickCount')) {
-                clickCount = parseInt(localStorage.getItem('clickCount'));
-                document.getElementById('click-count').textContent = clickCount;
-            }
-        }
-
-        // Save data
-        function saveData() {
-            localStorage.setItem('fitnessUsers', JSON.stringify(users));
-            localStorage.setItem('fitnessMessages', JSON.stringify(messages));
-            localStorage.setItem('clickCount', clickCount.toString());
-        }
-
-        // Image Modal functionality
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImage");
-        const span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on an image, open the modal
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('message-image')) {
-                modal.style.display = "flex";
-                modalImg.src = e.target.src;
-            }
-        });
-
-        // When the user clicks on (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        let unsubscribeChat = null; // For chat listener
 
         // Panel Navigation
         function show(panelId) {
@@ -744,20 +708,65 @@
             if (panel) {
                 panel.classList.remove('hidden');
             }
-           
-            // Special handling for chat panel
-            if (panelId === 'chat-panel') {
-                renderMessages();
-                // Auto-scroll to bottom
-                const chatContainer = document.querySelector('.chat-container');
-                if (chatContainer) {
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }
+            if (panelId === 'chat-panel' && currentFirebaseUser) {
+                renderMessages(); // Start listening for messages when chat panel is shown
+            } else if (unsubscribeChat) {
+                unsubscribeChat(); // Stop listening when navigating away from chat
+                unsubscribeChat = null;
+            }
+        }
+        
+        // Image Modal functionality
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const spanClose = document.getElementsByClassName("close")[0];
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('message-image')) {
+                modal.style.display = "flex";
+                modalImg.src = e.target.src;
+            }
+        });
+        if(spanClose) { // Ensure spanClose exists before adding listener
+            spanClose.onclick = function () {
+                modal.style.display = "none";
+            }
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
         }
 
+        // Firebase Auth State Listener
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentFirebaseUser = user;
+                const userRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(userRef);
+                if (docSnap.exists()) {
+                    currentAppUsername = docSnap.data().username;
+                    document.getElementById('current-user-display').textContent = currentAppUsername;
+                    show('menu-panel');
+                    updateAllLeaderboards();
+                } else {
+                    console.error("User data not found in Firestore for UID:", user.uid);
+                    await signOut(auth); // Log out if profile doesn't exist
+                }
+            } else {
+                currentFirebaseUser = null;
+                currentAppUsername = null;
+                if (unsubscribeChat) {
+                    unsubscribeChat();
+                    unsubscribeChat = null;
+                }
+                show('password-panel');
+            }
+        });
+
         // Update all leaderboards
         function updateAllLeaderboards() {
+            if (!currentFirebaseUser) return; // Don't update if not logged in
             updateLeaderboard('all-workouts-list', 'total');
             updateLeaderboard('erging-list', 'Erg');
             updateLeaderboard('running-list', 'Run');
@@ -766,189 +775,223 @@
         }
 
         // Update specific leaderboard
-        function updateLeaderboard(listId, activityType) {
-            const leaderboard = Object.entries(users)
-                .map(([name, data]) => {
-                    let points = 0;
+        async function updateLeaderboard(listId, activityType) {
+            const usersRef = collection(db, "users");
+            // No specific query needed here, we process all users client-side for this example
+            // For very large user bases, consider server-side aggregation or more specific queries.
+            const querySnapshot = await getDocs(usersRef);
+            let leaderboardData = [];
+
+            querySnapshot.forEach((docSnap) => {
+                const userData = docSnap.data();
+                const userName = userData.username;
+                let points = 0;
+
+                if (userData.activities && Array.isArray(userData.activities)) {
                     if (activityType === 'total') {
-                        points = data.activities.reduce((sum, a) => sum + a.points, 0);
+                        points = userData.activities.reduce((sum, a) => sum + (a.points || 0), 0);
                     } else {
-                        points = data.activities
+                        points = userData.activities
                             .filter(a => a.activity === activityType)
-                            .reduce((sum, a) => sum + a.points, 0);
+                            .reduce((sum, a) => sum + (a.points || 0), 0);
                     }
-                    return { name, points };
-                })
-                .filter(user => user.points > 0)
-                .sort((a, b) => b.points - a.points);
+                }
+                if (points > 0) {
+                    leaderboardData.push({ name: userName, points, uid: docSnap.id });
+                }
+            });
+
+            leaderboardData.sort((a, b) => b.points - a.points);
 
             const list = document.getElementById(listId);
             if (!list) return;
-           
             list.innerHTML = '';
-           
-            leaderboard.forEach((user, index) => {
+
+            leaderboardData.forEach((user, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span class="name" data-username="${user.name}">${user.name}</span>
+                    <span class="name" data-username="${user.name}" data-uid="${user.uid}">${user.name}</span>
                     <span class="points">${user.points} pts</span>
                 `;
-               
-                // Add medal classes for top 3
                 if (index === 0) li.classList.add('gold');
                 else if (index === 1) li.classList.add('silver');
                 else if (index === 2) li.classList.add('bronze');
-               
                 list.appendChild(li);
             });
-           
-            // Add click handlers to names
+
             document.querySelectorAll(`#${listId} .name`).forEach(el => {
                 el.addEventListener('click', (e) => {
                     const username = e.target.getAttribute('data-username');
-                    showUserProfile(username);
+                    const userUID = e.target.getAttribute('data-uid');
+                    showUserProfile(userUID, username);
                 });
             });
         }
-
+        
         // Show user profile
-        function showUserProfile(username) {
-            const user = users[username];
-            if (!user) return;
+        async function showUserProfile(userUID, usernameToDisplay) {
+            const userRef = doc(db, "users", userUID);
+            const docSnap = await getDoc(userRef);
 
-            // Update profile header
-            document.getElementById('profile-username').textContent = username;
-           
-            // Calculate stats
-            const totalPoints = user.activities.reduce((sum, a) => sum + a.points, 0);
+            if (!docSnap.exists()) {
+                console.error("User profile not found for UID:", userUID);
+                alert("Could not load user profile.");
+                return;
+            }
+
+            const user = docSnap.data();
+            const displayName = usernameToDisplay || user.username;
+
+            document.getElementById('profile-username').textContent = displayName;
+
+            const activities = user.activities || [];
+            const totalPoints = activities.reduce((sum, a) => sum + (a.points || 0), 0);
             document.getElementById('profile-total-points').textContent = totalPoints;
-           
-            // Calculate highest points per activity
+
             const highestPoints = {};
             const totalsByActivity = {};
-            const allActivities = ['Erg', 'Run', 'Bike', 'Swim'];
-           
-            allActivities.forEach(activity => {
+            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim', 'Admin'];
+
+            allActivityTypes.forEach(activity => {
                 highestPoints[activity] = 0;
                 totalsByActivity[activity] = 0;
             });
-           
-            user.activities.forEach(workout => {
-                if (workout.points > highestPoints[workout.activity]) {
-                    highestPoints[workout.activity] = workout.points;
+
+            activities.forEach(workout => {
+                const activityName = workout.activity || 'Unknown';
+                if (!highestPoints[activityName]) highestPoints[activityName] = 0;
+                if (!totalsByActivity[activityName]) totalsByActivity[activityName] = 0;
+
+                if (workout.points > highestPoints[activityName]) {
+                    highestPoints[activityName] = workout.points;
                 }
-                totalsByActivity[workout.activity] += workout.points;
+                totalsByActivity[activityName] += workout.points;
             });
-           
-            // Update highest scores
+
             const highestScoresContainer = document.getElementById('highest-scores');
-            highestScoresContainer.innerHTML = allActivities.map(activity => `
+            highestScoresContainer.innerHTML = allActivityTypes.map(act => `
                 <div class="stat-item">
-                    <span class="activity-type">${activity}:</span>
-                    <span class="activity-points">${highestPoints[activity] || 0} pts</span>
+                    <span class="activity-type">${act}:</span>
+                    <span class="activity-points">${highestPoints[act] || 0} pts</span>
                 </div>
             `).join('');
-           
-            // Update recent activities
+
             const recentActivitiesContainer = document.getElementById('recent-activities');
-            if (user.activities.length > 0) {
-                recentActivitiesContainer.innerHTML = user.activities.slice().reverse().slice(0, 10).map(workout => `
+            if (activities.length > 0) {
+                recentActivitiesContainer.innerHTML = activities
+                    .slice()
+                    .sort((a, b) => (b.date && a.date) ? b.date.toMillis() - a.date.toMillis() : 0)
+                    .slice(0, 10)
+                    .map(workout => `
                     <div class="stat-item">
                         <div>
                             <span class="activity-type">${workout.activity}:</span>
                             <span class="activity-points">${workout.points} pts</span>
                         </div>
-                        <div class="activity-date">${new Date(workout.date).toLocaleString()}</div>
+                        <div class="activity-date">${workout.date ? workout.date.toDate().toLocaleString() : 'N/A'}</div>
                         ${workout.image ? `<img src="${workout.image}" class="message-image">` : ''}
                     </div>
                 `).join('');
             } else {
                 recentActivitiesContainer.innerHTML = '<div class="stat-item">No activities yet</div>';
             }
-           
-            // Update activity totals
+
             const activityTotalsContainer = document.getElementById('activity-totals');
-            activityTotalsContainer.innerHTML = allActivities.map(activity => `
+            activityTotalsContainer.innerHTML = allActivityTypes.map(act => `
                 <div class="stat-item">
-                    <span class="activity-type">${activity}:</span>
-                    <span class="activity-points">${totalsByActivity[activity] || 0} pts</span>
+                    <span class="activity-type">${act}:</span>
+                    <span class="activity-points">${totalsByActivity[act] || 0} pts</span>
                 </div>
             `).join('');
-           
+
             show('profile-panel');
         }
 
         // Render chat messages
         function renderMessages() {
+            if (unsubscribeChat) { // If already listening, return or clear first
+                unsubscribeChat();
+            }
             const ul = document.getElementById('chat-messages');
             if (!ul) return;
-           
-            ul.innerHTML = '';
-           
-            messages.forEach(m => {
-                const li = document.createElement('li');
-               
-                const content = document.createElement('div');
-                content.className = 'message-content';
-               
-                const header = document.createElement('div');
-                header.className = 'message-header';
-                header.innerHTML = `
-                    <span class="message-sender">${m.user}</span>
-                    <span class="message-time">${new Date(m.time).toLocaleString()}</span>
-                `;
-                content.appendChild(header);
-               
-                const body = document.createElement('div');
-                body.className = 'message-body';
-               
-                if (m.text) {
-                    body.textContent = m.text;
-                } else if (m.activity) {
-                    body.innerHTML = `Added <strong>${m.points} points</strong> from <strong>${m.activity}</strong>`;
+
+            const messagesRef = collection(db, "messages");
+            const qMessages = query(messagesRef, orderBy("time", "asc")); 
+
+            unsubscribeChat = onSnapshot(qMessages, (querySnapshot) => {
+                ul.innerHTML = ''; 
+                querySnapshot.forEach((docSnap) => {
+                    const m = docSnap.data();
+                    const li = document.createElement('li');
+                    const content = document.createElement('div');
+                    content.className = 'message-content';
+                    const header = document.createElement('div');
+                    header.className = 'message-header';
+                    header.innerHTML = `
+                        <span class="message-sender">${m.user}</span>
+                        <span class="message-time">${m.time ? m.time.toDate().toLocaleString() : 'N/A'}</span>
+                    `;
+                    content.appendChild(header);
+                    const body = document.createElement('div');
+                    body.className = 'message-body';
+                    if (m.text) {
+                        body.textContent = m.text;
+                    } else if (m.activity) {
+                        body.innerHTML = `Added <strong>${m.points} points</strong> from <strong>${m.activity}</strong>`;
+                    }
+                    content.appendChild(body);
+                    if (m.image) {
+                        const img = document.createElement('img');
+                        img.src = m.image;
+                        img.className = 'message-image';
+                        content.appendChild(img);
+                    }
+                    li.appendChild(content);
+                    ul.appendChild(li);
+                });
+                const chatContainer = document.querySelector('.chat-container');
+                if (chatContainer) {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
                 }
-               
-                content.appendChild(body);
-               
-                if (m.image) {
-                    const img = document.createElement('img');
-                    img.src = m.image;
-                    img.className = 'message-image';
-                    content.appendChild(img);
-                }
-               
-                li.appendChild(content);
-                ul.appendChild(li);
+            }, (error) => {
+                console.error("Error fetching chat messages: ", error);
             });
         }
-
-        // Initialize the app
+        
+        // DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
-            initStorage();
-           
             // Navigation
             document.getElementById('signup-button').addEventListener('click', () => show('signup-panel'));
             document.getElementById('existing-login-button').addEventListener('click', () => show('user-login-panel'));
-           
+
             document.querySelectorAll('.back-home').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    currentUser = null;
-                    show('password-panel');
-                });
-            });
-           
+    btn.addEventListener('click', async () => {
+        console.log(".back-home button clicked"); // For debugging
+        try {
+            if (auth.currentUser) { // Only attempt signOut if a user is actually logged in
+                console.log("Attempting to sign out user:", auth.currentUser.uid);
+                await signOut(auth);
+                // onAuthStateChanged will then handle showing 'password-panel'
+            } else {
+                // If no user is logged in, onAuthStateChanged might not fire to change panel,
+                // so explicitly show the password panel.
+                console.log("No user to sign out, directly showing password-panel.");
+                show('password-panel');
+            }
+        } catch (error) {
+            console.error("Sign out error / .back-home error:", error);
+            // Fallback in case of error during signout, still try to navigate
+            show('password-panel');
+        }
+    });
+});
+
             document.querySelectorAll('.back-to-menu').forEach(btn => {
                 btn.addEventListener('click', () => show('menu-panel'));
             });
-           
+
             document.querySelectorAll('.back-to-leaderboard').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (document.querySelector('#leaderboard-menu-panel')) {
-                        show('leaderboard-menu-panel');
-                    } else {
-                        show('all-workouts-panel');
-                    }
-                });
+                btn.addEventListener('click', () => show('leaderboard-menu-panel'));
             });
 
             // Menu buttons
@@ -960,150 +1003,138 @@
             });
             document.getElementById('chat-button').addEventListener('click', () => show('chat-panel'));
             document.getElementById('view-profile-button').addEventListener('click', () => {
-                if (currentUser) {
-                    showUserProfile(currentUser);
+                if (currentFirebaseUser && currentAppUsername) {
+                    showUserProfile(currentFirebaseUser.uid, currentAppUsername);
                 }
             });
 
             // Leaderboard menu buttons
-            document.getElementById('all-workouts-button').addEventListener('click', () => {
-                updateLeaderboard('all-workouts-list', 'total');
-                show('all-workouts-panel');
-            });
-            document.getElementById('erging-button').addEventListener('click', () => {
-                updateLeaderboard('erging-list', 'Erg');
-                show('erging-panel');
-            });
-            document.getElementById('running-button').addEventListener('click', () => {
-                updateLeaderboard('running-list', 'Run');
-                show('running-panel');
-            });
-            document.getElementById('biking-button').addEventListener('click', () => {
-                updateLeaderboard('biking-list', 'Bike');
-                show('biking-panel');
-            });
-            document.getElementById('swimming-button').addEventListener('click', () => {
-                updateLeaderboard('swimming-list', 'Swim');
-                show('swimming-panel');
-            });
+            document.getElementById('all-workouts-button').addEventListener('click', () => { updateLeaderboard('all-workouts-list', 'total'); show('all-workouts-panel'); });
+            document.getElementById('erging-button').addEventListener('click', () => { updateLeaderboard('erging-list', 'Erg'); show('erging-panel'); });
+            document.getElementById('running-button').addEventListener('click', () => { updateLeaderboard('running-list', 'Run'); show('running-panel'); });
+            document.getElementById('biking-button').addEventListener('click', () => { updateLeaderboard('biking-list', 'Bike'); show('biking-panel'); });
+            document.getElementById('swimming-button').addEventListener('click', () => { updateLeaderboard('swimming-list', 'Swim'); show('swimming-panel'); });
 
             // User Signup
-            document.getElementById('submit-signup-button').addEventListener('click', () => {
+            document.getElementById('submit-signup-button').addEventListener('click', async () => {
+                console.log("Submit signup button clicked!");
                 const name = document.getElementById('name-input').value.trim();
                 const pw = document.getElementById('password-input').value;
-                const confirm = document.getElementById('confirm-password-input').value;
+                const confirmPw = document.getElementById('confirm-password-input').value;
+                const signupError = document.getElementById('signup-error-message');
+                signupError.textContent = '';
 
-                if (!name || !pw) {
-                    document.getElementById('signup-error-message').textContent = "Please fill all fields";
-                    return;
-                }
+                if (!name || !pw) { signupError.textContent = "Please fill all fields"; return; }
+                if (pw !== confirmPw) { signupError.textContent = "Passwords don't match"; return; }
 
-                if (pw !== confirm) {
-                    document.getElementById('signup-error-message').textContent = "Passwords don't match";
-                    return;
-                }
+                const usersRefTest = collection(db, "users");
+                const qTest = query(usersRefTest, where("username", "==", name));
+                const querySnapshotTest = await getDocs(qTest);
+                if (!querySnapshotTest.empty) { signupError.textContent = "Username already exists"; return; }
+                
+                const email = `${name.replace(/\s+/g, '_').toLowerCase()}@gmail.com`; 
+                console.log("Generated username for Firebase Auth:", email); // <--- ADD THIS LINE
 
-                if (!users[name]) {
-                    users[name] = { password: pw, activities: [] };
-                    currentUser = name;
-                    document.getElementById('current-user-display').textContent = name;
-                    saveData();
-                    show('menu-panel');
-                } else {
-                    document.getElementById('signup-error-message').textContent = "Username already exists";
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, pw);
+                    await setDoc(doc(db, "users", userCredential.user.uid), {
+                        username: name,
+                        activities: [],
+                        createdAt: Timestamp.now()
+                    });
+                    // onAuthStateChanged handles showing the menu panel
+                } catch (error) {
+                    signupError.textContent = error.message.includes("email-already-in-use") ? "Username (or derived email) already taken." : "Signup failed: " + error.message;
+                    console.error("Signup error:", error);
                 }
             });
 
             // User Login
-            document.getElementById('submit-user-login-button').addEventListener('click', () => {
+            document.getElementById('submit-user-login-button').addEventListener('click', async () => {
                 const name = document.getElementById('login-name-input').value.trim();
                 const pw = document.getElementById('login-user-password-input').value;
+                const loginError = document.getElementById('user-login-error-message');
+                loginError.textContent = '';
 
-                if (users[name] && users[name].password === pw) {
-                    currentUser = name;
-                    document.getElementById('current-user-display').textContent = name;
-                    show('menu-panel');
-                } else {
-                    document.getElementById('user-login-error-message').textContent = "Invalid username or password";
+                if (!name || !pw) { loginError.textContent = "Please enter username and password."; return; }
+                const email = `${name.replace(/\s+/g, '_').toLowerCase()}@gmail.com`;
+
+                try {
+                    await signInWithEmailAndPassword(auth, email, pw);
+                    // onAuthStateChanged handles UI
+                } catch (error) {
+                    loginError.textContent = "Invalid username or password.";
+                    console.error("Login error:", error);
                 }
             });
 
-            // Add Workout
-            document.getElementById('confirm-points-button').addEventListener('click', () => {
+            // Add Workout (confirm points button)
+            document.getElementById('confirm-points-button').addEventListener('click', async () => {
+                if (!currentFirebaseUser) { alert("Please log in first."); return; }
+
                 const points = parseInt(document.getElementById('points-input').value);
                 const activity = document.getElementById('activity-select').value;
                 const fileInput = document.getElementById('photo-upload');
                 const file = fileInput.files[0];
 
-                if (!points || points <= 0 || !activity) {
-                    alert("Please select an activity and enter valid points");
-                    return;
-                }
+                if (!points || points <= 0 || !activity) { alert("Please select an activity and enter valid points"); return; }
 
-                const workout = {
-                    activity,
-                    points,
-                    date: new Date(),
-                    image: null
-                };
-
+                let imageUrl = null;
                 if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        workout.image = e.target.result;
-                        addWorkout(workout);
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    addWorkout(workout);
+                    try {
+                        const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
+                        const snapshot = await uploadBytes(storageRef, file);
+                        imageUrl = await getDownloadURL(snapshot.ref);
+                    } catch (error) {
+                        console.error("Error uploading image: ", error);
+                        alert("Failed to upload image. Workout will be added without it.");
+                    }
+                }
+
+                const workoutData = { activity, points, date: Timestamp.now(), image: imageUrl };
+                const userRef = doc(db, "users", currentFirebaseUser.uid);
+
+                try {
+                    await updateDoc(userRef, { activities: arrayUnion(workoutData) });
+                    await addDoc(collection(db, "messages"), {
+                        userId: currentFirebaseUser.uid,
+                        user: currentAppUsername,
+                        activity: workoutData.activity,
+                        points: workoutData.points,
+                        image: workoutData.image,
+                        time: Timestamp.now()
+                    });
+                    updateAllLeaderboards();
+                    show('menu-panel');
+                    document.getElementById('points-input').value = '';
+                    document.getElementById('activity-select').value = '';
+                    fileInput.value = null; // Reset file input
+                } catch (error) {
+                    console.error("Error adding workout: ", error);
+                    alert("Failed to add workout.");
                 }
             });
 
-            function addWorkout(workout) {
-                if (!currentUser) return;
-               
-                if (!users[currentUser]) {
-                    users[currentUser] = { activities: [] };
-                }
-
-                users[currentUser].activities.push(workout);
-               
-                messages.push({
-                    user: currentUser,
-                    activity: workout.activity,
-                    points: workout.points,
-                    image: workout.image,
-                    time: new Date()
-                });
-
-                saveData();
-                updateAllLeaderboards();
-                show('menu-panel');
-            }
-
-            // Chat
-            document.getElementById('send-button').addEventListener('click', () => {
+            // Chat Send Button
+            document.getElementById('send-button').addEventListener('click', async () => {
                 const text = document.getElementById('chat-input').value.trim();
-                if (!text) return;
-               
-                messages.push({
-                    user: currentUser,
-                    text,
-                    time: new Date()
-                });
-               
-                document.getElementById('chat-input').value = '';
-                renderMessages();
-                saveData();
-               
-                // Auto-scroll to bottom after sending
-                const chatContainer = document.querySelector('.chat-container');
-                if (chatContainer) {
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                if (!text || !currentFirebaseUser || !currentAppUsername) return;
+
+                try {
+                    await addDoc(collection(db, "messages"), {
+                        userId: currentFirebaseUser.uid,
+                        user: currentAppUsername,
+                        text: text,
+                        time: Timestamp.now()
+                    });
+                    document.getElementById('chat-input').value = '';
+                    // renderMessages updates via onSnapshot
+                } catch (error) {
+                    console.error("Error sending message: ", error);
+                    alert("Failed to send message.");
                 }
             });
-
-            // Allow sending messages with Enter key (but allow Shift+Enter for new lines)
+            
             document.getElementById('chat-input')?.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -1111,151 +1142,134 @@
                 }
             });
 
-            // Secret word detection for admin access
+            // Secret word detection
             document.addEventListener('keydown', (e) => {
-                // Only check when on password panel or menu panel
                 const currentPanel = document.querySelector('.panel:not(.hidden)');
-                if (!currentPanel ||
-                    (currentPanel.id !== 'password-panel' &&
-                     currentPanel.id !== 'menu-panel' &&
-                     currentPanel.id !== 'admin-points-panel')) {
+                if (!currentPanel || (currentPanel.id !== 'password-panel' && currentPanel.id !== 'menu-panel' && currentPanel.id !== 'admin-points-panel')) {
+                    typedWord = ''; // Reset if not on relevant panels
                     return;
                 }
-
                 typedWord += e.key.toLowerCase();
-               
-                // Check for "awesome"
                 if (typedWord.includes('awesome')) {
                     typedWord = '';
-                    if (currentPanel.id === 'password-panel' || currentPanel.id === 'menu-panel') {
-                        show('admin-password-panel');
-                    } else if (currentPanel.id === 'admin-points-panel') {
-                        show('super-admin-password-panel');
-                    }
+                    if (currentPanel.id === 'password-panel' || currentPanel.id === 'menu-panel') show('admin-password-panel');
+                    else if (currentPanel.id === 'admin-points-panel') show('super-admin-password-panel');
                 }
-               
-                // Keep the last few characters to prevent memory buildup
-                if (typedWord.length > 10) {
-                    typedWord = typedWord.slice(-10);
-                }
+                if (typedWord.length > 10) typedWord = typedWord.slice(-10);
             });
 
             // Admin password submit
             document.getElementById('submit-admin-password-button').addEventListener('click', () => {
                 const password = document.getElementById('admin-password-input').value;
-                if (password === 'McleanCrew2025!') {
+                if (password === 'McleanCrew2025!') { // Keep your admin password
                     document.getElementById('admin-error-message').textContent = '';
                     show('admin-points-panel');
                 } else {
                     document.getElementById('admin-error-message').textContent = 'Incorrect password';
                 }
+                document.getElementById('admin-password-input').value = '';
             });
 
-            // Admin points management
-            document.getElementById('admin-add-points-button').addEventListener('click', () => {
-                const username = document.getElementById('admin-username-input').value.trim();
+            // Admin points management (add)
+            document.getElementById('admin-add-points-button').addEventListener('click', async () => {
+                const usernameToEdit = document.getElementById('admin-username-input').value.trim();
                 const points = parseInt(document.getElementById('admin-points-input').value);
-               
-                if (!username || !points || points <= 0) {
-                    alert('Please enter a valid username and points');
-                    return;
-                }
-               
-                if (!users[username]) {
-                    users[username] = { activities: [] };
-                }
-               
-                users[username].activities.push({
-                    activity: 'Admin',
-                    points: points,
-                    date: new Date()
-                });
-               
-                saveData();
-                updateAllLeaderboards();
-                alert(`Added ${points} points to ${username}`);
+                if (!usernameToEdit || !points || points <= 0) { alert('Valid username and positive points required'); return; }
+
+                const usersRef = collection(db, "users");
+                const q = query(usersRef, where("username", "==", usernameToEdit));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) { alert(`User ${usernameToEdit} not found.`); return; }
+                const userDocSnap = querySnapshot.docs[0];
+                try {
+                    await updateDoc(doc(db, "users", userDocSnap.id), {
+                        activities: arrayUnion({ activity: 'Admin Adjust', points: points, date: Timestamp.now() })
+                    });
+                    updateAllLeaderboards();
+                    alert(`Added ${points} points to ${usernameToEdit}`);
+                } catch (error) { console.error("Admin add points error:", error); alert("Error adding points."); }
+            });
+            // Admin points management (subtract)
+             document.getElementById('admin-subtract-points-button').addEventListener('click', async () => {
+                const usernameToEdit = document.getElementById('admin-username-input').value.trim();
+                const pointsToSubtract = parseInt(document.getElementById('admin-points-input').value);
+                if (!usernameToEdit || !pointsToSubtract || pointsToSubtract <= 0) { alert('Valid username and positive points to subtract required'); return; }
+
+                const usersRef = collection(db, "users");
+                const q = query(usersRef, where("username", "==", usernameToEdit));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) { alert(`User ${usernameToEdit} not found.`); return; }
+                const userDocSnap = querySnapshot.docs[0];
+                try {
+                    // Subtracting points by adding a negative value activity
+                    await updateDoc(doc(db, "users", userDocSnap.id), {
+                        activities: arrayUnion({ activity: 'Admin Adjust', points: -pointsToSubtract, date: Timestamp.now() })
+                    });
+                    updateAllLeaderboards();
+                    alert(`Subtracted ${pointsToSubtract} points from ${usernameToEdit}`);
+                } catch (error) { console.error("Admin subtract points error:", error); alert("Error subtracting points."); }
             });
 
-            document.getElementById('admin-subtract-points-button').addEventListener('click', () => {
-                const username = document.getElementById('admin-username-input').value.trim();
-                const points = parseInt(document.getElementById('admin-points-input').value);
-               
-                if (!username || !points || points <= 0) {
-                    alert('Please enter a valid username and points');
-                    return;
-                }
-               
-                if (!users[username]) {
-                    alert('User not found');
-                    return;
-                }
-               
-                users[username].activities.push({
-                    activity: 'Admin',
-                    points: -points,
-                    date: new Date()
-                });
-               
-                saveData();
-                updateAllLeaderboards();
-                alert(`Subtracted ${points} points from ${username}`);
-            });
 
             // Super admin password submit
             document.getElementById('submit-super-admin-password-button').addEventListener('click', () => {
                 const password = document.getElementById('super-admin-password-input').value;
-                if (password === 'LukeHoffman2006!') {
+                if (password === 'LukeHoffman2006!') { // Keep your super admin password
                     document.getElementById('super-admin-error-message').textContent = '';
                     show('super-admin-panel');
                     document.getElementById('click-count').textContent = clickCount;
                 } else {
                     document.getElementById('super-admin-error-message').textContent = 'Incorrect password';
                 }
+                 document.getElementById('super-admin-password-input').value = '';
             });
 
             // Super admin click counter
             document.getElementById('click-button').addEventListener('click', () => {
                 clickCount++;
                 document.getElementById('click-count').textContent = clickCount;
-                localStorage.setItem('clickCount', clickCount.toString());
-               
+                localStorage.setItem('clickCount', clickCount.toString()); // Still local for this feature
                 if (clickCount >= 100) {
                     document.getElementById('wipe-confirm-button').classList.remove('hidden');
-                    document.getElementById('undo-wipe-button').classList.remove('hidden');
+                    document.getElementById('undo-wipe-button').classList.remove('hidden'); // Consider disabling/hiding this permanently for cloud
+                }
+            });
+            
+            // Wipe all points (Super Admin)
+            document.getElementById('wipe-confirm-button').addEventListener('click', async () => {
+                if (confirm('Are you sure you want to wipe ALL points for ALL users from Firestore? This action is hard to reverse!')) {
+                    const usersRef = collection(db, "users");
+                    try {
+                        const querySnapshot = await getDocs(usersRef);
+                        const batch = writeBatch(db);
+                        querySnapshot.forEach((docSnap) => {
+                            batch.update(doc(db, "users", docSnap.id), { activities: [] });
+                        });
+                        await batch.commit();
+                        updateAllLeaderboards();
+                        alert('All points have been wiped from Firestore!');
+                        document.getElementById('undo-wipe-button').classList.add('hidden'); // Hide, as client-side undo is not applicable
+                    } catch (error) {
+                        console.error("Error wiping points: ", error);
+                        alert("Failed to wipe points from Firestore.");
+                    }
                 }
             });
 
-            // Wipe all points
-            document.getElementById('wipe-confirm-button').addEventListener('click', () => {
-                if (confirm('Are you sure you want to wipe ALL points for ALL users?')) {
-                    // Create backup before wiping
-                    backupUsers = JSON.parse(JSON.stringify(users));
-                   
-                    // Wipe all activities
-                    Object.keys(users).forEach(username => {
-                        users[username].activities = [];
-                    });
-                   
-                    saveData();
-                    updateAllLeaderboards();
-                    alert('All points have been wiped!');
-                }
-            });
-
-            // Undo wipe
+            // Undo wipe button (currently for localStorage backup, which is not used for main data anymore)
+            // This button is now mostly non-functional for cloud data.
             document.getElementById('undo-wipe-button').addEventListener('click', () => {
-                if (backupUsers) {
-                    users = JSON.parse(JSON.stringify(backupUsers));
-                    saveData();
-                    updateAllLeaderboards();
-                    alert('Wipe has been undone!');
-                } else {
-                    alert('No backup available to undo');
-                }
+                alert('Client-side undo is not available for cloud data. Please use Firebase backups if needed.');
             });
-
-            // Initial view
-            show('password-panel');
+            
+            // Initial view is handled by onAuthStateChanged
+            // If not logged in, it will show 'password-panel'.
+            // If logged in, it will attempt to load user data and show 'menu-panel'.
+             if (!currentFirebaseUser) { // Ensure password panel shows if auth state not yet processed
+                show('password-panel');
+             }
         });
     </script>
 </body>
