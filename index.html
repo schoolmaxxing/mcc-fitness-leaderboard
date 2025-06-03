@@ -25,9 +25,7 @@
             align-items: center;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
-            /* Smoother fonts on WebKit */
             -moz-osx-font-smoothing: grayscale;
-            /* Smoother fonts on Firefox */
         }
 
         .container {
@@ -35,9 +33,7 @@
             max-width: 500px;
             background: #1e1e1e;
             border-radius: 12px;
-            /* Slightly more rounded */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
-            /* Softer, more diffused shadow */
             padding: 25px;
             text-align: center;
         }
@@ -46,7 +42,6 @@
         h2,
         h3 {
             color: #f5f5f5;
-            /* Slightly softer than pure white */
             margin-top: 0;
         }
 
@@ -62,14 +57,10 @@
             margin-bottom: 16px;
         }
 
-        /* General h3, may be overridden specifically */
-
-
-        /* Panel System */
         .panel {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
@@ -77,7 +68,6 @@
             display: none;
         }
 
-        /* Leaderboard Styles */
         .leaderboard {
             list-style: none;
             padding: 0;
@@ -92,7 +82,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* Vertically align items */
             font-size: 18px;
             transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
         }
@@ -102,10 +91,9 @@
             transform: translateY(-2px);
         }
 
-        .leaderboard li .points {
+        .leaderboard li .score { 
             font-weight: bold;
             color: #b0b0b0;
-            /* Slightly muted points color */
         }
 
         .leaderboard li.gold {
@@ -123,11 +111,9 @@
             border-left: 5px solid #CD7F32;
         }
 
-        /* Buttons */
         button {
             padding: 12px 20px;
             border-radius: 8px;
-            /* Consistent rounding */
             border: none;
             background: #1976D2;
             color: white;
@@ -139,16 +125,18 @@
             max-width: 300px;
             margin: 5px 0;
             text-align: center;
-            /* Ensure text is centered if not by default */
         }
-
-        button:hover {
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
             background: #1565C0;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        button:active {
+        button:active:not(:disabled) {
             transform: translateY(0px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
         }
@@ -156,37 +144,50 @@
         button:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.5);
-            /* Accent color focus ring */
         }
 
-        /* Muted/Secondary Buttons */
         .button-group button.back-home,
         .button-group button.back-to-menu,
         .button-group button.back-to-leaderboard,
-        #points-menu .button-group button:last-child {
-            /* Cancel button in points menu */
+        #score-input-menu .button-group button:last-child, 
+        #verify-email-panel .button-group button { 
             background-color: #3e3e3e;
             color: #d0d0d0;
             font-weight: normal;
         }
+        #verify-email-panel .button-group button#resend-verification-button { 
+             background: #1976D2; 
+             color: white;
+             font-weight: bold;
+        }
 
-        .button-group button.back-home:hover,
-        .button-group button.back-to-menu:hover,
-        .button-group button.back-to-leaderboard:hover,
-        #points-menu .button-group button:last-child:hover {
+
+        .button-group button.back-home:hover:not(:disabled),
+        .button-group button.back-to-menu:hover:not(:disabled),
+        .button-group button.back-to-leaderboard:hover:not(:disabled),
+        #score-input-menu .button-group button:last-child:hover:not(:disabled), 
+        #verify-email-panel .button-group button:hover:not(:disabled) {
             background-color: #4a4a4a;
             color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+         #verify-email-panel .button-group button#resend-verification-button:hover:not(:disabled) {
+            background: #1565C0;
+        }
+
 
         .button-group button.back-home:focus,
         .button-group button.back-to-menu:focus,
         .button-group button.back-to-leaderboard:focus,
-        #points-menu .button-group button:last-child:focus {
+        #score-input-menu .button-group button:last-child:focus, 
+        #verify-email-panel .button-group button:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.5);
         }
+         #verify-email-panel .button-group button#resend-verification-button:focus {
+             box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.5);
+         }
 
 
         .button-group {
@@ -201,7 +202,6 @@
             gap: 15px;
         }
 
-        /* Forms */
         input,
         select,
         textarea {
@@ -209,16 +209,12 @@
             max-width: 300px;
             padding: 12px;
             border-radius: 8px;
-            /* Consistent rounding */
             border: 1px solid #383838;
-            /* Slightly lighter border */
             background: #2d2d2d;
             color: #e0e0e0;
-            /* Match body text color */
             font-size: 16px;
             margin: 5px 0;
             font-family: inherit;
-            /* Inherit body font */
             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
@@ -231,35 +227,33 @@
         }
 
         select {
-            /* Make select arrow match theme (basic) */
             appearance: none;
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23e0e0e0%22/%3E%3C/svg%3E');
             background-repeat: no-repeat;
             background-position: right 10px center;
             background-size: 16px;
             padding-right: 30px;
-            /* Space for arrow */
         }
-
 
         .error {
             color: #ef5350;
-            /* Softer red */
             margin: 10px 0;
             font-weight: bold;
         }
+        .success-message { 
+            color: #4CAF50; 
+            margin:10px 0;
+            font-weight: bold;
+        }
 
-        /* Rules */
         .rules-content {
             text-align: center;
             background: #2a2a2a;
-            /* Slightly different from other panel items */
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
             font-size: 18px;
             line-height: 1.8;
-            /* Increased line-height */
             width: 100%;
         }
 
@@ -270,11 +264,9 @@
         .note {
             font-style: italic;
             color: #a0a0a0;
-            /* Lighter than #aaa */
             margin-top: 25px !important;
         }
 
-        /* Chat Styles */
         .chat-container {
             height: 400px;
             width: 100%;
@@ -283,7 +275,6 @@
             border-radius: 8px;
             margin-bottom: 15px;
             background: #252525;
-            /* Slightly darker chat background */
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -302,7 +293,6 @@
         #chat-messages li {
             background: #3d3d3d;
             padding: 12px 15px;
-            /* Adjusted padding */
             border-radius: 8px;
             word-wrap: break-word;
             max-width: 100%;
@@ -313,7 +303,6 @@
             font-weight: bold;
             margin-bottom: 8px;
             color: #64b5f6;
-            /* Lighter blue for sender */
             font-size: 14px;
             display: flex;
             justify-content: space-between;
@@ -325,7 +314,6 @@
 
         .message-time {
             color: #909090;
-            /* Lighter time */
             font-size: 0.8em;
         }
 
@@ -333,15 +321,17 @@
             padding: 8px 0;
             font-size: 16px;
             line-height: 1.5;
-            /* Better readability for messages */
         }
+        .message-body strong { 
+            color: #81c784; 
+        }
+
 
         .chat-input-container {
             display: flex;
             gap: 5%;
             width: 100%;
             align-items: center;
-            /* Keep button aligned to bottom of textarea */
         }
 
         #chat-input {
@@ -359,22 +349,16 @@
 
         #send-button {
             height: 100px;
-            /* Match min-height of textarea for alignment */
             width: 30%;
-            /* Standard button padding */
             margin: 0;
-            /* Remove specific margin if not needed for alignment */
             flex-shrink: 0;
-            /* Prevent button from shrinking */
         }
 
-        #send-button:hover,
-        #send-button:active {
+        #send-button:hover:not(:disabled),
+        #send-button:active:not(:disabled) {
             transform: none;
-            /* Removes the vertical movement */
         }
 
-        /* Profile View Styles */
         .profile-container {
             width: 100%;
             display: flex;
@@ -391,13 +375,11 @@
 
         #profile-username {
             color: #f5f5f5;
-            /* Ensure matches general heading */
         }
 
-        #profile-total-points {
+        #profile-total-score { 
             font-weight: bold;
             color: #81c784;
-            /* Greenish for points */
         }
 
         .profile-stats-container {
@@ -419,74 +401,58 @@
         .stat-box h3 {
             margin-top: 0;
             margin-bottom: 10px;
-            /* Ensure space before content */
             border-bottom: 1px solid #444;
             padding-bottom: 10px;
             color: #e0e0e0;
-            /* Slightly less emphasis than main headers */
         }
 
         .stat-item {
             background: #3d3d3d;
             padding: 10px 12px;
-            /* Adjusted padding */
             border-radius: 6px;
             margin-bottom: 10px;
         }
 
         .stat-item:last-child {
             margin-bottom: 0;
-            /* Remove margin for last item */
         }
 
-
-        /* Image Styling */
         .message-image {
             max-width: 100%;
             max-height: 200px;
             border-radius: 6px;
-            /* Consistent rounding */
             margin-top: 10px;
-            /* More space */
             cursor: pointer;
             transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-            /* Added opacity transition */
         }
 
         .message-image:hover {
             transform: scale(1.03);
-            /* Slightly less intense scale */
             opacity: 0.9;
         }
 
-        /* Image Modal */
         .modal {
             display: none;
             position: fixed;
             z-index: 1000;
-            /* Ensure on top */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.92);
-            /* Darker overlay */
             justify-content: center;
             align-items: center;
-            /* Add a subtle fade-in if JS toggles a class, otherwise this won't animate display:none */
         }
 
         .modal-content {
             max-width: 90%;
             max-height: 90%;
             border-radius: 8px;
-            /* Rounded corners for modal image */
         }
 
         .close {
             position: absolute;
             top: 20px;
-            /* More spacing */
             right: 35px;
             color: #f1f1f1;
             font-size: 40px;
@@ -499,33 +465,26 @@
             color: #bbbbbb;
         }
 
-        /* Leaderboard Name Links */
         .leaderboard .name {
             cursor: pointer;
             color: #64b5f6;
-            /* Lighter, more inviting blue */
             text-decoration: none;
-            /* Remove underline by default */
             transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
         }
 
         .leaderboard .name:hover {
             color: #42a5f5;
             text-decoration: underline;
-            /* Underline on hover */
         }
 
-        /* Profile Activity Types */
         .activity-type {
             font-weight: bold;
             color: #4dd0e1;
-            /* Cyan accent for activity type */
         }
 
-        .activity-points {
+        .activity-value { 
             font-weight: bold;
             color: #fff;
-            /* White for emphasis */
         }
 
         .activity-date {
@@ -533,16 +492,13 @@
             font-size: 0.9em;
         }
 
-        /* View Profile Button */
         #view-profile-button {
             margin-top: 20px;
             background: #4CAF50;
-            /* Green */
         }
 
-        #view-profile-button:hover {
+        #view-profile-button:hover:not(:disabled) {
             background: #43a047;
-            /* Darker green */
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -551,17 +507,12 @@
             box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
         }
 
-
-        /* Admin Styles */
         .admin-button {
-            /* General class for admin action buttons */
             background: #e53935;
-            /* Admin red */
         }
 
-        .admin-button:hover {
+        .admin-button:hover:not(:disabled) {
             background: #d32f2f;
-            /* Darker admin red */
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -570,14 +521,12 @@
             box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.5);
         }
 
-
         .click-counter {
             font-size: 24px;
             margin: 20px 0;
             color: #f5f5f5;
         }
 
-        /* Styles for the cleaner file input button */
         .file-upload-wrapper {
             position: relative;
             display: flex;
@@ -597,12 +546,9 @@
             display: inline-block;
             padding: 12px 20px;
             border-radius: 8px;
-            /* Consistent rounding */
             border: 1px solid #1976D2;
             background: transparent;
-            /* Transparent background for outline style */
             color: #64b5f6;
-            /* Accent color text */
             font-size: 16px;
             font-weight: normal;
             cursor: pointer;
@@ -613,11 +559,9 @@
 
         .custom-file-upload-button:hover {
             background: rgba(25, 118, 210, 0.1);
-            /* Subtle background on hover */
             border-color: #42a5f5;
             color: #42a5f5;
             transform: translateY(-1px);
-            /* Subtle lift */
         }
 
         .custom-file-upload-button:focus {
@@ -626,7 +570,6 @@
             box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.4);
             color: #1565C0;
         }
-
 
         .file-name-display {
             font-size: 14px;
@@ -638,16 +581,13 @@
             max-width: 100%;
         }
 
-        /* Scrollbar Styling (WebKit) */
         ::-webkit-scrollbar {
             width: 10px;
-            /* Slightly wider for easier grabbing */
             height: 10px;
         }
 
         ::-webkit-scrollbar-track {
             background: #222;
-            /* Darker track */
             border-radius: 10px;
         }
 
@@ -655,42 +595,39 @@
             background: #555;
             border-radius: 10px;
             border: 2px solid #222;
-            /* Creates a "padding" effect */
         }
 
         ::-webkit-scrollbar-thumb:hover {
             background: #777;
         }
 
-        /* Responsive Design */
+        #verify-email-panel p {
+            line-height: 1.6;
+        }
+        #verify-email-panel #verification-email-address {
+            word-break: break-all; 
+        }
+
+
         @media (max-width: 500px) {
             body {
                 padding: 10px;
-                /* Less padding on small screens */
             }
-
             .container {
                 padding: 20px;
-                /* Adjust container padding */
             }
-
             .chat-container {
                 height: 350px;
                 padding: 15px;
             }
-
             .rules-content {
                 padding: 15px;
                 font-size: 16px;
             }
-
             .leaderboard li {
                 padding: 12px;
                 font-size: 16px;
             }
-
-            /* Profile stats already column, so this specific media query might not change much for it
-               but keeping it for other potential adjustments if the container max-width were larger. */
             .profile-stats-container {
                 flex-direction: column;
             }
@@ -707,17 +644,20 @@
     <div class="container">
         <div id="password-panel" class="panel">
             <h1>MCC Fitness Leaderboard</h1>
-            <div class="form-group button-group"> <button id="signup-button">New User Signup</button>
+            <img src="icon.png" alt="MCC Fitness Icon" style="max-width: 100px; margin-bottom: 20px;">
+            <div class="form-group button-group">
+                <button id="signup-button">New User Signup</button>
                 <button id="existing-login-button">Existing User Login</button>
             </div>
         </div>
 
         <div id="signup-panel" class="panel hidden">
             <h2>Sign Up</h2>
-            <input type="text" id="name-input" placeholder="Username">
-            <input type="password" id="password-input" placeholder="Password">
-            <input type="password" id="confirm-password-input" placeholder="Confirm Password">
-            <p id="signup-error-message" class="error"></p>
+            <input type="text" id="name-input" placeholder="Name" autocomplete="name">
+            <input type="email" id="email-input" placeholder="Email" autocomplete="email">
+            <input type="password" id="password-input" placeholder="Password" autocomplete="new-password">
+            <input type="password" id="confirm-password-input" placeholder="Confirm Password" autocomplete="new-password">
+            <p id="signup-message" class="error"></p> 
             <div class="button-group">
                 <button id="submit-signup-button">Sign Up</button>
                 <button class="back-home">Back</button>
@@ -726,12 +666,25 @@
 
         <div id="user-login-panel" class="panel hidden">
             <h2>User Login</h2>
-            <input type="text" id="login-name-input" placeholder="Username">
-            <input type="password" id="login-user-password-input" placeholder="Password">
+            <input type="email" id="login-email-input" placeholder="Email" autocomplete="email">
+            <input type="password" id="login-user-password-input" placeholder="Password" autocomplete="current-password">
             <p id="user-login-error-message" class="error"></p>
             <div class="button-group">
                 <button id="submit-user-login-button">Login</button>
                 <button class="back-home">Back</button>
+            </div>
+        </div>
+        
+        <div id="verify-email-panel" class="panel hidden">
+            <h2>Verify Your Email</h2>
+            <p>A verification email has been sent to <strong id="verification-email-address">your_email@example.com</strong>.</p>
+            <p>Please check your inbox (and spam folder) and click the verification link to activate your account.</p>
+            <p>If you don't see the email, you can resend it.</p>
+            <p id="resend-verification-message" class="error"></p> 
+            <div class="button-group vertical">
+                <button id="resend-verification-button">Resend Verification Email</button>
+                <button id="check-verification-status-button">I've Verified, Continue</button>
+                <button id="back-to-login-from-verify-button">Logout & Go to Login</button>
             </div>
         </div>
 
@@ -739,11 +692,12 @@
             <h2>Welcome, <span id="current-user-display"></span>!</h2>
             <div class="button-group vertical">
                 <button id="rules-button">Rules</button>
-                <button id="add-points-button">Add Workout</button>
+                <button id="add-workout-score-button">Add Workout Score</button> 
                 <button id="leaderboard-button">Leaderboards</button>
                 <button id="chat-button">Group Chat</button>
                 <button id="view-profile-button">View My Profile</button>
-                <button class="back-home">Logout</button> </div>
+                <button class="back-home">Logout</button> 
+            </div>
         </div>
 
         <div id="leaderboard-menu-panel" class="panel hidden">
@@ -754,6 +708,8 @@
                 <button id="running-button">Running Leaderboard</button>
                 <button id="biking-button">Biking Leaderboard</button>
                 <button id="swimming-button">Swimming Leaderboard</button>
+                <button id="lifting-button">Lifting Leaderboard</button>
+                <button id="otw-rowing-button">OTW Rowing Leaderboard</button>
                 <button class="back-to-menu">Back</button>
             </div>
         </div>
@@ -798,13 +754,32 @@
             </div>
         </div>
 
+        <div id="lifting-panel" class="panel hidden">
+            <h2>Lifting Leaderboard</h2>
+            <ul id="lifting-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+
+        <div id="otw-rowing-panel" class="panel hidden">
+            <h2>OTW Rowing Leaderboard</h2>
+            <ul id="otw-rowing-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+
         <div id="rules-panel" class="panel hidden">
             <h2>Competition Rules</h2>
             <div class="rules-content">
-                <p>1 Meter Erg = 1 Point</p>
-                <p>300 Meter Swim = 1000 points</p>
-                <p>1 Mile Run = 1000 Points</p>
-                <p>1 Mile Bike = 500 Points</p>
+                <p>1000 Meter Erg = 1000 Meters</p>
+                <p>300 Meter Swim = 1000 Meters</p>
+                <p>1 Mile Run = 1000 Meters</p>
+                <p>2 Mile Bike = 1000 Meters</p>
+                <p>1 Lift = 10000 Meters</p>
+                <p>1000 Meter 1x/2- OTW = 1000 Meter</p>
+                <p>1000 Meter 2x OTW = 1000 Meter</p>
                 <p class="note">More will be added soon!</p>
             </div>
             <div class="button-group">
@@ -812,24 +787,27 @@
             </div>
         </div>
 
-        <div id="points-menu" class="panel hidden">
-            <h2>Add Workout</h2>
+        <div id="score-input-menu" class="panel hidden"> 
+            <h2>Add Workout Score</h2>
             <select id="activity-select">
                 <option value="">Select Activity</option>
                 <option value="Erg">Erging</option>
                 <option value="Run">Running</option>
                 <option value="Bike">Biking</option>
                 <option value="Swim">Swimming</option>
+                <option value="Lift">Lifting</option>
+                <option value="OTW">OTW Rowing</option>
             </select>
-            <input type="number" id="points-input" placeholder="Points">
+            <input type="number" id="points-input" placeholder="Value (based on rules)"> 
             <div class="file-upload-wrapper">
                 <input type="file" id="photo-upload" accept="image/*" class="hidden-file-input">
                 <label for="photo-upload" class="custom-file-upload-button">Choose Photo</label>
                 <span id="file-name-display" class="file-name-display">No file chosen</span>
             </div>
             <div class="button-group">
-                <button id="confirm-points-button">Submit</button>
-                <button class="back-to-menu">Cancel</button> </div>
+                <button id="confirm-score-button">Submit Score</button> 
+                <button class="back-to-menu">Cancel</button> 
+            </div>
         </div>
 
         <div id="chat-panel" class="panel hidden">
@@ -838,10 +816,11 @@
                 <ul id="chat-messages"></ul>
             </div>
             <div class="chat-input-container">
-                <textarea id="chat-input" placeholder="Type your message here..." rows="3"></textarea> <button
-                    id="send-button">Send</button>
+                <textarea id="chat-input" placeholder="Type your message here..." rows="3"></textarea> 
+                <button id="send-button">Send</button>
             </div>
-            <div class="button-group" style="margin-top: 15px;"> <button class="back-to-menu">Back to Menu</button>
+            <div class="button-group" style="margin-top: 15px;"> 
+                <button class="back-to-menu">Back to Menu</button>
             </div>
         </div>
 
@@ -849,12 +828,12 @@
             <div class="profile-container">
                 <div class="profile-header">
                     <h2 id="profile-username">Username</h2>
-                    <p>Total Points: <span id="profile-total-points">0</span></p>
+                    <p>Total Score: <span id="profile-total-score">0</span> m</p> 
                 </div>
 
                 <div class="profile-stats-container">
                     <div class="stat-box">
-                        <h3>Highest Scores</h3>
+                        <h3>Highest Scores</h3> 
                         <div id="highest-scores">
                         </div>
                     </div>
@@ -866,7 +845,7 @@
                     </div>
 
                     <div class="stat-box">
-                        <h3>Activity Totals</h3>
+                        <h3>Activity Totals</h3> 
                         <div id="activity-totals">
                         </div>
                     </div>
@@ -888,14 +867,14 @@
             </div>
         </div>
 
-        <div id="admin-points-panel" class="panel hidden">
-            <h2>Admin Points Editor</h2>
+        <div id="admin-control-panel" class="panel hidden"> 
+            <h2>Admin Controls</h2>
             <input type="text" id="admin-username-input" placeholder="Username">
-            <input type="number" id="admin-points-input" placeholder="Points to add/subtract">
+            <input type="number" id="admin-points-input" placeholder="Value to add/subtract"> 
             <div class="button-group">
-                <button id="admin-add-points-button">Add Points</button>
-                <button id="admin-subtract-points-button" class="admin-button">Subtract Points</button> <button
-                    class="back-to-menu">Back to Menu</button>
+                <button id="admin-add-points-button">Add Value</button> 
+                <button id="admin-subtract-points-button" class="admin-button">Subtract Value</button> 
+                <button class="back-to-menu">Back to Menu</button>
             </div>
         </div>
 
@@ -913,7 +892,7 @@
             <h2>Super Admin Controls</h2>
             <div class="click-counter">Clicks: <span id="click-count">0</span>/100</div>
             <div class="button-group vertical">
-                <button id="wipe-confirm-button" class="hidden admin-button">Wipe All Points</button>
+                <button id="wipe-confirm-button" class="hidden admin-button">Wipe All Score Data</button> 
                 <button id="undo-wipe-button" class="hidden">Undo Wipe (Disabled for Cloud)</button>
                 <button id="click-button">Click Me</button>
                 <button class="back-to-menu">Back to Menu</button>
@@ -922,7 +901,6 @@
     </div>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
         import { 
@@ -930,7 +908,8 @@
             createUserWithEmailAndPassword, 
             signInWithEmailAndPassword, 
             onAuthStateChanged, 
-            signOut 
+            signOut,
+            sendEmailVerification
         } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
         import { 
             getFirestore, 
@@ -947,8 +926,7 @@
             updateDoc, 
             arrayUnion,
             onSnapshot,
-            writeBatch,
-            runTransaction
+            writeBatch
         } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
         import { 
             getStorage, 
@@ -957,25 +935,22 @@
             getDownloadURL 
         } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo", 
+            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo",
             authDomain: "mcc-summer-leaderboard.firebaseapp.com",
             projectId: "mcc-summer-leaderboard",
-            storageBucket: "mcc-summer-leaderboard.firebasestorage.app",
+            storageBucket: "mcc-summer-leaderboard.appspot.com", 
             messagingSenderId: "376614411221",
             appId: "1:376614411221:web:9afe27edc84cf5de3b7b5c",
             measurementId: "G-SKPNS56ZDN"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // --- Main App Logic ---
         let currentFirebaseUser = null; 
         let currentAppUsername = null;  
         let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
@@ -988,11 +963,11 @@
             if (panel) {
                 panel.classList.remove('hidden');
             }
-            if (panelId === 'chat-panel' && currentFirebaseUser) {
-                renderMessages(); 
-            } else if (unsubscribeChat) {
-                unsubscribeChat(); 
-                unsubscribeChat = null;
+            if (panelId !== 'chat-panel' && unsubscribeChat) {
+                 unsubscribeChat(); 
+                 unsubscribeChat = null;
+            } else if (panelId === 'chat-panel' && currentFirebaseUser && currentFirebaseUser.emailVerified) {
+                 renderMessages(); 
             }
         }
         
@@ -1007,48 +982,68 @@
             }
         });
         if(spanClose) { 
-            spanClose.onclick = function () {
-                modal.style.display = "none";
-            }
+            spanClose.onclick = function () { modal.style.display = "none"; }
         }
         window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+            if (event.target == modal) { modal.style.display = "none"; }
         }
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                currentFirebaseUser = user;
-                const userRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(userRef);
-                if (docSnap.exists()) {
-                    currentAppUsername = docSnap.data().username;
-                    document.getElementById('current-user-display').textContent = currentAppUsername;
-                    show('menu-panel');
-                    updateAllLeaderboards();
+                currentFirebaseUser = user; 
+                await user.reload(); 
+                currentFirebaseUser = auth.currentUser; 
+
+                if (!currentFirebaseUser.emailVerified) {
+                    document.getElementById('verification-email-address').textContent = currentFirebaseUser.email;
+                    currentAppUsername = null; 
+                    if (document.getElementById('current-user-display')) {
+                        document.getElementById('current-user-display').textContent = '';
+                    }
+                    show('verify-email-panel'); 
+                    if (unsubscribeChat) { 
+                        unsubscribeChat(); unsubscribeChat = null;
+                    }
                 } else {
-                    console.error("User data not found in Firestore for UID:", user.uid);
-                    await signOut(auth); 
+                    const userRef = doc(db, "users", currentFirebaseUser.uid);
+                    const docSnap = await getDoc(userRef);
+                    if (docSnap.exists()) {
+                        currentAppUsername = docSnap.data().username;
+                        if (document.getElementById('current-user-display')) {
+                            document.getElementById('current-user-display').textContent = currentAppUsername;
+                        }
+                        const activePanel = document.querySelector('.panel:not(.hidden)');
+                        if (!activePanel || ['verify-email-panel', 'password-panel', 'user-login-panel', 'signup-panel'].includes(activePanel.id)) {
+                            show('menu-panel');
+                        }
+                        updateAllLeaderboards();
+                    } else {
+                        console.error("User data not found in Firestore for UID:", currentFirebaseUser.uid);
+                        alert("Could not find your user profile. Logging out.");
+                        await signOut(auth);
+                    }
                 }
             } else {
-                currentFirebaseUser = null;
-                currentAppUsername = null;
-                if (unsubscribeChat) {
-                    unsubscribeChat();
-                    unsubscribeChat = null;
+                currentFirebaseUser = null; currentAppUsername = null;
+                if (document.getElementById('current-user-display')) {
+                    document.getElementById('current-user-display').textContent = '';
                 }
-                show('password-panel');
+                if (unsubscribeChat) {
+                    unsubscribeChat(); unsubscribeChat = null;
+                }
+                show('password-panel'); 
             }
         });
 
         function updateAllLeaderboards() {
-            if (!currentFirebaseUser) return; 
+            if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) return; 
             updateLeaderboard('all-workouts-list', 'total');
             updateLeaderboard('erging-list', 'Erg');
             updateLeaderboard('running-list', 'Run');
             updateLeaderboard('biking-list', 'Bike');
             updateLeaderboard('swimming-list', 'Swim');
+            updateLeaderboard('lifting-list', 'Lift');
+            updateLeaderboard('otw-rowing-list', 'OTW');
         }
 
         async function updateLeaderboard(listId, activityType) {
@@ -1058,24 +1053,24 @@
 
             querySnapshot.forEach((docSnap) => {
                 const userData = docSnap.data();
-                const userName = userData.username;
-                let points = 0;
+                const userName = userData.username; 
+                let totalScoreValue = 0; 
 
                 if (userData.activities && Array.isArray(userData.activities)) {
                     if (activityType === 'total') {
-                        points = userData.activities.reduce((sum, a) => sum + (a.points || 0), 0);
+                        totalScoreValue = userData.activities.reduce((sum, a) => sum + (a.points || 0), 0); 
                     } else {
-                        points = userData.activities
+                        totalScoreValue = userData.activities
                             .filter(a => a.activity === activityType)
-                            .reduce((sum, a) => sum + (a.points || 0), 0);
+                            .reduce((sum, a) => sum + (a.points || 0), 0); 
                     }
                 }
-                if (points > 0 || activityType === 'total') { 
-                     leaderboardData.push({ name: userName, points, uid: docSnap.id });
+                if (totalScoreValue > 0 || activityType === 'total') { 
+                     leaderboardData.push({ name: userName, score: totalScoreValue, uid: docSnap.id });
                 }
             });
 
-            leaderboardData.sort((a, b) => b.points - a.points);
+            leaderboardData.sort((a, b) => b.score - a.score);
 
             const list = document.getElementById(listId);
             if (!list) return;
@@ -1085,8 +1080,7 @@
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <span class="name" data-username="${user.name}" data-uid="${user.uid}">${user.name}</span>
-                    <span class="points">${user.points} pts</span>
-                `;
+                    <span class="score">${user.score} m</span>`; 
                 if (index === 0) li.classList.add('gold');
                 else if (index === 1) li.classList.add('silver');
                 else if (index === 2) li.classList.add('bronze');
@@ -1095,6 +1089,9 @@
 
             document.querySelectorAll(`#${listId} .name`).forEach(el => {
                 el.addEventListener('click', (e) => {
+                    if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
+                         alert("Please verify your email to view profiles."); return;
+                    }
                     const username = e.target.getAttribute('data-username');
                     const userUID = e.target.getAttribute('data-uid');
                     showUserProfile(userUID, username);
@@ -1103,6 +1100,9 @@
         }
         
         async function showUserProfile(userUID, usernameToDisplay) {
+             if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
+                 alert("Please verify your email to perform this action."); return;
+             }
             const userRef = doc(db, "users", userUID);
             const docSnap = await getDoc(userRef);
 
@@ -1113,39 +1113,41 @@
             }
 
             const user = docSnap.data();
-            const displayName = usernameToDisplay || user.username;
+            const displayName = usernameToDisplay || user.username; 
 
             document.getElementById('profile-username').textContent = displayName;
 
             const activities = user.activities || [];
-            const totalPoints = activities.reduce((sum, a) => sum + (a.points || 0), 0);
-            document.getElementById('profile-total-points').textContent = totalPoints;
+            const totalOverallScoreValue = activities.reduce((sum, a) => sum + (a.points || 0), 0); 
+            document.getElementById('profile-total-score').textContent = totalOverallScoreValue; 
 
-            const highestPoints = {};
-            const totalsByActivity = {};
-            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim']; 
+            const highestScores = {}; 
+            const totalsByActivityScore = {}; 
+            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim', 'Lift', 'OTW']; 
 
             allActivityTypes.forEach(activity => {
-                highestPoints[activity] = 0;
-                totalsByActivity[activity] = 0;
+                highestScores[activity] = 0;
+                totalsByActivityScore[activity] = 0;
             });
 
             activities.forEach(workout => {
                 const activityName = workout.activity || 'Unknown';
-                if (!highestPoints[activityName] && activityName !== 'Admin Adjust') highestPoints[activityName] = 0; 
-                if (!totalsByActivity[activityName]) totalsByActivity[activityName] = 0; 
+                const currentScoreValue = workout.points || 0; 
 
-                if (workout.points > highestPoints[activityName] && activityName !== 'Admin Adjust') {
-                    highestPoints[activityName] = workout.points;
+                if (!highestScores[activityName] && activityName !== 'Admin Adjust') highestScores[activityName] = 0; 
+                if (!totalsByActivityScore[activityName]) totalsByActivityScore[activityName] = 0; 
+
+                if (currentScoreValue > highestScores[activityName] && activityName !== 'Admin Adjust') {
+                    highestScores[activityName] = currentScoreValue;
                 }
-                totalsByActivity[activityName] += workout.points;
+                totalsByActivityScore[activityName] += currentScoreValue;
             });
 
             const highestScoresContainer = document.getElementById('highest-scores');
             highestScoresContainer.innerHTML = allActivityTypes.filter(act => act !== 'Admin Adjust').map(act => `
                 <div class="stat-item">
                     <span class="activity-type">${act}:</span>
-                    <span class="activity-points">${highestPoints[act] || 0} pts</span>
+                    <span class="activity-value">${highestScores[act] || 0} m</span> 
                 </div>
             `).join('');
 
@@ -1159,7 +1161,7 @@
                     <div class="stat-item">
                         <div>
                             <span class="activity-type">${workout.activity}:</span>
-                            <span class="activity-points">${workout.points} pts</span>
+                            <span class="activity-value">${workout.points || 0} m</span> 
                         </div>
                         <div class="activity-date">${workout.date ? workout.date.toDate().toLocaleString() : 'N/A'}</div>
                         ${workout.image ? `<img src="${workout.image}" class="message-image">` : ''}
@@ -1173,7 +1175,7 @@
             activityTotalsContainer.innerHTML = allActivityTypes.map(act => `
                 <div class="stat-item">
                     <span class="activity-type">${act}:</span>
-                    <span class="activity-points">${totalsByActivity[act] || 0} pts</span>
+                    <span class="activity-value">${totalsByActivityScore[act] || 0} m</span> 
                 </div>
             `).join('');
 
@@ -1181,9 +1183,12 @@
         }
 
         function renderMessages() {
-            if (unsubscribeChat) { 
-                unsubscribeChat();
-            }
+             if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) { 
+                 if (unsubscribeChat) { unsubscribeChat(); unsubscribeChat = null; }
+                 return;
+             }
+             if (unsubscribeChat) { unsubscribeChat(); }
+
             const ul = document.getElementById('chat-messages');
             if (!ul) return;
 
@@ -1201,15 +1206,14 @@
                     header.className = 'message-header';
                     header.innerHTML = `
                         <span class="message-sender">${m.user}</span>
-                        <span class="message-time">${m.time ? m.time.toDate().toLocaleString() : 'N/A'}</span>
-                    `;
+                        <span class="message-time">${m.time ? m.time.toDate().toLocaleString() : 'N/A'}</span>`;
                     content.appendChild(header);
                     const body = document.createElement('div');
                     body.className = 'message-body';
                     if (m.text) {
                         body.textContent = m.text;
-                    } else if (m.activity) {
-                        body.innerHTML = `Added <strong>${m.points} points</strong> from <strong>${m.activity}</strong>`;
+                    } else if (m.activity && typeof m.points !== 'undefined') { 
+                        body.innerHTML = `Added <strong>${m.points} m</strong> from <strong>${m.activity}</strong>`; 
                     }
                     content.appendChild(body);
                     if (m.image) {
@@ -1231,43 +1235,40 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('signup-button').addEventListener('click', () => show('signup-panel'));
+            const signupMessageEl = document.getElementById('signup-message');
+
+            document.getElementById('signup-button').addEventListener('click', () => {
+                signupMessageEl.textContent = ''; 
+                signupMessageEl.className = 'error'; 
+                show('signup-panel');
+            });
             document.getElementById('existing-login-button').addEventListener('click', () => show('user-login-panel'));
 
             document.querySelectorAll('.back-home').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     try {
-                        if (auth.currentUser) { 
-                            await signOut(auth);
-                        } else {
-                            show('password-panel');
-                        }
+                        if (auth.currentUser) { await signOut(auth); } 
+                        else { show('password-panel'); }
                     } catch (error) {
-                        console.error("Sign out error / .back-home error:", error);
-                        show('password-panel');
+                        console.error("Sign out error:", error); show('password-panel');
                     }
                 });
             });
 
-            document.querySelectorAll('.back-to-menu').forEach(btn => {
-                btn.addEventListener('click', () => show('menu-panel'));
-            });
-
-            document.querySelectorAll('.back-to-leaderboard').forEach(btn => {
-                btn.addEventListener('click', () => show('leaderboard-menu-panel'));
-            });
+            document.querySelectorAll('.back-to-menu').forEach(btn => btn.addEventListener('click', () => show('menu-panel')));
+            document.querySelectorAll('.back-to-leaderboard').forEach(btn => btn.addEventListener('click', () => show('leaderboard-menu-panel')));
 
             document.getElementById('rules-button').addEventListener('click', () => show('rules-panel'));
-            document.getElementById('add-points-button').addEventListener('click', () => show('points-menu'));
-            document.getElementById('leaderboard-button').addEventListener('click', () => {
-                updateAllLeaderboards();
-                show('leaderboard-menu-panel');
+            document.getElementById('add-workout-score-button').addEventListener('click', () => show('score-input-menu')); 
+            document.getElementById('leaderboard-button').addEventListener('click', () => { updateAllLeaderboards(); show('leaderboard-menu-panel'); });
+            
+            document.getElementById('chat-button').addEventListener('click', () => {
+                if (currentFirebaseUser && currentFirebaseUser.emailVerified) { show('chat-panel'); } 
+                else { alert("Please verify your email to access the chat."); show('verify-email-panel'); }
             });
-            document.getElementById('chat-button').addEventListener('click', () => show('chat-panel'));
             document.getElementById('view-profile-button').addEventListener('click', () => {
-                if (currentFirebaseUser && currentAppUsername) {
-                    showUserProfile(currentFirebaseUser.uid, currentAppUsername);
-                }
+                if (currentFirebaseUser && currentFirebaseUser.emailVerified && currentAppUsername) { showUserProfile(currentFirebaseUser.uid, currentAppUsername); } 
+                else if (currentFirebaseUser && !currentFirebaseUser.emailVerified) { alert("Please verify your email to view your profile."); show('verify-email-panel'); }
             });
 
             document.getElementById('all-workouts-button').addEventListener('click', () => { updateLeaderboard('all-workouts-list', 'total'); show('all-workouts-panel'); });
@@ -1275,53 +1276,72 @@
             document.getElementById('running-button').addEventListener('click', () => { updateLeaderboard('running-list', 'Run'); show('running-panel'); });
             document.getElementById('biking-button').addEventListener('click', () => { updateLeaderboard('biking-list', 'Bike'); show('biking-panel'); });
             document.getElementById('swimming-button').addEventListener('click', () => { updateLeaderboard('swimming-list', 'Swim'); show('swimming-panel'); });
+            document.getElementById('lifting-button').addEventListener('click', () => { updateLeaderboard('lifting-list', 'Lift'); show('lifting-panel'); });
+            document.getElementById('otw-rowing-button').addEventListener('click', () => { updateLeaderboard('otw-rowing-list', 'OTW'); show('otw-rowing-panel'); });
+
 
             document.getElementById('submit-signup-button').addEventListener('click', async () => {
+                const signupButton = document.getElementById('submit-signup-button');
                 const name = document.getElementById('name-input').value.trim();
+                const email = document.getElementById('email-input').value.trim();
                 const pw = document.getElementById('password-input').value;
                 const confirmPw = document.getElementById('confirm-password-input').value;
-                const signupError = document.getElementById('signup-error-message');
-                signupError.textContent = '';
-
-                if (!name || !pw) { signupError.textContent = "Please fill all fields"; return; }
-                if (pw !== confirmPw) { signupError.textContent = "Passwords don't match"; return; }
-                if (pw.length < 6) { signupError.textContent = "Password should be at least 6 characters"; return; }
-
-                const usersRefTest = collection(db, "users");
-                const qTest = query(usersRefTest, where("username", "==", name));
-                const querySnapshotTest = await getDocs(qTest);
-                if (!querySnapshotTest.empty) { signupError.textContent = "Username already exists"; return; }
                 
-                const email = `${name.replace(/\s+/g, '_').toLowerCase()}@gmail.com`; 
+                signupMessageEl.textContent = ''; signupMessageEl.className = 'error';
+
+                if (!name || !email || !pw) { signupMessageEl.textContent = "Please fill all fields"; return; }
+                if (pw !== confirmPw) { signupMessageEl.textContent = "Passwords don't match"; return; }
+                if (pw.length < 6) { signupMessageEl.textContent = "Password should be at least 6 characters"; return; }
+
+                signupButton.disabled = true; signupButton.textContent = 'Signing Up...';
 
                 try {
+                    const usersRefTest = collection(db, "users");
+                    const qTest = query(usersRefTest, where("username", "==", name));
+                    const querySnapshotTest = await getDocs(qTest);
+
+                    if (!querySnapshotTest.empty) {
+                        signupMessageEl.textContent = "This name is already taken.";
+                        signupButton.disabled = false; signupButton.textContent = 'Sign Up'; return;
+                    }
+                
                     const userCredential = await createUserWithEmailAndPassword(auth, email, pw);
-                    await setDoc(doc(db, "users", userCredential.user.uid), {
-                        username: name,
-                        activities: [],
-                        createdAt: Timestamp.now()
+                    const newUser = userCredential.user;
+                    await setDoc(doc(db, "users", newUser.uid), {
+                        username: name, email: email, activities: [], createdAt: Timestamp.now()
                     });
+                    await sendEmailVerification(newUser);
+                    
+                    ['name-input', 'email-input', 'password-input', 'confirm-password-input'].forEach(id => document.getElementById(id).value = '');
+                    signupMessageEl.textContent = 'Signup successful! Verification email sent.';
+                    signupMessageEl.className = 'success-message'; 
                 } catch (error) {
-                    signupError.textContent = error.message.includes("email-already-in-use") ? "Username (or derived email) already taken." : "Signup failed: " + error.message;
+                    if (error.code === 'auth/email-already-in-use') signupMessageEl.textContent = "Email already in use.";
+                    else if (error.code === 'auth/invalid-email') signupMessageEl.textContent = "Invalid email.";
+                    else signupMessageEl.textContent = "Signup failed: " + error.message;
                     console.error("Signup error:", error);
+                    signupButton.disabled = false; signupButton.textContent = 'Sign Up';
                 }
             });
 
             document.getElementById('submit-user-login-button').addEventListener('click', async () => {
-                const name = document.getElementById('login-name-input').value.trim();
+                const loginButton = document.getElementById('submit-user-login-button');
+                const email = document.getElementById('login-email-input').value.trim();
                 const pw = document.getElementById('login-user-password-input').value;
                 const loginError = document.getElementById('user-login-error-message');
                 loginError.textContent = '';
 
-                if (!name || !pw) { loginError.textContent = "Please enter username and password."; return; }
+                if (!email || !pw) { loginError.textContent = "Enter email and password."; return; }
                 
-                const email = `${name.replace(/\s+/g, '_').toLowerCase()}@gmail.com`;
-
+                loginButton.disabled = true; loginButton.textContent = 'Logging In...';
                 try {
                     await signInWithEmailAndPassword(auth, email, pw);
                 } catch (error) {
-                    loginError.textContent = "Invalid username or password.";
+                    if (['auth/user-not-found', 'auth/wrong-password', 'auth/invalid-credential'].includes(error.code)) loginError.textContent = "Invalid email or password.";
+                    else if (error.code === 'auth/invalid-email') loginError.textContent = "Invalid email format.";
+                    else loginError.textContent = "Login failed. Try again.";
                     console.error("Login error:", error);
+                    loginButton.disabled = false; loginButton.textContent = 'Login';
                 }
             });
             
@@ -1329,33 +1349,38 @@
             const fileNameDisplay = document.getElementById('file-name-display');
             if (photoUploadInput && fileNameDisplay) {
                 photoUploadInput.addEventListener('change', function() {
-                    if (this.files && this.files.length > 0) {
-                        fileNameDisplay.textContent = this.files[0].name;
-                    } else {
-                        fileNameDisplay.textContent = 'No file chosen';
-                    }
+                    fileNameDisplay.textContent = this.files && this.files.length > 0 ? this.files[0].name : 'No file chosen';
                 });
             }
 
-            // MODIFIED: Add Workout (confirm points button)
-            document.getElementById('confirm-points-button').addEventListener('click', async () => {
-                const confirmButton = document.getElementById('confirm-points-button');
-                const pointsInput = document.getElementById('points-input');
-                const activitySelect = document.getElementById('activity-select');
-                const photoUpload = document.getElementById('photo-upload');
-                const currentFileNameDisplay = document.getElementById('file-name-display'); // Use local const
-
-                if (!currentFirebaseUser) { 
-                    alert("Please log in first."); 
-                    return; 
+            // MODIFIED confirm-score-button event listener
+            document.getElementById('confirm-score-button').addEventListener('click', async () => {
+                if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
+                    alert("Please verify your email to add workout scores.");
+                    return;
                 }
 
-                const points = parseInt(pointsInput.value);
+                const confirmButton = document.getElementById('confirm-score-button');
+                const pointsInputEl = document.getElementById('points-input');
+                const activitySelect = document.getElementById('activity-select');
+                const photoUpload = document.getElementById('photo-upload');
+                const currentFileNameDisplay = document.getElementById('file-name-display');
+
                 const activity = activitySelect.value;
+                const pointsVal = parseInt(pointsInputEl.value);
                 const file = photoUpload.files[0];
 
-                if (isNaN(points) || points <= 0 || !activity) { 
-                    alert("Please select an activity and enter valid positive points"); 
+                // Validation checks
+                if (!activity) {
+                    alert("Please select an activity.");
+                    return; 
+                }
+                if (isNaN(pointsVal) || pointsVal <= 0) {
+                    alert("Please enter a valid positive value for your score.");
+                    return; 
+                }
+                if (!file) {
+                    alert("An image upload is required as proof for your workout.");
                     return; 
                 }
 
@@ -1364,183 +1389,212 @@
 
                 try {
                     let imageUrl = null;
-                    if (file) {
-                        try {
-                            const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
-                            const snapshot = await uploadBytes(storageRef, file);
-                            imageUrl = await getDownloadURL(snapshot.ref);
-                        } catch (uploadError) {
-                            console.error("Error uploading image: ", uploadError);
-                            alert("Failed to upload image. Workout will be added without it.");
-                            // Image upload failed, but we proceed to add workout data without image
-                        }
+                    try {
+                        const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
+                        const snapshot = await uploadBytes(storageRef, file);
+                        imageUrl = await getDownloadURL(snapshot.ref);
+                    } catch (uploadError) {
+                        console.error("Image upload error: ", uploadError);
+                        alert("Image upload failed. Please try again or select a different image.");
+                        // Reset button and stop if image upload fails (it's mandatory)
+                        confirmButton.disabled = false;
+                        confirmButton.textContent = 'Submit Score';
+                        return; 
                     }
 
-                    const workoutData = { activity, points, date: Timestamp.now(), image: imageUrl };
+                    const workoutData = { 
+                        activity, 
+                        points: pointsVal, 
+                        date: Timestamp.now(), 
+                        image: imageUrl 
+                    };
+                    
                     const userRef = doc(db, "users", currentFirebaseUser.uid);
-
                     await updateDoc(userRef, { activities: arrayUnion(workoutData) });
+
                     await addDoc(collection(db, "messages"), {
-                        userId: currentFirebaseUser.uid,
+                        userId: currentFirebaseUser.uid, 
                         user: currentAppUsername,
-                        activity: workoutData.activity,
+                        activity: workoutData.activity, 
                         points: workoutData.points,
-                        image: workoutData.image,
+                        image: workoutData.image, 
                         time: Timestamp.now()
                     });
 
-                    updateAllLeaderboards();
+                    updateAllLeaderboards(); 
                     show('menu-panel');
-                    pointsInput.value = '';
+                    
+                    pointsInputEl.value = '';
                     activitySelect.value = '';
                     photoUpload.value = null; 
                     if (currentFileNameDisplay) currentFileNameDisplay.textContent = 'No file chosen';
-                    // alert("Workout added successfully!"); // Optional success alert
+                    
+                    // You might want to add a success alert here if desired
+                    // alert("Workout score submitted successfully!");
 
                 } catch (error) {
-                    console.error("Error adding workout: ", error);
-                    alert("Failed to add workout. Please try again.");
+                    console.error("Add workout error: ", error);
+                    alert("Failed to add workout score. Please check the console for details and try again.");
+                    // The finally block will reset the button state.
                 } finally {
                     confirmButton.disabled = false;
-                    confirmButton.textContent = 'Submit';
+                    confirmButton.textContent = 'Submit Score';
                 }
             });
 
-
             document.getElementById('send-button').addEventListener('click', async () => {
+                if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
+                     alert("Please verify your email to send messages."); return;
+                 }
                 const text = document.getElementById('chat-input').value.trim();
-                if (!text || !currentFirebaseUser || !currentAppUsername) return;
-
+                if (!text || !currentAppUsername) return;
                 try {
                     await addDoc(collection(db, "messages"), {
-                        userId: currentFirebaseUser.uid,
-                        user: currentAppUsername,
-                        text: text,
-                        time: Timestamp.now()
+                        userId: currentFirebaseUser.uid, user: currentAppUsername, 
+                        text: text, time: Timestamp.now()
                     });
                     document.getElementById('chat-input').value = '';
                 } catch (error) {
-                    console.error("Error sending message: ", error);
-                    alert("Failed to send message.");
+                    console.error("Send msg error: ", error); alert("Failed to send message.");
                 }
             });
             
             document.getElementById('chat-input')?.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    document.getElementById('send-button').click();
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.getElementById('send-button').click(); }
+            });
+            
+            const resendVerificationButton = document.getElementById('resend-verification-button');
+            const resendMessageEl = document.getElementById('resend-verification-message');
+
+            resendVerificationButton.addEventListener('click', async () => {
+                if (currentFirebaseUser) {
+                    resendVerificationButton.disabled = true; resendVerificationButton.textContent = 'Sending...';
+                    resendMessageEl.textContent = ''; resendMessageEl.className = 'error'; 
+                    try {
+                        await sendEmailVerification(currentFirebaseUser);
+                        resendMessageEl.textContent = 'Verification email resent. Check inbox/spam.';
+                        resendMessageEl.className = 'success-message'; 
+                        setTimeout(() => {
+                            resendVerificationButton.disabled = false; resendVerificationButton.textContent = 'Resend Email';
+                        }, 30000); 
+                    } catch (error) {
+                        console.error("Resend email error:", error);
+                        resendMessageEl.textContent = error.code === 'auth/too-many-requests' ? 'Too many requests. Try later.' : 'Failed to resend. Try again.';
+                        resendVerificationButton.disabled = false; resendVerificationButton.textContent = 'Resend Email';
+                    }
+                } else {
+                    resendMessageEl.textContent = 'No user logged in.'; show('password-panel'); 
                 }
             });
 
+            document.getElementById('check-verification-status-button').addEventListener('click', async () => {
+                if (currentFirebaseUser) {
+                    const button = document.getElementById('check-verification-status-button');
+                    button.disabled = true; button.textContent = "Checking...";
+                    await currentFirebaseUser.reload(); currentFirebaseUser = auth.currentUser; 
+                    button.disabled = false; button.textContent = "I've Verified, Continue";
+                    if (currentFirebaseUser.emailVerified) {
+                        const userRef = doc(db, "users", currentFirebaseUser.uid);
+                        const docSnap = await getDoc(userRef);
+                        if (docSnap.exists()) {
+                            currentAppUsername = docSnap.data().username;
+                             if (document.getElementById('current-user-display')) document.getElementById('current-user-display').textContent = currentAppUsername;
+                            show('menu-panel'); updateAllLeaderboards();
+                        } else {
+                            console.error("User data not found:", currentFirebaseUser.uid); alert("Profile not found. Logging out.");
+                            await signOut(auth);
+                        }
+                    } else alert('Email still not verified. Check inbox or resend.');
+                } else show('password-panel'); 
+            });
+
+            document.getElementById('back-to-login-from-verify-button').addEventListener('click', async () => {
+                resendMessageEl.textContent = ''; 
+                if (auth.currentUser) { await signOut(auth); } else { show('password-panel'); }
+            });
+
             document.addEventListener('keydown', (e) => {
+                 if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) { typedWord = ''; return; }
                 const currentPanel = document.querySelector('.panel:not(.hidden)');
-                if (!currentPanel || (currentPanel.id !== 'password-panel' && currentPanel.id !== 'menu-panel' && currentPanel.id !== 'admin-points-panel')) {
-                    typedWord = ''; 
-                    return;
+                if (!currentPanel || !['password-panel', 'menu-panel', 'admin-control-panel'].includes(currentPanel.id)) {
+                    typedWord = ''; return;
                 }
                 typedWord += e.key.toLowerCase();
                 if (typedWord.includes('awesome')) {
                     typedWord = '';
-                    if (currentPanel.id === 'password-panel' || currentPanel.id === 'menu-panel') show('admin-password-panel');
-                    else if (currentPanel.id === 'admin-points-panel') show('super-admin-password-panel');
+                    if (['password-panel', 'menu-panel'].includes(currentPanel.id)) show('admin-password-panel');
+                    else if (currentPanel.id === 'admin-control-panel') show('super-admin-password-panel');
                 }
                 if (typedWord.length > 10) typedWord = typedWord.slice(-10);
             });
 
             document.getElementById('submit-admin-password-button').addEventListener('click', () => {
                 const password = document.getElementById('admin-password-input').value;
-                if (password === 'McleanCrew2025!') { 
-                    document.getElementById('admin-error-message').textContent = '';
-                    show('admin-points-panel');
-                } else {
-                    document.getElementById('admin-error-message').textContent = 'Incorrect password';
-                }
+                document.getElementById('admin-error-message').textContent = password === 'McleanCrew2025!' ? (show('admin-control-panel'), '') : 'Incorrect password';
                 document.getElementById('admin-password-input').value = '';
             });
             
-            async function modifyUserPoints(add) {
-                const usernameToEdit = document.getElementById('admin-username-input').value.trim();
-                let points = parseInt(document.getElementById('admin-points-input').value);
-                if (!usernameToEdit || isNaN(points) || points === 0) { alert('Valid username and non-zero points required'); return; }
-
-                if (!add) points = -points; 
+            async function modifyUserScore(addOperation) { 
+                const usernameToEdit = document.getElementById('admin-username-input').value.trim(); 
+                let pointsVal = parseInt(document.getElementById('admin-points-input').value); 
+                if (!usernameToEdit || isNaN(pointsVal) || pointsVal === 0) { alert('Valid username & non-zero value required.'); return; }
+                if (!addOperation) pointsVal = -pointsVal; 
 
                 const usersRef = collection(db, "users");
-                const q = query(usersRef, where("username", "==", usernameToEdit));
+                const q = query(usersRef, where("username", "==", usernameToEdit)); 
                 const querySnapshot = await getDocs(q);
-
                 if (querySnapshot.empty) { alert(`User ${usernameToEdit} not found.`); return; }
                 const userDocSnap = querySnapshot.docs[0];
                 try {
                     await updateDoc(doc(db, "users", userDocSnap.id), {
-                        activities: arrayUnion({ activity: 'Admin Adjust', points: points, date: Timestamp.now() })
+                        activities: arrayUnion({ activity: 'Admin Adjust', points: pointsVal, date: Timestamp.now() }) 
                     });
                     updateAllLeaderboards();
-                    alert(`${add ? 'Added' : 'Subtracted'} ${Math.abs(points)} points ${add ? 'to' : 'from'} ${usernameToEdit}`);
-                     document.getElementById('admin-username-input').value = '';
-                     document.getElementById('admin-points-input').value = '';
-                } catch (error) { console.error(`Admin ${add ? 'add' : 'subtract'} points error:`, error); alert("Error modifying points."); }
+                    alert(`${addOperation ? 'Added' : 'Subtracted'} ${Math.abs(pointsVal)} (value) ${addOperation ? 'to' : 'from'} ${usernameToEdit}`);
+                    document.getElementById('admin-username-input').value = '';
+                    document.getElementById('admin-points-input').value = '';
+                } catch (error) { console.error(`Admin modify score error:`, error); alert("Error modifying score."); }
             }
-
-            document.getElementById('admin-add-points-button').addEventListener('click', () => modifyUserPoints(true));
-            document.getElementById('admin-subtract-points-button').addEventListener('click', () => modifyUserPoints(false));
-
+            document.getElementById('admin-add-points-button').addEventListener('click', () => modifyUserScore(true)); 
+            document.getElementById('admin-subtract-points-button').addEventListener('click', () => modifyUserScore(false)); 
 
             document.getElementById('submit-super-admin-password-button').addEventListener('click', () => {
                 const password = document.getElementById('super-admin-password-input').value;
                 if (password === 'LukeHoffman2006!') { 
                     document.getElementById('super-admin-error-message').textContent = '';
-                    show('super-admin-panel');
-                    document.getElementById('click-count').textContent = clickCount;
-                } else {
-                    document.getElementById('super-admin-error-message').textContent = 'Incorrect password';
-                }
+                    show('super-admin-panel'); document.getElementById('click-count').textContent = clickCount;
+                } else document.getElementById('super-admin-error-message').textContent = 'Incorrect password';
                 document.getElementById('super-admin-password-input').value = '';
             });
 
             document.getElementById('click-button').addEventListener('click', () => {
-                clickCount++;
-                document.getElementById('click-count').textContent = clickCount;
+                clickCount++; document.getElementById('click-count').textContent = clickCount;
                 localStorage.setItem('clickCount', clickCount.toString()); 
-                if (clickCount >= 100) {
-                    document.getElementById('wipe-confirm-button').classList.remove('hidden');
-                }
+                if (clickCount >= 100) document.getElementById('wipe-confirm-button').classList.remove('hidden');
             });
             
             document.getElementById('wipe-confirm-button').addEventListener('click', async () => {
-                if (confirm('Are you sure you want to wipe ALL points for ALL users from Firestore? This action is hard to reverse!')) {
+                if (confirm('Are you sure you want to wipe ALL SCORE DATA for ALL users? This is hard to reverse!')) { 
                     const usersRef = collection(db, "users");
                     try {
                         const querySnapshot = await getDocs(usersRef);
                         const batch = writeBatch(db);
-                        querySnapshot.forEach((docSnap) => {
-                            batch.update(doc(db, "users", docSnap.id), { activities: [] });
-                        });
+                        querySnapshot.forEach((docSnap) => batch.update(doc(db, "users", docSnap.id), { activities: [] }));
                         await batch.commit();
-                        updateAllLeaderboards();
-                        alert('All points have been wiped from Firestore!');
+                        updateAllLeaderboards(); alert('All score data wiped!'); 
                         document.getElementById('undo-wipe-button').classList.add('hidden'); 
-                        clickCount = 0; 
-                        localStorage.setItem('clickCount', clickCount.toString());
-                        document.getElementById('click-count').textContent = clickCount;
+                        clickCount = 0; localStorage.setItem('clickCount', '0');
+                        document.getElementById('click-count').textContent = 0;
                         document.getElementById('wipe-confirm-button').classList.add('hidden');
-
                     } catch (error) {
-                        console.error("Error wiping points: ", error);
-                        alert("Failed to wipe points from Firestore.");
+                        console.error("Wipe score data error: ", error); alert("Failed to wipe score data."); 
                     }
                 }
             });
-
-            document.getElementById('undo-wipe-button').addEventListener('click', () => {
-                alert('Client-side undo is not available for cloud data. Please use Firebase backups if needed.');
-            });
+            document.getElementById('undo-wipe-button').addEventListener('click', () => alert('Client-side undo not available for cloud data. Use Firebase backups.'));
             
-             if (!currentFirebaseUser) { 
-                show('password-panel');
-             }
+            if (!auth.currentUser) show('password-panel');
         });
     </script>
 </body>
-
 </html>
