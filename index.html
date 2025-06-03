@@ -4,11 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Leaderboard</title>
+    <title>MCC Fitness Leaderboard</title>
+    <link rel="icon" type="image/x-icon" href="icon.png">
     <style>
-        /* Dark Theme with Centered Content */
+        /* Global Reset & Base */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
             background-color: #121212;
             color: #e0e0e0;
             margin: 0;
@@ -17,14 +24,20 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            /* Smoother fonts on WebKit */
+            -moz-osx-font-smoothing: grayscale;
+            /* Smoother fonts on Firefox */
         }
 
         .container {
             width: 100%;
             max-width: 500px;
             background: #1e1e1e;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            /* Slightly more rounded */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+            /* Softer, more diffused shadow */
             padding: 25px;
             text-align: center;
         }
@@ -32,9 +45,25 @@
         h1,
         h2,
         h3 {
-            color: #ffffff;
+            color: #f5f5f5;
+            /* Slightly softer than pure white */
             margin-top: 0;
         }
+
+        h1 {
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-bottom: 16px;
+        }
+
+        /* General h3, may be overridden specifically */
+
 
         /* Panel System */
         .panel {
@@ -62,43 +91,103 @@
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            /* Vertically align items */
             font-size: 18px;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .leaderboard li:hover {
+            background-color: #383838;
+            transform: translateY(-2px);
+        }
+
+        .leaderboard li .points {
+            font-weight: bold;
+            color: #b0b0b0;
+            /* Slightly muted points color */
         }
 
         .leaderboard li.gold {
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.3) 0%, #2d2d2d 30%);
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.25) 0%, #2d2d2d 60%);
             border-left: 5px solid #D4AF37;
         }
 
         .leaderboard li.silver {
-            background: linear-gradient(90deg, rgba(192, 192, 192, 0.3) 0%, #2d2d2d 30%);
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.20) 0%, #2d2d2d 60%);
             border-left: 5px solid #C0C0C0;
         }
 
         .leaderboard li.bronze {
-            background: linear-gradient(90deg, rgba(205, 127, 50, 0.3) 0%, #2d2d2d 30%);
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.25) 0%, #2d2d2d 60%);
             border-left: 5px solid #CD7F32;
         }
 
         /* Buttons */
         button {
             padding: 12px 20px;
-            border-radius: 6px;
+            border-radius: 8px;
+            /* Consistent rounding */
             border: none;
             background: #1976D2;
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
             width: 100%;
             max-width: 300px;
             margin: 5px 0;
+            text-align: center;
+            /* Ensure text is centered if not by default */
         }
 
         button:hover {
             background: #1565C0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
+        button:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.5);
+            /* Accent color focus ring */
+        }
+
+        /* Muted/Secondary Buttons */
+        .button-group button.back-home,
+        .button-group button.back-to-menu,
+        .button-group button.back-to-leaderboard,
+        #points-menu .button-group button:last-child {
+            /* Cancel button in points menu */
+            background-color: #3e3e3e;
+            color: #d0d0d0;
+            font-weight: normal;
+        }
+
+        .button-group button.back-home:hover,
+        .button-group button.back-to-menu:hover,
+        .button-group button.back-to-leaderboard:hover,
+        #points-menu .button-group button:last-child:hover {
+            background-color: #4a4a4a;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-group button.back-home:focus,
+        .button-group button.back-to-menu:focus,
+        .button-group button.back-to-leaderboard:focus,
+        #points-menu .button-group button:last-child:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.5);
+        }
+
 
         .button-group {
             display: flex;
@@ -119,28 +208,58 @@
             width: 100%;
             max-width: 300px;
             padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #333;
+            border-radius: 8px;
+            /* Consistent rounding */
+            border: 1px solid #383838;
+            /* Slightly lighter border */
             background: #2d2d2d;
-            color: #ffffff;
+            color: #e0e0e0;
+            /* Match body text color */
             font-size: 16px;
             margin: 5px 0;
+            font-family: inherit;
+            /* Inherit body font */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1976D2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.4);
+        }
+
+        select {
+            /* Make select arrow match theme (basic) */
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23e0e0e0%22/%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            padding-right: 30px;
+            /* Space for arrow */
+        }
+
+
         .error {
-            color: #f44336;
+            color: #ef5350;
+            /* Softer red */
             margin: 10px 0;
+            font-weight: bold;
         }
 
         /* Rules */
         .rules-content {
             text-align: center;
-            background: #2d2d2d;
+            background: #2a2a2a;
+            /* Slightly different from other panel items */
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
             font-size: 18px;
-            line-height: 2;
+            line-height: 1.8;
+            /* Increased line-height */
             width: 100%;
         }
 
@@ -150,7 +269,8 @@
 
         .note {
             font-style: italic;
-            color: #aaa;
+            color: #a0a0a0;
+            /* Lighter than #aaa */
             margin-top: 25px !important;
         }
 
@@ -162,7 +282,8 @@
             border: 1px solid #333;
             border-radius: 8px;
             margin-bottom: 15px;
-            background: #2d2d2d;
+            background: #252525;
+            /* Slightly darker chat background */
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -180,7 +301,8 @@
 
         #chat-messages li {
             background: #3d3d3d;
-            padding: 15px;
+            padding: 12px 15px;
+            /* Adjusted padding */
             border-radius: 8px;
             word-wrap: break-word;
             max-width: 100%;
@@ -190,7 +312,8 @@
         .message-header {
             font-weight: bold;
             margin-bottom: 8px;
-            color: #1976D2;
+            color: #64b5f6;
+            /* Lighter blue for sender */
             font-size: 14px;
             display: flex;
             justify-content: space-between;
@@ -201,47 +324,54 @@
         }
 
         .message-time {
-            color: #aaa;
+            color: #909090;
+            /* Lighter time */
             font-size: 0.8em;
         }
 
         .message-body {
             padding: 8px 0;
             font-size: 16px;
+            line-height: 1.5;
+            /* Better readability for messages */
         }
 
         .chat-input-container {
             display: flex;
-            gap: 10px;
+            gap: 5%;
             width: 100%;
-            align-items: flex-end;
+            align-items: center;
+            /* Keep button aligned to bottom of textarea */
         }
 
         #chat-input {
             flex: 1;
-            min-height: 80px;
-            padding: 12px;
             border-radius: 8px;
-            border: 1px solid #333;
             background: #2d2d2d;
             color: #ffffff;
             font-size: 16px;
-            resize: vertical;
+            resize: none;
+            height: 100px;
+            width:100%;
             line-height: 1.5;
-            max-height: 200px;
             overflow-y: auto;
         }
 
-        #chat-input:focus {
-            outline: none;
-            border-color: #1976D2;
+        #send-button {
+            height: 100px;
+            /* Match min-height of textarea for alignment */
+            width: 30%;
+            /* Standard button padding */
+            margin: 0;
+            /* Remove specific margin if not needed for alignment */
+            flex-shrink: 0;
+            /* Prevent button from shrinking */
         }
 
-        #send-button {
-            height: 50px;
-            width: 80px;
-            padding: 0;
-            margin: 0;
+        #send-button:hover,
+        #send-button:active {
+            transform: none;
+            /* Removes the vertical movement */
         }
 
         /* Profile View Styles */
@@ -255,8 +385,19 @@
         .profile-header {
             text-align: center;
             padding: 20px;
-            background: #2d2d2d;
+            background: #2a2a2a;
             border-radius: 8px;
+        }
+
+        #profile-username {
+            color: #f5f5f5;
+            /* Ensure matches general heading */
+        }
+
+        #profile-total-points {
+            font-weight: bold;
+            color: #81c784;
+            /* Greenish for points */
         }
 
         .profile-stats-container {
@@ -264,12 +405,6 @@
             gap: 15px;
             width: 100%;
             flex-direction: column;
-        }
-
-        @media (min-width: 768px) {
-            .profile-stats-container {
-                flex-direction: row;
-            }
         }
 
         .stat-box {
@@ -283,83 +418,118 @@
 
         .stat-box h3 {
             margin-top: 0;
+            margin-bottom: 10px;
+            /* Ensure space before content */
             border-bottom: 1px solid #444;
             padding-bottom: 10px;
+            color: #e0e0e0;
+            /* Slightly less emphasis than main headers */
         }
 
         .stat-item {
             background: #3d3d3d;
-            padding: 10px;
+            padding: 10px 12px;
+            /* Adjusted padding */
             border-radius: 6px;
             margin-bottom: 10px;
         }
+
+        .stat-item:last-child {
+            margin-bottom: 0;
+            /* Remove margin for last item */
+        }
+
 
         /* Image Styling */
         .message-image {
             max-width: 100%;
             max-height: 200px;
-            border-radius: 4px;
-            margin-top: 8px;
+            border-radius: 6px;
+            /* Consistent rounding */
+            margin-top: 10px;
+            /* More space */
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+            /* Added opacity transition */
         }
 
         .message-image:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            /* Slightly less intense scale */
+            opacity: 0.9;
         }
 
         /* Image Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 100;
+            z-index: 1000;
+            /* Ensure on top */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.92);
+            /* Darker overlay */
             justify-content: center;
             align-items: center;
+            /* Add a subtle fade-in if JS toggles a class, otherwise this won't animate display:none */
         }
 
         .modal-content {
             max-width: 90%;
             max-height: 90%;
+            border-radius: 8px;
+            /* Rounded corners for modal image */
         }
 
         .close {
             position: absolute;
-            top: 15px;
+            top: 20px;
+            /* More spacing */
             right: 35px;
             color: #f1f1f1;
             font-size: 40px;
             font-weight: bold;
             cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .close:hover {
+            color: #bbbbbb;
         }
 
         /* Leaderboard Name Links */
         .leaderboard .name {
             cursor: pointer;
-            color: #1976D2;
-            text-decoration: underline;
+            color: #64b5f6;
+            /* Lighter, more inviting blue */
+            text-decoration: none;
+            /* Remove underline by default */
+            transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
         }
 
         .leaderboard .name:hover {
-            color: #1565C0;
+            color: #42a5f5;
+            text-decoration: underline;
+            /* Underline on hover */
         }
 
         /* Profile Activity Types */
         .activity-type {
             font-weight: bold;
-            color: #4CAF50;
+            color: #4dd0e1;
+            /* Cyan accent for activity type */
         }
 
         .activity-points {
             font-weight: bold;
+            color: #fff;
+            /* White for emphasis */
         }
 
         .activity-date {
-            color: #aaa;
+            color: #a0a0a0;
             font-size: 0.9em;
         }
 
@@ -367,30 +537,141 @@
         #view-profile-button {
             margin-top: 20px;
             background: #4CAF50;
+            /* Green */
         }
 
         #view-profile-button:hover {
-            background: #3e8e41;
+            background: #43a047;
+            /* Darker green */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
+        #view-profile-button:focus {
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+        }
+
 
         /* Admin Styles */
         .admin-button {
-            background: #f44336;
+            /* General class for admin action buttons */
+            background: #e53935;
+            /* Admin red */
         }
 
         .admin-button:hover {
             background: #d32f2f;
+            /* Darker admin red */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
+        .admin-button:focus {
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.5);
+        }
+
 
         .click-counter {
             font-size: 24px;
             margin: 20px 0;
+            color: #f5f5f5;
+        }
+
+        /* Styles for the cleaner file input button */
+        .file-upload-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 300px;
+            margin: 5px 0;
+        }
+
+        .hidden-file-input {
+            display: none;
+        }
+
+        .custom-file-upload-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 8px;
+            /* Consistent rounding */
+            border: 1px solid #1976D2;
+            background: transparent;
+            /* Transparent background for outline style */
+            color: #64b5f6;
+            /* Accent color text */
+            font-size: 16px;
+            font-weight: normal;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            text-align: center;
+            width: 100%;
+        }
+
+        .custom-file-upload-button:hover {
+            background: rgba(25, 118, 210, 0.1);
+            /* Subtle background on hover */
+            border-color: #42a5f5;
+            color: #42a5f5;
+            transform: translateY(-1px);
+            /* Subtle lift */
+        }
+
+        .custom-file-upload-button:focus {
+            outline: none;
+            border-color: #1565C0;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.4);
+            color: #1565C0;
+        }
+
+
+        .file-name-display {
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        /* Scrollbar Styling (WebKit) */
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Slightly wider for easier grabbing */
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #222;
+            /* Darker track */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+            border: 2px solid #222;
+            /* Creates a "padding" effect */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777;
         }
 
         /* Responsive Design */
         @media (max-width: 500px) {
+            body {
+                padding: 10px;
+                /* Less padding on small screens */
+            }
+
             .container {
-                padding: 15px;
+                padding: 20px;
+                /* Adjust container padding */
             }
 
             .chat-container {
@@ -408,77 +689,11 @@
                 font-size: 16px;
             }
 
+            /* Profile stats already column, so this specific media query might not change much for it
+               but keeping it for other potential adjustments if the container max-width were larger. */
             .profile-stats-container {
                 flex-direction: column;
             }
-        }
-
-        /* Styles for the cleaner file input button */
-        .file-upload-wrapper {
-            position: relative;
-            /* For potential future absolute positioning of elements inside */
-            display: flex;
-            flex-direction: column;
-            /* Stack button and file name */
-            align-items: center;
-            gap: 8px;
-            /* Space between button and file name text */
-            width: 100%;
-            max-width: 300px;
-            /* Match other inputs */
-            margin: 5px 0;
-            /* Match other inputs */
-        }
-
-        .hidden-file-input {
-            display: none;
-            /* Hide the default file input */
-        }
-
-        .custom-file-upload-button {
-            display: inline-block;
-            /* Allows padding and other block-like properties */
-            padding: 12px 20px;
-            border-radius: 6px;
-            border: 1px solid #1976D2;
-            /* Or use a background color */
-            background: #2d2d2d;
-            /* Darker background for contrast or match inputs */
-            color: #1976D2;
-            /* Text color, can be white if background is #1976D2 */
-            font-size: 16px;
-            font-weight: normal;
-            /* Or bold if you prefer */
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            width: 100%;
-            /* Make it full-width within its container */
-            box-sizing: border-box;
-            /* Ensure padding doesn't overflow width */
-        }
-
-        .custom-file-upload-button:hover {
-            background: #3a3a3a;
-            /* Slightly lighter on hover if background is dark */
-            border-color: #1565C0;
-            color: #1565C0;
-            /* Or adjust hover text color */
-        }
-
-        .file-name-display {
-            font-size: 14px;
-            color: #aaa;
-            /* Lighter text for the file name */
-            margin-top: 5px;
-            white-space: nowrap;
-            /* Prevent wrapping */
-            overflow: hidden;
-            /* Hide overflow */
-            text-overflow: ellipsis;
-            /* Add ellipsis if text is too long */
-            max-width: 100%;
-            /* Ensure it doesn't overflow its container */
         }
     </style>
 </head>
@@ -491,9 +706,8 @@
 
     <div class="container">
         <div id="password-panel" class="panel">
-            <h1>Fitness Leaderboard</h1>
-            <div class="form-group">
-                <button id="signup-button">New User Signup</button>
+            <h1>MCC Fitness Leaderboard</h1>
+            <div class="form-group button-group"> <button id="signup-button">New User Signup</button>
                 <button id="existing-login-button">Existing User Login</button>
             </div>
         </div>
@@ -522,7 +736,7 @@
         </div>
 
         <div id="menu-panel" class="panel hidden">
-            <h2>Welcome <span id="current-user-display"></span></h2>
+            <h2>Welcome, <span id="current-user-display"></span>!</h2>
             <div class="button-group vertical">
                 <button id="rules-button">Rules</button>
                 <button id="add-points-button">Add Workout</button>
@@ -615,8 +829,7 @@
             </div>
             <div class="button-group">
                 <button id="confirm-points-button">Submit</button>
-                <button class="back-to-menu">Cancel</button>
-            </div>
+                <button class="back-to-menu">Cancel</button> </div>
         </div>
 
         <div id="chat-panel" class="panel hidden">
@@ -625,11 +838,10 @@
                 <ul id="chat-messages"></ul>
             </div>
             <div class="chat-input-container">
-                <textarea id="chat-input" placeholder="Type your message here..." rows="4"></textarea>
-                <button id="send-button">Send</button>
+                <textarea id="chat-input" placeholder="Type your message here..." rows="3"></textarea> <button
+                    id="send-button">Send</button>
             </div>
-            <div class="button-group">
-                <button class="back-to-menu">Back to Menu</button>
+            <div class="button-group" style="margin-top: 15px;"> <button class="back-to-menu">Back to Menu</button>
             </div>
         </div>
 
@@ -654,7 +866,7 @@
                     </div>
 
                     <div class="stat-box">
-                        <h3>Activity <br>Totals</h3>
+                        <h3>Activity Totals</h3>
                         <div id="activity-totals">
                         </div>
                     </div>
@@ -682,8 +894,8 @@
             <input type="number" id="admin-points-input" placeholder="Points to add/subtract">
             <div class="button-group">
                 <button id="admin-add-points-button">Add Points</button>
-                <button id="admin-subtract-points-button">Subtract Points</button>
-                <button class="back-to-menu">Back to Menu</button>
+                <button id="admin-subtract-points-button" class="admin-button">Subtract Points</button> <button
+                    class="back-to-menu">Back to Menu</button>
             </div>
         </div>
 
@@ -746,9 +958,8 @@
         } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
 
         // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo", // Keep your actual API key
+            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo", 
             authDomain: "mcc-summer-leaderboard.firebaseapp.com",
             projectId: "mcc-summer-leaderboard",
             storageBucket: "mcc-summer-leaderboard.firebasestorage.app",
@@ -765,15 +976,12 @@
         const storage = getStorage(app);
 
         // --- Main App Logic ---
-
-        // Data Storage
-        let currentFirebaseUser = null; // Firebase auth user object
-        let currentAppUsername = null;  // Application-specific username
+        let currentFirebaseUser = null; 
+        let currentAppUsername = null;  
         let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
         let typedWord = '';
-        let unsubscribeChat = null; // For chat listener
+        let unsubscribeChat = null; 
 
-        // Panel Navigation
         function show(panelId) {
             document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
             const panel = document.getElementById(panelId);
@@ -781,14 +989,13 @@
                 panel.classList.remove('hidden');
             }
             if (panelId === 'chat-panel' && currentFirebaseUser) {
-                renderMessages(); // Start listening for messages when chat panel is shown
+                renderMessages(); 
             } else if (unsubscribeChat) {
-                unsubscribeChat(); // Stop listening when navigating away from chat
+                unsubscribeChat(); 
                 unsubscribeChat = null;
             }
         }
         
-        // Image Modal functionality
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImage");
         const spanClose = document.getElementsByClassName("close")[0];
@@ -799,7 +1006,7 @@
                 modalImg.src = e.target.src;
             }
         });
-        if(spanClose) { // Ensure spanClose exists before adding listener
+        if(spanClose) { 
             spanClose.onclick = function () {
                 modal.style.display = "none";
             }
@@ -810,7 +1017,6 @@
             }
         }
 
-        // Firebase Auth State Listener
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentFirebaseUser = user;
@@ -823,7 +1029,7 @@
                     updateAllLeaderboards();
                 } else {
                     console.error("User data not found in Firestore for UID:", user.uid);
-                    await signOut(auth); // Log out if profile doesn't exist
+                    await signOut(auth); 
                 }
             } else {
                 currentFirebaseUser = null;
@@ -836,9 +1042,8 @@
             }
         });
 
-        // Update all leaderboards
         function updateAllLeaderboards() {
-            if (!currentFirebaseUser) return; // Don't update if not logged in
+            if (!currentFirebaseUser) return; 
             updateLeaderboard('all-workouts-list', 'total');
             updateLeaderboard('erging-list', 'Erg');
             updateLeaderboard('running-list', 'Run');
@@ -846,11 +1051,8 @@
             updateLeaderboard('swimming-list', 'Swim');
         }
 
-        // Update specific leaderboard
         async function updateLeaderboard(listId, activityType) {
             const usersRef = collection(db, "users");
-            // No specific query needed here, we process all users client-side for this example
-            // For very large user bases, consider server-side aggregation or more specific queries.
             const querySnapshot = await getDocs(usersRef);
             let leaderboardData = [];
 
@@ -868,8 +1070,8 @@
                             .reduce((sum, a) => sum + (a.points || 0), 0);
                     }
                 }
-                if (points > 0) {
-                    leaderboardData.push({ name: userName, points, uid: docSnap.id });
+                if (points > 0 || activityType === 'total') { 
+                     leaderboardData.push({ name: userName, points, uid: docSnap.id });
                 }
             });
 
@@ -900,7 +1102,6 @@
             });
         }
         
-        // Show user profile
         async function showUserProfile(userUID, usernameToDisplay) {
             const userRef = doc(db, "users", userUID);
             const docSnap = await getDoc(userRef);
@@ -922,7 +1123,7 @@
 
             const highestPoints = {};
             const totalsByActivity = {};
-            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim'];
+            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim']; 
 
             allActivityTypes.forEach(activity => {
                 highestPoints[activity] = 0;
@@ -931,17 +1132,17 @@
 
             activities.forEach(workout => {
                 const activityName = workout.activity || 'Unknown';
-                if (!highestPoints[activityName]) highestPoints[activityName] = 0;
-                if (!totalsByActivity[activityName]) totalsByActivity[activityName] = 0;
+                if (!highestPoints[activityName] && activityName !== 'Admin Adjust') highestPoints[activityName] = 0; 
+                if (!totalsByActivity[activityName]) totalsByActivity[activityName] = 0; 
 
-                if (workout.points > highestPoints[activityName]) {
+                if (workout.points > highestPoints[activityName] && activityName !== 'Admin Adjust') {
                     highestPoints[activityName] = workout.points;
                 }
                 totalsByActivity[activityName] += workout.points;
             });
 
             const highestScoresContainer = document.getElementById('highest-scores');
-            highestScoresContainer.innerHTML = allActivityTypes.map(act => `
+            highestScoresContainer.innerHTML = allActivityTypes.filter(act => act !== 'Admin Adjust').map(act => `
                 <div class="stat-item">
                     <span class="activity-type">${act}:</span>
                     <span class="activity-points">${highestPoints[act] || 0} pts</span>
@@ -979,9 +1180,8 @@
             show('profile-panel');
         }
 
-        // Render chat messages
         function renderMessages() {
-            if (unsubscribeChat) { // If already listening, return or clear first
+            if (unsubscribeChat) { 
                 unsubscribeChat();
             }
             const ul = document.getElementById('chat-messages');
@@ -1030,33 +1230,24 @@
             });
         }
         
-        // DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
-            // Navigation
             document.getElementById('signup-button').addEventListener('click', () => show('signup-panel'));
             document.getElementById('existing-login-button').addEventListener('click', () => show('user-login-panel'));
 
             document.querySelectorAll('.back-home').forEach(btn => {
-    btn.addEventListener('click', async () => {
-        console.log(".back-home button clicked"); // For debugging
-        try {
-            if (auth.currentUser) { // Only attempt signOut if a user is actually logged in
-                console.log("Attempting to sign out user:", auth.currentUser.uid);
-                await signOut(auth);
-                // onAuthStateChanged will then handle showing 'password-panel'
-            } else {
-                // If no user is logged in, onAuthStateChanged might not fire to change panel,
-                // so explicitly show the password panel.
-                console.log("No user to sign out, directly showing password-panel.");
-                show('password-panel');
-            }
-        } catch (error) {
-            console.error("Sign out error / .back-home error:", error);
-            // Fallback in case of error during signout, still try to navigate
-            show('password-panel');
-        }
-    });
-});
+                btn.addEventListener('click', async () => {
+                    try {
+                        if (auth.currentUser) { 
+                            await signOut(auth);
+                        } else {
+                            show('password-panel');
+                        }
+                    } catch (error) {
+                        console.error("Sign out error / .back-home error:", error);
+                        show('password-panel');
+                    }
+                });
+            });
 
             document.querySelectorAll('.back-to-menu').forEach(btn => {
                 btn.addEventListener('click', () => show('menu-panel'));
@@ -1066,7 +1257,6 @@
                 btn.addEventListener('click', () => show('leaderboard-menu-panel'));
             });
 
-            // Menu buttons
             document.getElementById('rules-button').addEventListener('click', () => show('rules-panel'));
             document.getElementById('add-points-button').addEventListener('click', () => show('points-menu'));
             document.getElementById('leaderboard-button').addEventListener('click', () => {
@@ -1080,16 +1270,13 @@
                 }
             });
 
-            // Leaderboard menu buttons
             document.getElementById('all-workouts-button').addEventListener('click', () => { updateLeaderboard('all-workouts-list', 'total'); show('all-workouts-panel'); });
             document.getElementById('erging-button').addEventListener('click', () => { updateLeaderboard('erging-list', 'Erg'); show('erging-panel'); });
             document.getElementById('running-button').addEventListener('click', () => { updateLeaderboard('running-list', 'Run'); show('running-panel'); });
             document.getElementById('biking-button').addEventListener('click', () => { updateLeaderboard('biking-list', 'Bike'); show('biking-panel'); });
             document.getElementById('swimming-button').addEventListener('click', () => { updateLeaderboard('swimming-list', 'Swim'); show('swimming-panel'); });
 
-            // User Signup
             document.getElementById('submit-signup-button').addEventListener('click', async () => {
-                console.log("Submit signup button clicked!");
                 const name = document.getElementById('name-input').value.trim();
                 const pw = document.getElementById('password-input').value;
                 const confirmPw = document.getElementById('confirm-password-input').value;
@@ -1098,6 +1285,7 @@
 
                 if (!name || !pw) { signupError.textContent = "Please fill all fields"; return; }
                 if (pw !== confirmPw) { signupError.textContent = "Passwords don't match"; return; }
+                if (pw.length < 6) { signupError.textContent = "Password should be at least 6 characters"; return; }
 
                 const usersRefTest = collection(db, "users");
                 const qTest = query(usersRefTest, where("username", "==", name));
@@ -1105,7 +1293,6 @@
                 if (!querySnapshotTest.empty) { signupError.textContent = "Username already exists"; return; }
                 
                 const email = `${name.replace(/\s+/g, '_').toLowerCase()}@gmail.com`; 
-                console.log("Generated username for Firebase Auth:", email); // <--- ADD THIS LINE
 
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, pw);
@@ -1114,14 +1301,12 @@
                         activities: [],
                         createdAt: Timestamp.now()
                     });
-                    // onAuthStateChanged handles showing the menu panel
                 } catch (error) {
                     signupError.textContent = error.message.includes("email-already-in-use") ? "Username (or derived email) already taken." : "Signup failed: " + error.message;
                     console.error("Signup error:", error);
                 }
             });
 
-            // User Login
             document.getElementById('submit-user-login-button').addEventListener('click', async () => {
                 const name = document.getElementById('login-name-input').value.trim();
                 const pw = document.getElementById('login-user-password-input').value;
@@ -1129,57 +1314,71 @@
                 loginError.textContent = '';
 
                 if (!name || !pw) { loginError.textContent = "Please enter username and password."; return; }
+                
                 const email = `${name.replace(/\s+/g, '_').toLowerCase()}@gmail.com`;
 
                 try {
                     await signInWithEmailAndPassword(auth, email, pw);
-                    // onAuthStateChanged handles UI
                 } catch (error) {
                     loginError.textContent = "Invalid username or password.";
                     console.error("Login error:", error);
                 }
             });
-
-            // Add Workout (confirm points button)
-            document.getElementById('confirm-points-button').addEventListener('click', async () => {
-                if (!currentFirebaseUser) { alert("Please log in first."); return; }
-
-                const points = parseInt(document.getElementById('points-input').value);
-                const activity = document.getElementById('activity-select').value;
-
-                const photoUploadInput = document.getElementById('photo-upload');
-                const fileNameDisplay = document.getElementById('file-name-display');
-
-                if (photoUploadInput && fileNameDisplay) {
-                    photoUploadInput.addEventListener('change', function() {
-                        if (this.files && this.files.length > 0) {
-                            fileNameDisplay.textContent = this.files[0].name;
-                        } else {
-                            fileNameDisplay.textContent = 'No file chosen';
-                        }
-                    });
-                }
-                const fileInput = document.getElementById('photo-upload');
-                const file = fileInput.files[0];
-
-                if (!points || points <= 0 || !activity) { alert("Please select an activity and enter valid points"); return; }
-
-                let imageUrl = null;
-                if (file) {
-                    try {
-                        const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
-                        const snapshot = await uploadBytes(storageRef, file);
-                        imageUrl = await getDownloadURL(snapshot.ref);
-                    } catch (error) {
-                        console.error("Error uploading image: ", error);
-                        alert("Failed to upload image. Workout will be added without it.");
+            
+            const photoUploadInput = document.getElementById('photo-upload');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            if (photoUploadInput && fileNameDisplay) {
+                photoUploadInput.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        fileNameDisplay.textContent = this.files[0].name;
+                    } else {
+                        fileNameDisplay.textContent = 'No file chosen';
                     }
+                });
+            }
+
+            // MODIFIED: Add Workout (confirm points button)
+            document.getElementById('confirm-points-button').addEventListener('click', async () => {
+                const confirmButton = document.getElementById('confirm-points-button');
+                const pointsInput = document.getElementById('points-input');
+                const activitySelect = document.getElementById('activity-select');
+                const photoUpload = document.getElementById('photo-upload');
+                const currentFileNameDisplay = document.getElementById('file-name-display'); // Use local const
+
+                if (!currentFirebaseUser) { 
+                    alert("Please log in first."); 
+                    return; 
                 }
 
-                const workoutData = { activity, points, date: Timestamp.now(), image: imageUrl };
-                const userRef = doc(db, "users", currentFirebaseUser.uid);
+                const points = parseInt(pointsInput.value);
+                const activity = activitySelect.value;
+                const file = photoUpload.files[0];
+
+                if (isNaN(points) || points <= 0 || !activity) { 
+                    alert("Please select an activity and enter valid positive points"); 
+                    return; 
+                }
+
+                confirmButton.disabled = true;
+                confirmButton.textContent = 'Submitting...';
 
                 try {
+                    let imageUrl = null;
+                    if (file) {
+                        try {
+                            const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
+                            const snapshot = await uploadBytes(storageRef, file);
+                            imageUrl = await getDownloadURL(snapshot.ref);
+                        } catch (uploadError) {
+                            console.error("Error uploading image: ", uploadError);
+                            alert("Failed to upload image. Workout will be added without it.");
+                            // Image upload failed, but we proceed to add workout data without image
+                        }
+                    }
+
+                    const workoutData = { activity, points, date: Timestamp.now(), image: imageUrl };
+                    const userRef = doc(db, "users", currentFirebaseUser.uid);
+
                     await updateDoc(userRef, { activities: arrayUnion(workoutData) });
                     await addDoc(collection(db, "messages"), {
                         userId: currentFirebaseUser.uid,
@@ -1189,18 +1388,25 @@
                         image: workoutData.image,
                         time: Timestamp.now()
                     });
+
                     updateAllLeaderboards();
                     show('menu-panel');
-                    document.getElementById('points-input').value = '';
-                    document.getElementById('activity-select').value = '';
-                    fileInput.value = null; // Reset file input
+                    pointsInput.value = '';
+                    activitySelect.value = '';
+                    photoUpload.value = null; 
+                    if (currentFileNameDisplay) currentFileNameDisplay.textContent = 'No file chosen';
+                    // alert("Workout added successfully!"); // Optional success alert
+
                 } catch (error) {
                     console.error("Error adding workout: ", error);
-                    alert("Failed to add workout.");
+                    alert("Failed to add workout. Please try again.");
+                } finally {
+                    confirmButton.disabled = false;
+                    confirmButton.textContent = 'Submit';
                 }
             });
 
-            // Chat Send Button
+
             document.getElementById('send-button').addEventListener('click', async () => {
                 const text = document.getElementById('chat-input').value.trim();
                 if (!text || !currentFirebaseUser || !currentAppUsername) return;
@@ -1213,7 +1419,6 @@
                         time: Timestamp.now()
                     });
                     document.getElementById('chat-input').value = '';
-                    // renderMessages updates via onSnapshot
                 } catch (error) {
                     console.error("Error sending message: ", error);
                     alert("Failed to send message.");
@@ -1227,11 +1432,10 @@
                 }
             });
 
-            // Secret word detection
             document.addEventListener('keydown', (e) => {
                 const currentPanel = document.querySelector('.panel:not(.hidden)');
                 if (!currentPanel || (currentPanel.id !== 'password-panel' && currentPanel.id !== 'menu-panel' && currentPanel.id !== 'admin-points-panel')) {
-                    typedWord = ''; // Reset if not on relevant panels
+                    typedWord = ''; 
                     return;
                 }
                 typedWord += e.key.toLowerCase();
@@ -1243,10 +1447,9 @@
                 if (typedWord.length > 10) typedWord = typedWord.slice(-10);
             });
 
-            // Admin password submit
             document.getElementById('submit-admin-password-button').addEventListener('click', () => {
                 const password = document.getElementById('admin-password-input').value;
-                if (password === 'McleanCrew2025!') { // Keep your admin password
+                if (password === 'McleanCrew2025!') { 
                     document.getElementById('admin-error-message').textContent = '';
                     show('admin-points-panel');
                 } else {
@@ -1254,12 +1457,13 @@
                 }
                 document.getElementById('admin-password-input').value = '';
             });
-
-            // Admin points management (add)
-            document.getElementById('admin-add-points-button').addEventListener('click', async () => {
+            
+            async function modifyUserPoints(add) {
                 const usernameToEdit = document.getElementById('admin-username-input').value.trim();
-                const points = parseInt(document.getElementById('admin-points-input').value);
-                if (!usernameToEdit || !points || points <= 0) { alert('Valid username and positive points required'); return; }
+                let points = parseInt(document.getElementById('admin-points-input').value);
+                if (!usernameToEdit || isNaN(points) || points === 0) { alert('Valid username and non-zero points required'); return; }
+
+                if (!add) points = -points; 
 
                 const usersRef = collection(db, "users");
                 const q = query(usersRef, where("username", "==", usernameToEdit));
@@ -1272,57 +1476,37 @@
                         activities: arrayUnion({ activity: 'Admin Adjust', points: points, date: Timestamp.now() })
                     });
                     updateAllLeaderboards();
-                    alert(`Added ${points} points to ${usernameToEdit}`);
-                } catch (error) { console.error("Admin add points error:", error); alert("Error adding points."); }
-            });
-            // Admin points management (subtract)
-             document.getElementById('admin-subtract-points-button').addEventListener('click', async () => {
-                const usernameToEdit = document.getElementById('admin-username-input').value.trim();
-                const pointsToSubtract = parseInt(document.getElementById('admin-points-input').value);
-                if (!usernameToEdit || !pointsToSubtract || pointsToSubtract <= 0) { alert('Valid username and positive points to subtract required'); return; }
+                    alert(`${add ? 'Added' : 'Subtracted'} ${Math.abs(points)} points ${add ? 'to' : 'from'} ${usernameToEdit}`);
+                     document.getElementById('admin-username-input').value = '';
+                     document.getElementById('admin-points-input').value = '';
+                } catch (error) { console.error(`Admin ${add ? 'add' : 'subtract'} points error:`, error); alert("Error modifying points."); }
+            }
 
-                const usersRef = collection(db, "users");
-                const q = query(usersRef, where("username", "==", usernameToEdit));
-                const querySnapshot = await getDocs(q);
-
-                if (querySnapshot.empty) { alert(`User ${usernameToEdit} not found.`); return; }
-                const userDocSnap = querySnapshot.docs[0];
-                try {
-                    // Subtracting points by adding a negative value activity
-                    await updateDoc(doc(db, "users", userDocSnap.id), {
-                        activities: arrayUnion({ activity: 'Admin Adjust', points: -pointsToSubtract, date: Timestamp.now() })
-                    });
-                    updateAllLeaderboards();
-                    alert(`Subtracted ${pointsToSubtract} points from ${usernameToEdit}`);
-                } catch (error) { console.error("Admin subtract points error:", error); alert("Error subtracting points."); }
-            });
+            document.getElementById('admin-add-points-button').addEventListener('click', () => modifyUserPoints(true));
+            document.getElementById('admin-subtract-points-button').addEventListener('click', () => modifyUserPoints(false));
 
 
-            // Super admin password submit
             document.getElementById('submit-super-admin-password-button').addEventListener('click', () => {
                 const password = document.getElementById('super-admin-password-input').value;
-                if (password === 'LukeHoffman2006!') { // Keep your super admin password
+                if (password === 'LukeHoffman2006!') { 
                     document.getElementById('super-admin-error-message').textContent = '';
                     show('super-admin-panel');
                     document.getElementById('click-count').textContent = clickCount;
                 } else {
                     document.getElementById('super-admin-error-message').textContent = 'Incorrect password';
                 }
-                 document.getElementById('super-admin-password-input').value = '';
+                document.getElementById('super-admin-password-input').value = '';
             });
 
-            // Super admin click counter
             document.getElementById('click-button').addEventListener('click', () => {
                 clickCount++;
                 document.getElementById('click-count').textContent = clickCount;
-                localStorage.setItem('clickCount', clickCount.toString()); // Still local for this feature
+                localStorage.setItem('clickCount', clickCount.toString()); 
                 if (clickCount >= 100) {
                     document.getElementById('wipe-confirm-button').classList.remove('hidden');
-                    document.getElementById('undo-wipe-button').classList.remove('hidden'); // Consider disabling/hiding this permanently for cloud
                 }
             });
             
-            // Wipe all points (Super Admin)
             document.getElementById('wipe-confirm-button').addEventListener('click', async () => {
                 if (confirm('Are you sure you want to wipe ALL points for ALL users from Firestore? This action is hard to reverse!')) {
                     const usersRef = collection(db, "users");
@@ -1335,7 +1519,12 @@
                         await batch.commit();
                         updateAllLeaderboards();
                         alert('All points have been wiped from Firestore!');
-                        document.getElementById('undo-wipe-button').classList.add('hidden'); // Hide, as client-side undo is not applicable
+                        document.getElementById('undo-wipe-button').classList.add('hidden'); 
+                        clickCount = 0; 
+                        localStorage.setItem('clickCount', clickCount.toString());
+                        document.getElementById('click-count').textContent = clickCount;
+                        document.getElementById('wipe-confirm-button').classList.add('hidden');
+
                     } catch (error) {
                         console.error("Error wiping points: ", error);
                         alert("Failed to wipe points from Firestore.");
@@ -1343,16 +1532,11 @@
                 }
             });
 
-            // Undo wipe button (currently for localStorage backup, which is not used for main data anymore)
-            // This button is now mostly non-functional for cloud data.
             document.getElementById('undo-wipe-button').addEventListener('click', () => {
                 alert('Client-side undo is not available for cloud data. Please use Firebase backups if needed.');
             });
             
-            // Initial view is handled by onAuthStateChanged
-            // If not logged in, it will show 'password-panel'.
-            // If logged in, it will attempt to load user data and show 'menu-panel'.
-             if (!currentFirebaseUser) { // Ensure password panel shows if auth state not yet processed
+             if (!currentFirebaseUser) { 
                 show('password-panel');
              }
         });
