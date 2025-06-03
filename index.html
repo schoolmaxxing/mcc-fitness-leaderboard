@@ -91,7 +91,7 @@
             transform: translateY(-2px);
         }
 
-        .leaderboard li .score { 
+        .leaderboard li .score {
             font-weight: bold;
             color: #b0b0b0;
         }
@@ -149,14 +149,14 @@
         .button-group button.back-home,
         .button-group button.back-to-menu,
         .button-group button.back-to-leaderboard,
-        #score-input-menu .button-group button:last-child, 
-        #verify-email-panel .button-group button { 
+        #score-input-menu .button-group button:last-child,
+        #verify-email-panel .button-group button {
             background-color: #3e3e3e;
             color: #d0d0d0;
             font-weight: normal;
         }
-        #verify-email-panel .button-group button#resend-verification-button { 
-             background: #1976D2; 
+        #verify-email-panel .button-group button#resend-verification-button {
+             background: #1976D2;
              color: white;
              font-weight: bold;
         }
@@ -165,7 +165,7 @@
         .button-group button.back-home:hover:not(:disabled),
         .button-group button.back-to-menu:hover:not(:disabled),
         .button-group button.back-to-leaderboard:hover:not(:disabled),
-        #score-input-menu .button-group button:last-child:hover:not(:disabled), 
+        #score-input-menu .button-group button:last-child:hover:not(:disabled),
         #verify-email-panel .button-group button:hover:not(:disabled) {
             background-color: #4a4a4a;
             color: #ffffff;
@@ -180,7 +180,7 @@
         .button-group button.back-home:focus,
         .button-group button.back-to-menu:focus,
         .button-group button.back-to-leaderboard:focus,
-        #score-input-menu .button-group button:last-child:focus, 
+        #score-input-menu .button-group button:last-child:focus,
         #verify-email-panel .button-group button:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.5);
@@ -240,8 +240,8 @@
             margin: 10px 0;
             font-weight: bold;
         }
-        .success-message { 
-            color: #4CAF50; 
+        .success-message {
+            color: #4CAF50;
             margin:10px 0;
             font-weight: bold;
         }
@@ -322,8 +322,8 @@
             font-size: 16px;
             line-height: 1.5;
         }
-        .message-body strong { 
-            color: #81c784; 
+        .message-body strong {
+            color: #81c784;
         }
 
 
@@ -377,7 +377,7 @@
             color: #f5f5f5;
         }
 
-        #profile-total-score { 
+        #profile-total-score {
             font-weight: bold;
             color: #81c784;
         }
@@ -386,7 +386,7 @@
             display: flex;
             gap: 15px;
             width: 100%;
-            flex-direction: column;
+            flex-direction: column; /* Default to column for smaller screens */
         }
 
         .stat-box {
@@ -482,7 +482,7 @@
             color: #4dd0e1;
         }
 
-        .activity-value { 
+        .activity-value {
             font-weight: bold;
             color: #fff;
         }
@@ -605,7 +605,7 @@
             line-height: 1.6;
         }
         #verify-email-panel #verification-email-address {
-            word-break: break-all; 
+            word-break: break-all;
         }
 
 
@@ -629,7 +629,7 @@
                 font-size: 16px;
             }
             .profile-stats-container {
-                flex-direction: column;
+                flex-direction: column; /* This is already the default, but explicit for clarity */
             }
         }
     </style>
@@ -648,6 +648,7 @@
             <div class="form-group button-group">
                 <button id="signup-button">New User Signup</button>
                 <button id="existing-login-button">Existing User Login</button>
+                <button id="guest-leaderboard-button">View Leaderboards (Guest)</button>
             </div>
         </div>
 
@@ -657,7 +658,7 @@
             <input type="email" id="email-input" placeholder="Email" autocomplete="email">
             <input type="password" id="password-input" placeholder="Password" autocomplete="new-password">
             <input type="password" id="confirm-password-input" placeholder="Confirm Password" autocomplete="new-password">
-            <p id="signup-message" class="error"></p> 
+            <p id="signup-message" class="error"></p>
             <div class="button-group">
                 <button id="submit-signup-button">Sign Up</button>
                 <button class="back-home">Back</button>
@@ -674,13 +675,13 @@
                 <button class="back-home">Back</button>
             </div>
         </div>
-        
+
         <div id="verify-email-panel" class="panel hidden">
             <h2>Verify Your Email</h2>
             <p>A verification email has been sent to <strong id="verification-email-address">your_email@example.com</strong>.</p>
             <p>Please check your inbox (and spam folder) and click the verification link to activate your account.</p>
-            <p>If you don't see the email, you can resend it.</p>
-            <p id="resend-verification-message" class="error"></p> 
+            <p>If you don't see the email, you can resend it or contact Minh Tran or Ethan Hoffman.</p>
+            <p id="resend-verification-message" class="error"></p>
             <div class="button-group vertical">
                 <button id="resend-verification-button">Resend Verification Email</button>
                 <button id="check-verification-status-button">I've Verified, Continue</button>
@@ -692,11 +693,11 @@
             <h2>Welcome, <span id="current-user-display"></span>!</h2>
             <div class="button-group vertical">
                 <button id="rules-button">Rules</button>
-                <button id="add-workout-score-button">Add Workout Score</button> 
+                <button id="add-workout-score-button">Add Workout Score</button>
                 <button id="leaderboard-button">Leaderboards</button>
                 <button id="chat-button">Group Chat</button>
                 <button id="view-profile-button">View My Profile</button>
-                <button class="back-home">Logout</button> 
+                <button class="back-home">Logout</button>
             </div>
         </div>
 
@@ -710,7 +711,8 @@
                 <button id="swimming-button">Swimming Leaderboard</button>
                 <button id="lifting-button">Lifting Leaderboard</button>
                 <button id="otw-rowing-button">OTW Rowing Leaderboard</button>
-                <button class="back-to-menu">Back</button>
+                <button class="back-to-menu">Back to Main Menu</button> <!-- Changed text for clarity for logged-in users -->
+                <button id="back-to-home-from-leaderboard-guest" class="hidden">Back to Login</button> <!-- For guests -->
             </div>
         </div>
 
@@ -783,11 +785,12 @@
                 <p class="note">More will be added soon!</p>
             </div>
             <div class="button-group">
-                <button class="back-to-menu">Back to Menu</button>
+                <button class="back-to-menu">Back to Menu</button> <!-- For logged-in users -->
+                <button id="back-to-home-from-rules-guest" class="hidden">Back to Login</button> <!-- For guests -->
             </div>
         </div>
 
-        <div id="score-input-menu" class="panel hidden"> 
+        <div id="score-input-menu" class="panel hidden">
             <h2>Add Workout Score</h2>
             <select id="activity-select">
                 <option value="">Select Activity</option>
@@ -798,15 +801,15 @@
                 <option value="Lift">Lifting</option>
                 <option value="OTW">OTW Rowing</option>
             </select>
-            <input type="number" id="points-input" placeholder="Meters (based on rules)"> 
+            <input type="number" id="points-input" placeholder="Meters (based on rules)">
             <div class="file-upload-wrapper">
                 <input type="file" id="photo-upload" accept="image/*" class="hidden-file-input">
                 <label for="photo-upload" class="custom-file-upload-button">Choose Photo</label>
                 <span id="file-name-display" class="file-name-display">No file chosen</span>
             </div>
             <div class="button-group">
-                <button id="confirm-score-button">Submit Score</button> 
-                <button class="back-to-menu">Cancel</button> 
+                <button id="confirm-score-button">Submit Score</button>
+                <button class="back-to-menu">Cancel</button>
             </div>
         </div>
 
@@ -816,10 +819,10 @@
                 <ul id="chat-messages"></ul>
             </div>
             <div class="chat-input-container">
-                <textarea id="chat-input" placeholder="Type your message here..." rows="3"></textarea> 
+                <textarea id="chat-input" placeholder="Type your message here..." rows="3"></textarea>
                 <button id="send-button">Send</button>
             </div>
-            <div class="button-group" style="margin-top: 15px;"> 
+            <div class="button-group" style="margin-top: 15px;">
                 <button class="back-to-menu">Back to Menu</button>
             </div>
         </div>
@@ -828,12 +831,12 @@
             <div class="profile-container">
                 <div class="profile-header">
                     <h2 id="profile-username">Username</h2>
-                    <p>Total Score: <span id="profile-total-score">0</span> m</p> 
+                    <p>Total Score: <span id="profile-total-score">0</span> m</p>
                 </div>
 
                 <div class="profile-stats-container">
                     <div class="stat-box">
-                        <h3>Highest Scores</h3> 
+                        <h3>Highest Scores</h3>
                         <div id="highest-scores">
                         </div>
                     </div>
@@ -845,7 +848,7 @@
                     </div>
 
                     <div class="stat-box">
-                        <h3>Activity Totals</h3> 
+                        <h3>Activity Totals</h3>
                         <div id="activity-totals">
                         </div>
                     </div>
@@ -867,13 +870,13 @@
             </div>
         </div>
 
-        <div id="admin-control-panel" class="panel hidden"> 
+        <div id="admin-control-panel" class="panel hidden">
             <h2>Admin Controls</h2>
             <input type="text" id="admin-username-input" placeholder="Username">
-            <input type="number" id="admin-points-input" placeholder="Value to add/subtract"> 
+            <input type="number" id="admin-points-input" placeholder="Value to add/subtract">
             <div class="button-group">
-                <button id="admin-add-points-button">Add Value</button> 
-                <button id="admin-subtract-points-button" class="admin-button">Subtract Value</button> 
+                <button id="admin-add-points-button">Add Value</button>
+                <button id="admin-subtract-points-button" class="admin-button">Subtract Value</button>
                 <button class="back-to-menu">Back to Menu</button>
             </div>
         </div>
@@ -892,7 +895,7 @@
             <h2>Super Admin Controls</h2>
             <div class="click-counter">Clicks: <span id="click-count">0</span>/100</div>
             <div class="button-group vertical">
-                <button id="wipe-confirm-button" class="hidden admin-button">Wipe All Score Data</button> 
+                <button id="wipe-confirm-button" class="hidden admin-button">Wipe All Score Data</button>
                 <button id="undo-wipe-button" class="hidden">Undo Wipe (Disabled for Cloud)</button>
                 <button id="click-button">Click Me</button>
                 <button class="back-to-menu">Back to Menu</button>
@@ -903,140 +906,221 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
-        import { 
-            getAuth, 
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword, 
-            onAuthStateChanged, 
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            onAuthStateChanged,
             signOut,
             sendEmailVerification
         } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
-        import { 
-            getFirestore, 
-            doc, 
-            setDoc, 
-            getDoc, 
-            addDoc, 
-            collection, 
-            query, 
-            where, 
-            getDocs, 
-            orderBy, 
-            Timestamp, 
-            updateDoc, 
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            getDoc,
+            addDoc,
+            collection,
+            query,
+            where,
+            getDocs,
+            orderBy,
+            Timestamp,
+            updateDoc,
             arrayUnion,
             onSnapshot,
             writeBatch
         } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
-        import { 
-            getStorage, 
-            ref, 
-            uploadBytes, 
-            getDownloadURL 
+        import {
+            getStorage,
+            ref,
+            uploadBytes,
+            getDownloadURL
         } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
 
+        // IMPORTANT: Replace with your actual Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo",
+            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo", 
             authDomain: "mcc-summer-leaderboard.firebaseapp.com",
             projectId: "mcc-summer-leaderboard",
-            storageBucket: "mcc-summer-leaderboard.firebasestorage.app", 
+            storageBucket: "mcc-summer-leaderboard.firebasestorage.app",
             messagingSenderId: "376614411221",
             appId: "1:376614411221:web:9afe27edc84cf5de3b7b5c",
             measurementId: "G-SKPNS56ZDN"
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
+        const analytics = getAnalytics(app); // Optional
         const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        let currentFirebaseUser = null; 
-        let currentAppUsername = null;  
+        let currentFirebaseUser = null;
+        let currentAppUsername = null;
         let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
         let typedWord = '';
-        let unsubscribeChat = null; 
+        let unsubscribeChat = null;
+
+        // Helper function to show a custom alert-like modal
+        function showCustomAlert(message) {
+            // For simplicity, using browser's alert. Replace with a custom modal in a real app.
+            alert(message);
+        }
+
 
         function show(panelId) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
-            const panel = document.getElementById(panelId);
-            if (panel) {
-                panel.classList.remove('hidden');
+            const panelsRequiringLogin = [
+                'menu-panel', 'verify-email-panel', 'score-input-menu', 'chat-panel', 'profile-panel',
+                'admin-password-panel', 'admin-control-panel', 'super-admin-password-panel', 'super-admin-panel'
+            ];
+            const panelsRequiringVerification = [ // These require login AND verification
+                'score-input-menu', 'chat-panel', 'profile-panel'
+                // Note: 'menu-panel' itself doesn't require verification, but features within it might.
+            ];
+
+            let newPanelId = panelId;
+
+            // Determine if the "Back to Login" or "Back to Menu" button should be shown in leaderboard/rules panels
+            const backToHomeFromLeaderboardGuestBtn = document.getElementById('back-to-home-from-leaderboard-guest');
+            const backToHomeFromRulesGuestBtn = document.getElementById('back-to-home-from-rules-guest');
+            const backToMenuBtnInLeaderboard = document.querySelector('#leaderboard-menu-panel .back-to-menu');
+            const backToMenuBtnInRules = document.querySelector('#rules-panel .back-to-menu');
+
+
+            if (!currentFirebaseUser) { // Guest user
+                if (panelsRequiringLogin.includes(panelId)) {
+                    showCustomAlert("You need to be logged in to access this page.");
+                    newPanelId = 'password-panel';
+                }
+                // For guests, show "Back to Login" on leaderboard/rules
+                if (backToHomeFromLeaderboardGuestBtn) backToHomeFromLeaderboardGuestBtn.classList.toggle('hidden', panelId !== 'leaderboard-menu-panel');
+                if (backToMenuBtnInLeaderboard) backToMenuBtnInLeaderboard.classList.toggle('hidden', panelId === 'leaderboard-menu-panel');
+
+                if (backToHomeFromRulesGuestBtn) backToHomeFromRulesGuestBtn.classList.toggle('hidden', panelId !== 'rules-panel');
+                if (backToMenuBtnInRules) backToMenuBtnInRules.classList.toggle('hidden', panelId === 'rules-panel');
+
+            } else { // Logged-in user
+                if (!currentFirebaseUser.emailVerified && panelsRequiringVerification.includes(panelId)) {
+                    showCustomAlert("Please verify your email to access this feature.");
+                    newPanelId = 'verify-email-panel';
+                    const verificationEmailEl = document.getElementById('verification-email-address');
+                    if (verificationEmailEl) verificationEmailEl.textContent = currentFirebaseUser.email;
+                }
+                // For logged-in users, show "Back to Menu"
+                if (backToHomeFromLeaderboardGuestBtn) backToHomeFromLeaderboardGuestBtn.classList.add('hidden');
+                if (backToMenuBtnInLeaderboard) backToMenuBtnInLeaderboard.classList.remove('hidden');
+
+                if (backToHomeFromRulesGuestBtn) backToHomeFromRulesGuestBtn.classList.add('hidden');
+                if (backToMenuBtnInRules) backToMenuBtnInRules.classList.remove('hidden');
             }
-            if (panelId !== 'chat-panel' && unsubscribeChat) {
-                 unsubscribeChat(); 
-                 unsubscribeChat = null;
-            } else if (panelId === 'chat-panel' && currentFirebaseUser && currentFirebaseUser.emailVerified) {
-                 renderMessages(); 
+
+
+            document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+            const panelToShow = document.getElementById(newPanelId);
+            if (panelToShow) {
+                panelToShow.classList.remove('hidden');
+            } else {
+                console.warn(`Panel with ID ${newPanelId} not found. Defaulting to password-panel.`);
+                const passwordPanel = document.getElementById('password-panel');
+                if (passwordPanel) passwordPanel.classList.remove('hidden');
+            }
+
+            if (newPanelId !== 'chat-panel' && unsubscribeChat) {
+                unsubscribeChat();
+                unsubscribeChat = null;
+            } else if (newPanelId === 'chat-panel') {
+                if (currentFirebaseUser && currentFirebaseUser.emailVerified) {
+                    renderMessages();
+                }
             }
         }
-        
+
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImage");
         const spanClose = document.getElementsByClassName("close")[0];
 
         document.addEventListener('click', function (e) {
             if (e.target.classList.contains('message-image')) {
-                modal.style.display = "flex";
-                modalImg.src = e.target.src;
+                if(modal && modalImg) {
+                    modal.style.display = "flex";
+                    modalImg.src = e.target.src;
+                }
             }
         });
-        if(spanClose) { 
-            spanClose.onclick = function () { modal.style.display = "none"; }
+        if(spanClose) {
+            spanClose.onclick = function () { if(modal) modal.style.display = "none"; }
         }
         window.onclick = function (event) {
-            if (event.target == modal) { modal.style.display = "none"; }
+            if (event.target == modal && modal) { modal.style.display = "none"; }
         }
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                currentFirebaseUser = user; 
-                await user.reload(); 
-                currentFirebaseUser = auth.currentUser; 
+                currentFirebaseUser = user;
+                await user.reload(); // Ensure latest emailVerified status
+                currentFirebaseUser = auth.currentUser; // Re-assign after reload
 
                 if (!currentFirebaseUser.emailVerified) {
-                    document.getElementById('verification-email-address').textContent = currentFirebaseUser.email;
-                    currentAppUsername = null; 
-                    if (document.getElementById('current-user-display')) {
-                        document.getElementById('current-user-display').textContent = '';
-                    }
-                    show('verify-email-panel'); 
-                    if (unsubscribeChat) { 
-                        unsubscribeChat(); unsubscribeChat = null;
-                    }
+                    const verificationEmailEl = document.getElementById('verification-email-address');
+                    if (verificationEmailEl) verificationEmailEl.textContent = currentFirebaseUser.email;
+                    currentAppUsername = null;
+                    const currentUserDisplayEl = document.getElementById('current-user-display');
+                    if (currentUserDisplayEl) currentUserDisplayEl.textContent = '';
+                    show('verify-email-panel');
+                    if (unsubscribeChat) { unsubscribeChat(); unsubscribeChat = null; }
                 } else {
                     const userRef = doc(db, "users", currentFirebaseUser.uid);
                     const docSnap = await getDoc(userRef);
                     if (docSnap.exists()) {
                         currentAppUsername = docSnap.data().username;
-                        if (document.getElementById('current-user-display')) {
-                            document.getElementById('current-user-display').textContent = currentAppUsername;
-                        }
+                        const currentUserDisplayEl = document.getElementById('current-user-display');
+                        if (currentUserDisplayEl) currentUserDisplayEl.textContent = currentAppUsername;
+
                         const activePanel = document.querySelector('.panel:not(.hidden)');
-                        if (!activePanel || ['verify-email-panel', 'password-panel', 'user-login-panel', 'signup-panel'].includes(activePanel.id)) {
+                        // If user was on a login/signup/verify panel, move to menu
+                        if (!activePanel || ['password-panel', 'signup-panel', 'user-login-panel', 'verify-email-panel'].includes(activePanel.id)) {
                             show('menu-panel');
                         }
-                        updateAllLeaderboards();
+                        updateAllLeaderboards(); // Update leaderboards for logged-in, verified user
                     } else {
                         console.error("User data not found in Firestore for UID:", currentFirebaseUser.uid);
-                        alert("Could not find your user profile. Logging out.");
-                        await signOut(auth);
+                        showCustomAlert("Could not find your user profile. Logging out.");
+                        await signOut(auth); // This will trigger onAuthStateChanged again
                     }
                 }
-            } else {
-                currentFirebaseUser = null; currentAppUsername = null;
-                if (document.getElementById('current-user-display')) {
-                    document.getElementById('current-user-display').textContent = '';
-                }
+            } else { // No user logged in (guest state or after logout)
+                currentFirebaseUser = null;
+                currentAppUsername = null;
+                const currentUserDisplayEl = document.getElementById('current-user-display');
+                if (currentUserDisplayEl) currentUserDisplayEl.textContent = '';
+
                 if (unsubscribeChat) {
-                    unsubscribeChat(); unsubscribeChat = null;
+                    unsubscribeChat();
+                    unsubscribeChat = null;
                 }
-                show('password-panel'); 
+
+                const activePanel = document.querySelector('.panel:not(.hidden)');
+                const guestAllowedPanels = [
+                    'password-panel', 'signup-panel', 'user-login-panel', // Auth panels
+                    'rules-panel', // Public info
+                    'leaderboard-menu-panel', 'all-workouts-panel', 'erging-panel', // Leaderboards
+                    'running-panel', 'biking-panel', 'swimming-panel',
+                    'lifting-panel', 'otw-rowing-panel'
+                ];
+
+                // If current panel is not guest-allowed, or no panel is active, show login
+                if (!activePanel || !guestAllowedPanels.includes(activePanel.id)) {
+                    show('password-panel');
+                } else {
+                    // If on a guest-allowed panel, ensure correct back buttons are shown
+                    show(activePanel.id);
+                }
             }
         });
 
         function updateAllLeaderboards() {
-            if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) return; 
+            // This function can be called by guests or logged-in users.
+            // Firestore rules must allow reading the necessary data for leaderboards.
             updateLeaderboard('all-workouts-list', 'total');
             updateLeaderboard('erging-list', 'Erg');
             updateLeaderboard('running-list', 'Run');
@@ -1047,50 +1131,70 @@
         }
 
         async function updateLeaderboard(listId, activityType) {
-            const usersRef = collection(db, "users");
-            const querySnapshot = await getDocs(usersRef);
-            let leaderboardData = [];
+            const list = document.getElementById(listId);
+            if (!list) {
+                console.error(`Leaderboard list element with ID ${listId} not found.`);
+                return;
+            }
+            list.innerHTML = '<li>Loading...</li>'; // Initial loading state
 
+            const usersRef = collection(db, "users");
+            let querySnapshot;
+            try {
+                // Note: For guests to see this, Firestore rules need to allow reads on "users" collection
+                // or at least the fields needed for the leaderboard (username, activities).
+                querySnapshot = await getDocs(usersRef);
+            } catch (error) {
+                console.error("Error fetching users for leaderboard: ", error);
+                list.innerHTML = '<li>Error loading leaderboard data. Check Firestore rules or console.</li>';
+                return;
+            }
+
+            let leaderboardData = [];
             querySnapshot.forEach((docSnap) => {
                 const userData = docSnap.data();
-                const userName = userData.username; 
-                let totalScoreValue = 0; 
+                const userName = userData.username;
+                let scoreValue = 0;
 
                 if (userData.activities && Array.isArray(userData.activities)) {
                     if (activityType === 'total') {
-                        totalScoreValue = userData.activities.reduce((sum, a) => sum + (a.points || 0), 0); 
+                        scoreValue = userData.activities.reduce((sum, a) => sum + (Number(a.points) || 0), 0);
                     } else {
-                        totalScoreValue = userData.activities
+                        scoreValue = userData.activities
                             .filter(a => a.activity === activityType)
-                            .reduce((sum, a) => sum + (a.points || 0), 0); 
+                            .reduce((sum, a) => sum + (Number(a.points) || 0), 0);
                     }
                 }
-                if (totalScoreValue > 0 || activityType === 'total') { 
-                     leaderboardData.push({ name: userName, score: totalScoreValue, uid: docSnap.id });
+                // Only add if score > 0, unless it's the "total" leaderboard where 0 is fine if they exist
+                if (scoreValue > 0 || (activityType === 'total' && userName)) {
+                     leaderboardData.push({ name: userName, score: scoreValue, uid: docSnap.id });
                 }
             });
 
             leaderboardData.sort((a, b) => b.score - a.score);
+            list.innerHTML = ''; // Clear loading/previous data
 
-            const list = document.getElementById(listId);
-            if (!list) return;
-            list.innerHTML = '';
-
-            leaderboardData.forEach((user, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span class="name" data-username="${user.name}" data-uid="${user.uid}">${user.name}</span>
-                    <span class="score">${user.score} m</span>`; 
-                if (index === 0) li.classList.add('gold');
-                else if (index === 1) li.classList.add('silver');
-                else if (index === 2) li.classList.add('bronze');
-                list.appendChild(li);
-            });
+            if (leaderboardData.length === 0) {
+                list.innerHTML = `<li>No scores recorded for this ${activityType === 'total' ? 'category' : activityType} yet.</li>`;
+            } else {
+                leaderboardData.forEach((user, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span class="name" data-username="${user.name}" data-uid="${user.uid}">${user.name}</span>
+                        <span class="score">${user.score} m</span>`;
+                    if (index === 0) li.classList.add('gold');
+                    else if (index === 1) li.classList.add('silver');
+                    else if (index === 2) li.classList.add('bronze');
+                    list.appendChild(li);
+                });
+            }
 
             document.querySelectorAll(`#${listId} .name`).forEach(el => {
                 el.addEventListener('click', (e) => {
                     if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
-                         alert("Please verify your email to view profiles."); return;
+                        showCustomAlert("Please login and verify your email to view user profiles.");
+                        show('password-panel'); // Redirect to login
+                        return;
                     }
                     const username = e.target.getAttribute('data-username');
                     const userUID = e.target.getAttribute('data-uid');
@@ -1098,32 +1202,36 @@
                 });
             });
         }
-        
+
         async function showUserProfile(userUID, usernameToDisplay) {
-             if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
-                 alert("Please verify your email to perform this action."); return;
-             }
+            if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
+                showCustomAlert("Please login and verify your email to view profiles.");
+                show('password-panel');
+                return;
+            }
             const userRef = doc(db, "users", userUID);
             const docSnap = await getDoc(userRef);
 
             if (!docSnap.exists()) {
                 console.error("User profile not found for UID:", userUID);
-                alert("Could not load user profile.");
+                showCustomAlert("Could not load user profile.");
                 return;
             }
 
             const user = docSnap.data();
-            const displayName = usernameToDisplay || user.username; 
+            const displayName = usernameToDisplay || user.username;
 
-            document.getElementById('profile-username').textContent = displayName;
+            const profileUsernameEl = document.getElementById('profile-username');
+            if(profileUsernameEl) profileUsernameEl.textContent = displayName;
 
             const activities = user.activities || [];
-            const totalOverallScoreValue = activities.reduce((sum, a) => sum + (a.points || 0), 0); 
-            document.getElementById('profile-total-score').textContent = totalOverallScoreValue; 
+            const totalOverallScoreValue = activities.reduce((sum, a) => sum + (Number(a.points) || 0), 0);
+            const profileTotalScoreEl = document.getElementById('profile-total-score');
+            if(profileTotalScoreEl) profileTotalScoreEl.textContent = totalOverallScoreValue;
 
-            const highestScores = {}; 
-            const totalsByActivityScore = {}; 
-            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim', 'Lift', 'OTW']; 
+            const highestScores = {};
+            const totalsByActivityScore = {};
+            const allActivityTypes = ['Erg', 'Run', 'Bike', 'Swim', 'Lift', 'OTW'];
 
             allActivityTypes.forEach(activity => {
                 highestScores[activity] = 0;
@@ -1132,93 +1240,104 @@
 
             activities.forEach(workout => {
                 const activityName = workout.activity || 'Unknown';
-                const currentScoreValue = workout.points || 0; 
+                const currentScoreValue = Number(workout.points) || 0;
 
-                if (!highestScores[activityName] && activityName !== 'Admin Adjust') highestScores[activityName] = 0; 
-                if (!totalsByActivityScore[activityName]) totalsByActivityScore[activityName] = 0; 
-
-                if (currentScoreValue > highestScores[activityName] && activityName !== 'Admin Adjust') {
-                    highestScores[activityName] = currentScoreValue;
+                if (allActivityTypes.includes(activityName)) { // Only process known types
+                    if (currentScoreValue > highestScores[activityName]) {
+                        highestScores[activityName] = currentScoreValue;
+                    }
+                    totalsByActivityScore[activityName] += currentScoreValue;
                 }
-                totalsByActivityScore[activityName] += currentScoreValue;
             });
 
             const highestScoresContainer = document.getElementById('highest-scores');
-            highestScoresContainer.innerHTML = allActivityTypes.filter(act => act !== 'Admin Adjust').map(act => `
-                <div class="stat-item">
-                    <span class="activity-type">${act}:</span>
-                    <span class="activity-value">${highestScores[act] || 0} m</span> 
-                </div>
-            `).join('');
-
-            const recentActivitiesContainer = document.getElementById('recent-activities');
-            if (activities.length > 0) {
-                recentActivitiesContainer.innerHTML = activities
-                    .slice()
-                    .sort((a, b) => (b.date && a.date) ? b.date.toMillis() - a.date.toMillis() : 0)
-                    .slice(0, 10)
-                    .map(workout => `
+            if(highestScoresContainer) {
+                highestScoresContainer.innerHTML = allActivityTypes.map(act => `
                     <div class="stat-item">
-                        <div>
-                            <span class="activity-type">${workout.activity}:</span>
-                            <span class="activity-value">${workout.points || 0} m</span> 
-                        </div>
-                        <div class="activity-date">${workout.date ? workout.date.toDate().toLocaleString() : 'N/A'}</div>
-                        ${workout.image ? `<img src="${workout.image}" class="message-image">` : ''}
+                        <span class="activity-type">${act}:</span>
+                        <span class="activity-value">${highestScores[act] || 0} m</span>
                     </div>
                 `).join('');
-            } else {
-                recentActivitiesContainer.innerHTML = '<div class="stat-item">No activities yet</div>';
             }
 
+
+            const recentActivitiesContainer = document.getElementById('recent-activities');
+            if(recentActivitiesContainer) {
+                if (activities.length > 0) {
+                    recentActivitiesContainer.innerHTML = activities
+                        .slice() // Create a copy before sorting
+                        .sort((a, b) => (b.date && a.date) ? b.date.toMillis() - a.date.toMillis() : 0)
+                        .slice(0, 10) // Get top 10 recent
+                        .map(workout => `
+                        <div class="stat-item">
+                            <div>
+                                <span class="activity-type">${workout.activity}:</span>
+                                <span class="activity-value">${Number(workout.points) || 0} m</span>
+                            </div>
+                            <div class="activity-date">${workout.date ? workout.date.toDate().toLocaleString() : 'N/A'}</div>
+                            ${workout.image ? `<img src="${workout.image}" class="message-image" alt="Workout image">` : ''}
+                        </div>
+                    `).join('');
+                } else {
+                    recentActivitiesContainer.innerHTML = '<div class="stat-item">No activities yet</div>';
+                }
+            }
+
+
             const activityTotalsContainer = document.getElementById('activity-totals');
-            activityTotalsContainer.innerHTML = allActivityTypes.map(act => `
-                <div class="stat-item">
-                    <span class="activity-type">${act}:</span>
-                    <span class="activity-value">${totalsByActivityScore[act] || 0} m</span> 
-                </div>
-            `).join('');
+            if(activityTotalsContainer) {
+                activityTotalsContainer.innerHTML = allActivityTypes.map(act => `
+                    <div class="stat-item">
+                        <span class="activity-type">${act}:</span>
+                        <span class="activity-value">${totalsByActivityScore[act] || 0} m</span>
+                    </div>
+                `).join('');
+            }
 
             show('profile-panel');
         }
 
         function renderMessages() {
-             if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) { 
-                 if (unsubscribeChat) { unsubscribeChat(); unsubscribeChat = null; }
-                 return;
-             }
-             if (unsubscribeChat) { unsubscribeChat(); }
+            if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
+                if (unsubscribeChat) { unsubscribeChat(); unsubscribeChat = null; }
+                return;
+            }
+            if (unsubscribeChat) { unsubscribeChat(); } // Unsubscribe from previous listener
 
             const ul = document.getElementById('chat-messages');
             if (!ul) return;
 
             const messagesRef = collection(db, "messages");
-            const qMessages = query(messagesRef, orderBy("time", "asc")); 
+            const qMessages = query(messagesRef, orderBy("time", "asc"));
 
             unsubscribeChat = onSnapshot(qMessages, (querySnapshot) => {
-                ul.innerHTML = ''; 
+                ul.innerHTML = ''; // Clear previous messages
                 querySnapshot.forEach((docSnap) => {
                     const m = docSnap.data();
                     const li = document.createElement('li');
                     const content = document.createElement('div');
                     content.className = 'message-content';
+
                     const header = document.createElement('div');
                     header.className = 'message-header';
                     header.innerHTML = `
-                        <span class="message-sender">${m.user}</span>
+                        <span class="message-sender">${m.user || 'Anonymous'}</span>
                         <span class="message-time">${m.time ? m.time.toDate().toLocaleString() : 'N/A'}</span>`;
                     content.appendChild(header);
+
                     const body = document.createElement('div');
                     body.className = 'message-body';
                     if (m.text) {
                         body.textContent = m.text;
-                    } else if (m.activity && typeof m.points !== 'undefined') { 
-                        body.innerHTML = `Added <strong>${m.points} m</strong> from <strong>${m.activity}</strong>`; 
+                    } else if (m.activity && typeof m.points !== 'undefined') {
+                        body.innerHTML = `Added <strong>${m.points} m</strong> from <strong>${m.activity}</strong>`;
                     }
                     content.appendChild(body);
+
                     if (m.image) {
                         const img = document.createElement('img');
                         img.src = m.image;
+                        img.alt = "Chat image";
                         img.className = 'message-image';
                         content.appendChild(img);
                     }
@@ -1227,27 +1346,38 @@
                 });
                 const chatContainer = document.querySelector('.chat-container');
                 if (chatContainer) {
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    chatContainer.scrollTop = chatContainer.scrollHeight; // Auto-scroll to bottom
                 }
             }, (error) => {
                 console.error("Error fetching chat messages: ", error);
+                if(ul) ul.innerHTML = '<li>Error loading chat.</li>';
             });
         }
-        
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const signupMessageEl = document.getElementById('signup-message');
 
             document.getElementById('signup-button').addEventListener('click', () => {
-                signupMessageEl.textContent = ''; 
-                signupMessageEl.className = 'error'; 
+                if(signupMessageEl) {
+                    signupMessageEl.textContent = '';
+                    signupMessageEl.className = 'error';
+                }
                 show('signup-panel');
             });
             document.getElementById('existing-login-button').addEventListener('click', () => show('user-login-panel'));
+            document.getElementById('guest-leaderboard-button').addEventListener('click', () => {
+                updateAllLeaderboards(); // Pre-fetch data
+                show('leaderboard-menu-panel');
+            });
+             document.getElementById('back-to-home-from-leaderboard-guest').addEventListener('click', () => show('password-panel'));
+             document.getElementById('back-to-home-from-rules-guest').addEventListener('click', () => show('password-panel'));
+
 
             document.querySelectorAll('.back-home').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     try {
-                        if (auth.currentUser) { await signOut(auth); } 
+                        if (auth.currentUser) { await signOut(auth); } // Triggers onAuthStateChanged
                         else { show('password-panel'); }
                     } catch (error) {
                         console.error("Sign out error:", error); show('password-panel');
@@ -1258,17 +1388,17 @@
             document.querySelectorAll('.back-to-menu').forEach(btn => btn.addEventListener('click', () => show('menu-panel')));
             document.querySelectorAll('.back-to-leaderboard').forEach(btn => btn.addEventListener('click', () => show('leaderboard-menu-panel')));
 
-            document.getElementById('rules-button').addEventListener('click', () => show('rules-panel'));
-            document.getElementById('add-workout-score-button').addEventListener('click', () => show('score-input-menu')); 
+            document.getElementById('rules-button').addEventListener('click', () => show('rules-panel')); // Rules can be public
+            document.getElementById('add-workout-score-button').addEventListener('click', () => show('score-input-menu'));
             document.getElementById('leaderboard-button').addEventListener('click', () => { updateAllLeaderboards(); show('leaderboard-menu-panel'); });
-            
-            document.getElementById('chat-button').addEventListener('click', () => {
-                if (currentFirebaseUser && currentFirebaseUser.emailVerified) { show('chat-panel'); } 
-                else { alert("Please verify your email to access the chat."); show('verify-email-panel'); }
-            });
+
+            document.getElementById('chat-button').addEventListener('click', () => show('chat-panel'));
             document.getElementById('view-profile-button').addEventListener('click', () => {
-                if (currentFirebaseUser && currentFirebaseUser.emailVerified && currentAppUsername) { showUserProfile(currentFirebaseUser.uid, currentAppUsername); } 
-                else if (currentFirebaseUser && !currentFirebaseUser.emailVerified) { alert("Please verify your email to view your profile."); show('verify-email-panel'); }
+                if (currentFirebaseUser && currentFirebaseUser.emailVerified && currentAppUsername) {
+                    showUserProfile(currentFirebaseUser.uid, currentAppUsername);
+                } else {
+                    show('verify-email-panel'); // Or password-panel if not logged in
+                }
             });
 
             document.getElementById('all-workouts-button').addEventListener('click', () => { updateLeaderboard('all-workouts-list', 'total'); show('all-workouts-panel'); });
@@ -1282,16 +1412,22 @@
 
             document.getElementById('submit-signup-button').addEventListener('click', async () => {
                 const signupButton = document.getElementById('submit-signup-button');
-                const name = document.getElementById('name-input').value.trim();
-                const email = document.getElementById('email-input').value.trim();
-                const pw = document.getElementById('password-input').value;
-                const confirmPw = document.getElementById('confirm-password-input').value;
-                
-                signupMessageEl.textContent = ''; signupMessageEl.className = 'error';
+                const nameInput = document.getElementById('name-input');
+                const emailInput = document.getElementById('email-input');
+                const passwordInput = document.getElementById('password-input');
+                const confirmPasswordInput = document.getElementById('confirm-password-input');
 
-                if (!name || !email || !pw) { signupMessageEl.textContent = "Please fill all fields"; return; }
-                if (pw !== confirmPw) { signupMessageEl.textContent = "Passwords don't match"; return; }
-                if (pw.length < 6) { signupMessageEl.textContent = "Password should be at least 6 characters"; return; }
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const pw = passwordInput.value;
+                const confirmPw = confirmPasswordInput.value;
+
+                if(signupMessageEl) { signupMessageEl.textContent = ''; signupMessageEl.className = 'error'; }
+
+
+                if (!name || !email || !pw) { if(signupMessageEl) signupMessageEl.textContent = "Please fill all fields"; return; }
+                if (pw !== confirmPw) { if(signupMessageEl) signupMessageEl.textContent = "Passwords don't match"; return; }
+                if (pw.length < 6) { if(signupMessageEl) signupMessageEl.textContent = "Password should be at least 6 characters"; return; }
 
                 signupButton.disabled = true; signupButton.textContent = 'Signing Up...';
 
@@ -1301,50 +1437,62 @@
                     const querySnapshotTest = await getDocs(qTest);
 
                     if (!querySnapshotTest.empty) {
-                        signupMessageEl.textContent = "This name is already taken.";
+                        if(signupMessageEl) signupMessageEl.textContent = "This name is already taken.";
                         signupButton.disabled = false; signupButton.textContent = 'Sign Up'; return;
                     }
-                
+
                     const userCredential = await createUserWithEmailAndPassword(auth, email, pw);
                     const newUser = userCredential.user;
                     await setDoc(doc(db, "users", newUser.uid), {
                         username: name, email: email, activities: [], createdAt: Timestamp.now()
                     });
                     await sendEmailVerification(newUser);
-                    
-                    ['name-input', 'email-input', 'password-input', 'confirm-password-input'].forEach(id => document.getElementById(id).value = '');
-                    signupMessageEl.textContent = 'Signup successful! Verification email sent.';
-                    signupMessageEl.className = 'success-message'; 
+
+                    [nameInput, emailInput, passwordInput, confirmPasswordInput].forEach(input => input.value = '');
+                    if(signupMessageEl) {
+                        signupMessageEl.textContent = 'Signup successful! Verification email sent.';
+                        signupMessageEl.className = 'success-message';
+                    }
                 } catch (error) {
-                    if (error.code === 'auth/email-already-in-use') signupMessageEl.textContent = "Email already in use.";
-                    else if (error.code === 'auth/invalid-email') signupMessageEl.textContent = "Invalid email.";
-                    else signupMessageEl.textContent = "Signup failed: " + error.message;
+                    if(signupMessageEl){
+                        if (error.code === 'auth/email-already-in-use') signupMessageEl.textContent = "Email already in use.";
+                        else if (error.code === 'auth/invalid-email') signupMessageEl.textContent = "Invalid email.";
+                        else signupMessageEl.textContent = "Signup failed: " + error.message;
+                    }
                     console.error("Signup error:", error);
-                    signupButton.disabled = false; signupButton.textContent = 'Sign Up';
+                } finally {
+                     signupButton.disabled = false; signupButton.textContent = 'Sign Up';
                 }
             });
 
             document.getElementById('submit-user-login-button').addEventListener('click', async () => {
                 const loginButton = document.getElementById('submit-user-login-button');
-                const email = document.getElementById('login-email-input').value.trim();
-                const pw = document.getElementById('login-user-password-input').value;
-                const loginError = document.getElementById('user-login-error-message');
-                loginError.textContent = '';
+                const emailInput = document.getElementById('login-email-input');
+                const passwordInput = document.getElementById('login-user-password-input');
+                const loginErrorEl = document.getElementById('user-login-error-message');
 
-                if (!email || !pw) { loginError.textContent = "Enter email and password."; return; }
-                
+                const email = emailInput.value.trim();
+                const pw = passwordInput.value;
+                if(loginErrorEl) loginErrorEl.textContent = '';
+
+                if (!email || !pw) { if(loginErrorEl) loginErrorEl.textContent = "Enter email and password."; return; }
+
                 loginButton.disabled = true; loginButton.textContent = 'Logging In...';
                 try {
                     await signInWithEmailAndPassword(auth, email, pw);
+                    // onAuthStateChanged will handle navigation
                 } catch (error) {
-                    if (['auth/user-not-found', 'auth/wrong-password', 'auth/invalid-credential'].includes(error.code)) loginError.textContent = "Invalid email or password.";
-                    else if (error.code === 'auth/invalid-email') loginError.textContent = "Invalid email format.";
-                    else loginError.textContent = "Login failed. Try again.";
+                    if(loginErrorEl){
+                        if (['auth/user-not-found', 'auth/wrong-password', 'auth/invalid-credential'].includes(error.code)) loginErrorEl.textContent = "Invalid email or password.";
+                        else if (error.code === 'auth/invalid-email') loginErrorEl.textContent = "Invalid email format.";
+                        else loginErrorEl.textContent = "Login failed. Try again.";
+                    }
                     console.error("Login error:", error);
+                } finally {
                     loginButton.disabled = false; loginButton.textContent = 'Login';
                 }
             });
-            
+
             const photoUploadInput = document.getElementById('photo-upload');
             const fileNameDisplay = document.getElementById('file-name-display');
             if (photoUploadInput && fileNameDisplay) {
@@ -1353,10 +1501,10 @@
                 });
             }
 
-            // MODIFIED confirm-score-button event listener
             document.getElementById('confirm-score-button').addEventListener('click', async () => {
                 if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
-                    alert("Please verify your email to add workout scores.");
+                    showCustomAlert("Please verify your email to add workout scores.");
+                    show('verify-email-panel');
                     return;
                 }
 
@@ -1370,72 +1518,49 @@
                 const pointsVal = parseInt(pointsInputEl.value);
                 const file = photoUpload.files[0];
 
-                // Validation checks
-                if (!activity) {
-                    alert("Please select an activity.");
-                    return; 
-                }
-                if (isNaN(pointsVal) || pointsVal <= 0) {
-                    alert("Please enter a valid positive value for your score.");
-                    return; 
-                }
-                if (!file) {
-                    alert("An image upload is required as proof for your workout.");
-                    return; 
-                }
+                if (!activity) { showCustomAlert("Please select an activity."); return; }
+                if (isNaN(pointsVal) || pointsVal <= 0) { showCustomAlert("Please enter a valid positive value for your score."); return; }
+                if (!file) { showCustomAlert("An image upload is required as proof for your workout."); return; }
 
-                confirmButton.disabled = true;
-                confirmButton.textContent = 'Submitting...';
+                confirmButton.disabled = true; confirmButton.textContent = 'Submitting...';
 
                 try {
                     let imageUrl = null;
-                    try {
-                        const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
-                        const snapshot = await uploadBytes(storageRef, file);
-                        imageUrl = await getDownloadURL(snapshot.ref);
-                    } catch (uploadError) {
-                        console.error("Image upload error: ", uploadError);
-                        alert("Image upload failed. Please try again or select a different image.");
-                        // Reset button and stop if image upload fails (it's mandatory)
-                        confirmButton.disabled = false;
-                        confirmButton.textContent = 'Submit Score';
-                        return; 
-                    }
+                    const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
+                    const snapshot = await uploadBytes(storageRef, file);
+                    imageUrl = await getDownloadURL(snapshot.ref);
 
-                    const workoutData = { 
-                        activity, 
-                        points: pointsVal, 
-                        date: Timestamp.now(), 
-                        image: imageUrl 
+                    const workoutData = {
+                        activity,
+                        points: pointsVal,
+                        date: Timestamp.now(),
+                        image: imageUrl
                     };
-                    
+
                     const userRef = doc(db, "users", currentFirebaseUser.uid);
                     await updateDoc(userRef, { activities: arrayUnion(workoutData) });
 
                     await addDoc(collection(db, "messages"), {
-                        userId: currentFirebaseUser.uid, 
+                        userId: currentFirebaseUser.uid,
                         user: currentAppUsername,
-                        activity: workoutData.activity, 
+                        activity: workoutData.activity,
                         points: workoutData.points,
-                        image: workoutData.image, 
+                        image: workoutData.image,
                         time: Timestamp.now()
                     });
 
-                    updateAllLeaderboards(); 
+                    updateAllLeaderboards();
                     show('menu-panel');
-                    
+
                     pointsInputEl.value = '';
                     activitySelect.value = '';
-                    photoUpload.value = null; 
+                    photoUpload.value = null;
                     if (currentFileNameDisplay) currentFileNameDisplay.textContent = 'No file chosen';
-                    
-                    // You might want to add a success alert here if desired
-                    // alert("Workout score submitted successfully!");
+                    showCustomAlert("Workout score submitted successfully!");
 
                 } catch (error) {
                     console.error("Add workout error: ", error);
-                    alert("Failed to add workout score. Please check the console for details and try again.");
-                    // The finally block will reset the button state.
+                    showCustomAlert("Failed to add workout score. Please check the console and try again.");
                 } finally {
                     confirmButton.disabled = false;
                     confirmButton.textContent = 'Submit Score';
@@ -1444,77 +1569,109 @@
 
             document.getElementById('send-button').addEventListener('click', async () => {
                 if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
-                     alert("Please verify your email to send messages."); return;
-                 }
-                const text = document.getElementById('chat-input').value.trim();
+                    showCustomAlert("Please verify your email to send messages.");
+                    show('verify-email-panel');
+                    return;
+                }
+                const chatInputEl = document.getElementById('chat-input');
+                const text = chatInputEl.value.trim();
                 if (!text || !currentAppUsername) return;
+
                 try {
                     await addDoc(collection(db, "messages"), {
-                        userId: currentFirebaseUser.uid, user: currentAppUsername, 
+                        userId: currentFirebaseUser.uid, user: currentAppUsername,
                         text: text, time: Timestamp.now()
                     });
-                    document.getElementById('chat-input').value = '';
+                    chatInputEl.value = '';
                 } catch (error) {
-                    console.error("Send msg error: ", error); alert("Failed to send message.");
+                    console.error("Send msg error: ", error); showCustomAlert("Failed to send message.");
                 }
             });
-            
-            document.getElementById('chat-input')?.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.getElementById('send-button').click(); }
-            });
-            
+
+            const chatInputElement = document.getElementById('chat-input');
+            if (chatInputElement) {
+                 chatInputElement.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        const sendButton = document.getElementById('send-button');
+                        if(sendButton) sendButton.click();
+                    }
+                });
+            }
+
+
             const resendVerificationButton = document.getElementById('resend-verification-button');
             const resendMessageEl = document.getElementById('resend-verification-message');
 
-            resendVerificationButton.addEventListener('click', async () => {
-                if (currentFirebaseUser) {
-                    resendVerificationButton.disabled = true; resendVerificationButton.textContent = 'Sending...';
-                    resendMessageEl.textContent = ''; resendMessageEl.className = 'error'; 
-                    try {
-                        await sendEmailVerification(currentFirebaseUser);
-                        resendMessageEl.textContent = 'Verification email resent. Check inbox/spam.';
-                        resendMessageEl.className = 'success-message'; 
-                        setTimeout(() => {
+            if(resendVerificationButton) {
+                resendVerificationButton.addEventListener('click', async () => {
+                    if (currentFirebaseUser) {
+                        resendVerificationButton.disabled = true; resendVerificationButton.textContent = 'Sending...';
+                        if(resendMessageEl) { resendMessageEl.textContent = ''; resendMessageEl.className = 'error'; }
+
+                        try {
+                            await sendEmailVerification(currentFirebaseUser);
+                            if(resendMessageEl) {
+                                resendMessageEl.textContent = 'Verification email resent. Check inbox/spam.';
+                                resendMessageEl.className = 'success-message';
+                            }
+                            setTimeout(() => {
+                                resendVerificationButton.disabled = false; resendVerificationButton.textContent = 'Resend Email';
+                            }, 30000); // 30 second cooldown
+                        } catch (error) {
+                            console.error("Resend email error:", error);
+                            if(resendMessageEl) resendMessageEl.textContent = error.code === 'auth/too-many-requests' ? 'Too many requests. Try later.' : 'Failed to resend. Try again.';
                             resendVerificationButton.disabled = false; resendVerificationButton.textContent = 'Resend Email';
-                        }, 30000); 
-                    } catch (error) {
-                        console.error("Resend email error:", error);
-                        resendMessageEl.textContent = error.code === 'auth/too-many-requests' ? 'Too many requests. Try later.' : 'Failed to resend. Try again.';
-                        resendVerificationButton.disabled = false; resendVerificationButton.textContent = 'Resend Email';
+                        }
+                    } else {
+                        if(resendMessageEl) resendMessageEl.textContent = 'No user logged in.';
+                        show('password-panel');
                     }
-                } else {
-                    resendMessageEl.textContent = 'No user logged in.'; show('password-panel'); 
-                }
-            });
+                });
+            }
+
 
             document.getElementById('check-verification-status-button').addEventListener('click', async () => {
                 if (currentFirebaseUser) {
                     const button = document.getElementById('check-verification-status-button');
                     button.disabled = true; button.textContent = "Checking...";
-                    await currentFirebaseUser.reload(); currentFirebaseUser = auth.currentUser; 
+                    await currentFirebaseUser.reload();
+                    currentFirebaseUser = auth.currentUser; // Refresh user object
                     button.disabled = false; button.textContent = "I've Verified, Continue";
+
                     if (currentFirebaseUser.emailVerified) {
+                        // onAuthStateChanged should handle the navigation to menu-panel if logic is correct
+                        // but we can also try to explicitly show it
                         const userRef = doc(db, "users", currentFirebaseUser.uid);
                         const docSnap = await getDoc(userRef);
                         if (docSnap.exists()) {
                             currentAppUsername = docSnap.data().username;
-                             if (document.getElementById('current-user-display')) document.getElementById('current-user-display').textContent = currentAppUsername;
-                            show('menu-panel'); updateAllLeaderboards();
+                            const currentUserDisplayEl = document.getElementById('current-user-display');
+                            if(currentUserDisplayEl) currentUserDisplayEl.textContent = currentAppUsername;
+                            show('menu-panel');
+                            updateAllLeaderboards();
                         } else {
-                            console.error("User data not found:", currentFirebaseUser.uid); alert("Profile not found. Logging out.");
-                            await signOut(auth);
+                             console.error("User data not found after verification check:", currentFirebaseUser.uid);
+                             showCustomAlert("Profile not found. Logging out.");
+                             await signOut(auth);
                         }
-                    } else alert('Email still not verified. Check inbox or resend.');
-                } else show('password-panel'); 
+                    } else {
+                        showCustomAlert('Email still not verified. Check inbox/spam or resend.');
+                    }
+                } else {
+                    show('password-panel');
+                }
             });
 
             document.getElementById('back-to-login-from-verify-button').addEventListener('click', async () => {
-                resendMessageEl.textContent = ''; 
-                if (auth.currentUser) { await signOut(auth); } else { show('password-panel'); }
+                if(resendMessageEl) resendMessageEl.textContent = '';
+                if (auth.currentUser) { await signOut(auth); }
+                else { show('password-panel'); }
             });
 
+            // Admin and Super Admin related event listeners (unchanged from original logic)
             document.addEventListener('keydown', (e) => {
-                 if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) { typedWord = ''; return; }
+                if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) { typedWord = ''; return; }
                 const currentPanel = document.querySelector('.panel:not(.hidden)');
                 if (!currentPanel || !['password-panel', 'menu-panel', 'admin-control-panel'].includes(currentPanel.id)) {
                     typedWord = ''; return;
@@ -1529,71 +1686,105 @@
             });
 
             document.getElementById('submit-admin-password-button').addEventListener('click', () => {
-                const password = document.getElementById('admin-password-input').value;
-                document.getElementById('admin-error-message').textContent = password === 'McleanCrew2025!' ? (show('admin-control-panel'), '') : 'Incorrect password';
-                document.getElementById('admin-password-input').value = '';
+                const passwordInput = document.getElementById('admin-password-input');
+                const adminErrorEl = document.getElementById('admin-error-message');
+                const password = passwordInput.value;
+                if (password === 'McleanCrew2025!') { // Replace with your actual admin password
+                    if(adminErrorEl) adminErrorEl.textContent = '';
+                    show('admin-control-panel');
+                } else {
+                    if(adminErrorEl) adminErrorEl.textContent = 'Incorrect password';
+                }
+                passwordInput.value = '';
             });
-            
-            async function modifyUserScore(addOperation) { 
-                const usernameToEdit = document.getElementById('admin-username-input').value.trim(); 
-                let pointsVal = parseInt(document.getElementById('admin-points-input').value); 
-                if (!usernameToEdit || isNaN(pointsVal) || pointsVal === 0) { alert('Valid username & non-zero value required.'); return; }
-                if (!addOperation) pointsVal = -pointsVal; 
+
+            async function modifyUserScore(addOperation) {
+                const usernameToEditInput = document.getElementById('admin-username-input');
+                const pointsInput = document.getElementById('admin-points-input');
+                const usernameToEdit = usernameToEditInput.value.trim();
+                let pointsVal = parseInt(pointsInput.value);
+                if (!usernameToEdit || isNaN(pointsVal) || pointsVal === 0) { showCustomAlert('Valid username & non-zero value required.'); return; }
+                if (!addOperation) pointsVal = -pointsVal;
 
                 const usersRef = collection(db, "users");
-                const q = query(usersRef, where("username", "==", usernameToEdit)); 
+                const q = query(usersRef, where("username", "==", usernameToEdit));
                 const querySnapshot = await getDocs(q);
-                if (querySnapshot.empty) { alert(`User ${usernameToEdit} not found.`); return; }
+                if (querySnapshot.empty) { showCustomAlert(`User ${usernameToEdit} not found.`); return; }
                 const userDocSnap = querySnapshot.docs[0];
                 try {
                     await updateDoc(doc(db, "users", userDocSnap.id), {
-                        activities: arrayUnion({ activity: 'Admin Adjust', points: pointsVal, date: Timestamp.now() }) 
+                        activities: arrayUnion({ activity: 'Admin Adjust', points: pointsVal, date: Timestamp.now() })
                     });
                     updateAllLeaderboards();
-                    alert(`${addOperation ? 'Added' : 'Subtracted'} ${Math.abs(pointsVal)} (value) ${addOperation ? 'to' : 'from'} ${usernameToEdit}`);
-                    document.getElementById('admin-username-input').value = '';
-                    document.getElementById('admin-points-input').value = '';
-                } catch (error) { console.error(`Admin modify score error:`, error); alert("Error modifying score."); }
+                    showCustomAlert(`${addOperation ? 'Added' : 'Subtracted'} ${Math.abs(pointsVal)} (value) ${addOperation ? 'to' : 'from'} ${usernameToEdit}`);
+                    usernameToEditInput.value = '';
+                    pointsInput.value = '';
+                } catch (error) { console.error(`Admin modify score error:`, error); showCustomAlert("Error modifying score."); }
             }
-            document.getElementById('admin-add-points-button').addEventListener('click', () => modifyUserScore(true)); 
-            document.getElementById('admin-subtract-points-button').addEventListener('click', () => modifyUserScore(false)); 
+            document.getElementById('admin-add-points-button').addEventListener('click', () => modifyUserScore(true));
+            document.getElementById('admin-subtract-points-button').addEventListener('click', () => modifyUserScore(false));
 
             document.getElementById('submit-super-admin-password-button').addEventListener('click', () => {
-                const password = document.getElementById('super-admin-password-input').value;
-                if (password === 'LukeHoffman2006!') { 
-                    document.getElementById('super-admin-error-message').textContent = '';
-                    show('super-admin-panel'); document.getElementById('click-count').textContent = clickCount;
-                } else document.getElementById('super-admin-error-message').textContent = 'Incorrect password';
-                document.getElementById('super-admin-password-input').value = '';
+                const passwordInput = document.getElementById('super-admin-password-input');
+                const superAdminErrorEl = document.getElementById('super-admin-error-message');
+                const password = passwordInput.value;
+                if (password === 'LukeHoffman2006!') { // Replace with your actual super admin password
+                    if(superAdminErrorEl) superAdminErrorEl.textContent = '';
+                    show('super-admin-panel');
+                    const clickCountEl = document.getElementById('click-count');
+                    if(clickCountEl) clickCountEl.textContent = clickCount;
+                } else {
+                    if(superAdminErrorEl) superAdminErrorEl.textContent = 'Incorrect password';
+                }
+                passwordInput.value = '';
             });
 
             document.getElementById('click-button').addEventListener('click', () => {
-                clickCount++; document.getElementById('click-count').textContent = clickCount;
-                localStorage.setItem('clickCount', clickCount.toString()); 
-                if (clickCount >= 100) document.getElementById('wipe-confirm-button').classList.remove('hidden');
+                clickCount++;
+                const clickCountEl = document.getElementById('click-count');
+                if(clickCountEl) clickCountEl.textContent = clickCount;
+                localStorage.setItem('clickCount', clickCount.toString());
+                const wipeButton = document.getElementById('wipe-confirm-button');
+                if (clickCount >= 100 && wipeButton) wipeButton.classList.remove('hidden');
             });
-            
+
             document.getElementById('wipe-confirm-button').addEventListener('click', async () => {
-                if (confirm('Are you sure you want to wipe ALL SCORE DATA for ALL users? This is hard to reverse!')) { 
+                // Replaced window.confirm with a simple browser confirm for this example.
+                // In a real app, use a custom modal for confirmations.
+                if (confirm('Are you sure you want to wipe ALL SCORE DATA for ALL users? This is hard to reverse!')) {
                     const usersRef = collection(db, "users");
                     try {
                         const querySnapshot = await getDocs(usersRef);
                         const batch = writeBatch(db);
                         querySnapshot.forEach((docSnap) => batch.update(doc(db, "users", docSnap.id), { activities: [] }));
                         await batch.commit();
-                        updateAllLeaderboards(); alert('All score data wiped!'); 
-                        document.getElementById('undo-wipe-button').classList.add('hidden'); 
+                        updateAllLeaderboards(); showCustomAlert('All score data wiped!');
+                        const undoWipeButton = document.getElementById('undo-wipe-button');
+                        if(undoWipeButton) undoWipeButton.classList.add('hidden');
                         clickCount = 0; localStorage.setItem('clickCount', '0');
-                        document.getElementById('click-count').textContent = 0;
-                        document.getElementById('wipe-confirm-button').classList.add('hidden');
+                        const clickCountEl = document.getElementById('click-count');
+                        if(clickCountEl) clickCountEl.textContent = 0;
+                        const wipeButton = document.getElementById('wipe-confirm-button');
+                        if(wipeButton) wipeButton.classList.add('hidden');
                     } catch (error) {
-                        console.error("Wipe score data error: ", error); alert("Failed to wipe score data."); 
+                        console.error("Wipe score data error: ", error); showCustomAlert("Failed to wipe score data.");
                     }
                 }
             });
-            document.getElementById('undo-wipe-button').addEventListener('click', () => alert('Client-side undo not available for cloud data. Use Firebase backups.'));
-            
-            if (!auth.currentUser) show('password-panel');
+            document.getElementById('undo-wipe-button').addEventListener('click', () => showCustomAlert('Client-side undo not available for cloud data. Use Firebase backups.'));
+
+            // Initial panel display logic is handled by onAuthStateChanged
+             const initialPanelCheck = () => {
+                if (!auth.currentUser) {
+                    const activePanel = document.querySelector('.panel:not(.hidden)');
+                    if (!activePanel) { // If no panel is active (e.g., direct load)
+                        show('password-panel');
+                    }
+                }
+             };
+             // Give onAuthStateChanged a moment to run first
+             setTimeout(initialPanelCheck, 150);
+
         });
     </script>
 </body>
