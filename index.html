@@ -126,10 +126,12 @@
             margin: 5px 0;
             text-align: center;
         }
+
         button:disabled {
             background-color: #555;
             cursor: not-allowed;
         }
+
         button:hover:not(:disabled) {
             background: #1565C0;
             transform: translateY(-2px);
@@ -155,10 +157,11 @@
             color: #d0d0d0;
             font-weight: normal;
         }
+
         #verify-email-panel .button-group button#resend-verification-button {
-             background: #1976D2;
-             color: white;
-             font-weight: bold;
+            background: #1976D2;
+            color: white;
+            font-weight: bold;
         }
 
 
@@ -172,7 +175,8 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-         #verify-email-panel .button-group button#resend-verification-button:hover:not(:disabled) {
+
+        #verify-email-panel .button-group button#resend-verification-button:hover:not(:disabled) {
             background: #1565C0;
         }
 
@@ -185,9 +189,10 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.5);
         }
-         #verify-email-panel .button-group button#resend-verification-button:focus {
-             box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.5);
-         }
+
+        #verify-email-panel .button-group button#resend-verification-button:focus {
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.5);
+        }
 
 
         .button-group {
@@ -240,9 +245,10 @@
             margin: 10px 0;
             font-weight: bold;
         }
+
         .success-message {
             color: #4CAF50;
-            margin:10px 0;
+            margin: 10px 0;
             font-weight: bold;
         }
 
@@ -322,6 +328,7 @@
             font-size: 16px;
             line-height: 1.5;
         }
+
         .message-body strong {
             color: #81c784;
         }
@@ -342,7 +349,7 @@
             font-size: 16px;
             resize: none;
             height: 100px;
-            width:100%;
+            width: 100%;
             line-height: 1.5;
             overflow-y: auto;
         }
@@ -386,7 +393,8 @@
             display: flex;
             gap: 15px;
             width: 100%;
-            flex-direction: column; /* Default to column for smaller screens */
+            flex-direction: column;
+            /* Default to column for smaller screens */
         }
 
         .stat-box {
@@ -604,6 +612,7 @@
         #verify-email-panel p {
             line-height: 1.6;
         }
+
         #verify-email-panel #verification-email-address {
             word-break: break-all;
         }
@@ -613,23 +622,29 @@
             body {
                 padding: 10px;
             }
+
             .container {
                 padding: 20px;
             }
+
             .chat-container {
                 height: 350px;
                 padding: 15px;
             }
+
             .rules-content {
                 padding: 15px;
                 font-size: 16px;
             }
+
             .leaderboard li {
                 padding: 12px;
                 font-size: 16px;
             }
+
             .profile-stats-container {
-                flex-direction: column; /* This is already the default, but explicit for clarity */
+                flex-direction: column;
+                /* This is already the default, but explicit for clarity */
             }
         }
     </style>
@@ -657,7 +672,8 @@
             <input type="text" id="name-input" placeholder="Name" autocomplete="name">
             <input type="email" id="email-input" placeholder="Email" autocomplete="email">
             <input type="password" id="password-input" placeholder="Password" autocomplete="new-password">
-            <input type="password" id="confirm-password-input" placeholder="Confirm Password" autocomplete="new-password">
+            <input type="password" id="confirm-password-input" placeholder="Confirm Password"
+                autocomplete="new-password">
             <p id="signup-message" class="error"></p>
             <div class="button-group">
                 <button id="submit-signup-button">Sign Up</button>
@@ -668,7 +684,8 @@
         <div id="user-login-panel" class="panel hidden">
             <h2>User Login</h2>
             <input type="email" id="login-email-input" placeholder="Email" autocomplete="email">
-            <input type="password" id="login-user-password-input" placeholder="Password" autocomplete="current-password">
+            <input type="password" id="login-user-password-input" placeholder="Password"
+                autocomplete="current-password">
             <p id="user-login-error-message" class="error"></p>
             <div class="button-group">
                 <button id="submit-user-login-button">Login</button>
@@ -678,7 +695,8 @@
 
         <div id="verify-email-panel" class="panel hidden">
             <h2>Verify Your Email</h2>
-            <p>A verification email has been sent to <strong id="verification-email-address">your_email@example.com</strong>.</p>
+            <p>A verification email has been sent to <strong
+                    id="verification-email-address">your_email@example.com</strong>.</p>
             <p>Please check your inbox (and spam folder) and click the verification link to activate your account.</p>
             <p>If you don't see the email, you can resend it or contact Minh Tran or Ethan Hoffman.</p>
             <p id="resend-verification-message" class="error"></p>
@@ -711,9 +729,8 @@
                 <button id="swimming-button">Swimming Leaderboard</button>
                 <button id="lifting-button">Lifting Leaderboard</button>
                 <button id="otw-rowing-button">OTW Rowing Leaderboard</button>
-                <button class="back-to-menu">Back to Main Menu</button> <!-- Changed text for clarity for logged-in users -->
-                <button id="back-to-home-from-leaderboard-guest" class="hidden">Back to Login</button> <!-- For guests -->
-            </div>
+                <button class="back-to-menu">Back to Main Menu</button> <button id="back-to-home-from-leaderboard-guest"
+                    class="hidden">Back to Login</button> </div>
         </div>
 
         <div id="all-workouts-panel" class="panel hidden">
@@ -785,9 +802,8 @@
                 <p class="note">More may be added later!</p>
             </div>
             <div class="button-group">
-                <button class="back-to-menu">Back to Menu</button> <!-- For logged-in users -->
-                <button id="back-to-home-from-rules-guest" class="hidden">Back to Login</button> <!-- For guests -->
-            </div>
+                <button class="back-to-menu">Back to Menu</button> <button id="back-to-home-from-rules-guest"
+                    class="hidden">Back to Login</button> </div>
         </div>
 
         <div id="score-input-menu" class="panel hidden">
@@ -804,8 +820,8 @@
             </select>
             <input type="number" id="points-input" placeholder="Meters (based on rules)">
             <div class="file-upload-wrapper">
-                <input type="file" id="photo-upload" accept="image/*" class="hidden-file-input">
-                <label for="photo-upload" class="custom-file-upload-button">Choose Photo</label>
+                <input type="file" id="photo-upload" accept="image/*" class="hidden-file-input" multiple>
+                <label for="photo-upload" class="custom-file-upload-button">Choose Photo(s)</label>
                 <span id="file-name-display" class="file-name-display">No file chosen</span>
             </div>
             <div class="button-group">
@@ -856,7 +872,9 @@
                 </div>
 
                 <div class="button-group">
-                    <button class="back-to-menu">Back to Menu</button>
+                    <button class="back-to-menu">Back to Main Menu</button>
+                    <button id="back-to-leaderboard-from-profile-guest" class="back-to-leaderboard hidden">Back to
+                        Leaderboard</button>
                 </div>
             </div>
         </div>
@@ -971,12 +989,13 @@
 
         function show(panelId) {
             const panelsRequiringLogin = [
-                'menu-panel', 'verify-email-panel', 'score-input-menu', 'chat-panel', 'profile-panel',
+                'menu-panel', 'verify-email-panel', 'score-input-menu', 'chat-panel',
                 'admin-password-panel', 'admin-control-panel', 'super-admin-password-panel', 'super-admin-panel'
             ];
             const panelsRequiringVerification = [ // These require login AND verification
-                'score-input-menu', 'chat-panel', 'profile-panel'
-                // Note: 'menu-panel' itself doesn't require verification, but features within it might.
+                'score-input-menu', 'chat-panel'
+                 // Note: 'menu-panel' itself doesn't require verification, but features within it might.
+                 // Profile panel is now viewable by guests.
             ];
 
             let newPanelId = panelId;
@@ -1106,7 +1125,8 @@
                     'rules-panel', // Public info
                     'leaderboard-menu-panel', 'all-workouts-panel', 'erging-panel', // Leaderboards
                     'running-panel', 'biking-panel', 'swimming-panel',
-                    'lifting-panel', 'otw-rowing-panel'
+                    'lifting-panel', 'otw-rowing-panel',
+                    'profile-panel' // Profile panel is now guest-accessible
                 ];
 
                 // If current panel is not guest-allowed, or no panel is active, show login
@@ -1192,11 +1212,6 @@
 
             document.querySelectorAll(`#${listId} .name`).forEach(el => {
                 el.addEventListener('click', (e) => {
-                    if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
-                        showCustomAlert("Please login and verify your email to view user profiles.");
-                        show('password-panel'); // Redirect to login
-                        return;
-                    }
                     const username = e.target.getAttribute('data-username');
                     const userUID = e.target.getAttribute('data-uid');
                     showUserProfile(userUID, username);
@@ -1205,11 +1220,7 @@
         }
 
         async function showUserProfile(userUID, usernameToDisplay) {
-            if (!currentFirebaseUser || !currentFirebaseUser.emailVerified) {
-                showCustomAlert("Please login and verify your email to view profiles.");
-                show('password-panel');
-                return;
-            }
+            // This function is now accessible to guests.
             const userRef = doc(db, "users", userUID);
             const docSnap = await getDoc(userRef);
 
@@ -1265,6 +1276,16 @@
             const recentActivitiesContainer = document.getElementById('recent-activities');
             if(recentActivitiesContainer) {
                 if (activities.length > 0) {
+                     const renderWorkoutImages = (workout) => {
+                        let imagesHTML = '';
+                        if (workout.images && Array.isArray(workout.images)) {
+                            imagesHTML = workout.images.map(url => `<img src="${url}" class="message-image" alt="Workout image">`).join('');
+                        } else if (workout.image) { // Backward compatibility
+                            imagesHTML = `<img src="${workout.image}" class="message-image" alt="Workout image">`;
+                        }
+                        return imagesHTML;
+                    };
+
                     recentActivitiesContainer.innerHTML = activities
                         .slice() // Create a copy before sorting
                         .sort((a, b) => (b.date && a.date) ? b.date.toMillis() - a.date.toMillis() : 0)
@@ -1276,7 +1297,7 @@
                                 <span class="activity-value">${Number(workout.points) || 0} m</span>
                             </div>
                             <div class="activity-date">${workout.date ? workout.date.toDate().toLocaleString() : 'N/A'}</div>
-                            ${workout.image ? `<img src="${workout.image}" class="message-image" alt="Workout image">` : ''}
+                            ${renderWorkoutImages(workout)}
                         </div>
                     `).join('');
                 } else {
@@ -1293,6 +1314,18 @@
                         <span class="activity-value">${totalsByActivityScore[act] || 0} m</span>
                     </div>
                 `).join('');
+            }
+            
+            // Toggle visibility of back buttons based on user login state
+            const backToMenuBtn = document.querySelector('#profile-panel .back-to-menu');
+            const backToLeaderboardBtn = document.getElementById('back-to-leaderboard-from-profile-guest');
+
+            if (!currentFirebaseUser) { // Guest is viewing
+                if(backToMenuBtn) backToMenuBtn.classList.add('hidden');
+                if(backToLeaderboardBtn) backToLeaderboardBtn.classList.remove('hidden');
+            } else { // Logged-in user is viewing
+                if(backToMenuBtn) backToMenuBtn.classList.remove('hidden');
+                if(backToLeaderboardBtn) backToLeaderboardBtn.classList.add('hidden');
             }
 
             show('profile-panel');
@@ -1335,7 +1368,16 @@
                     }
                     content.appendChild(body);
 
-                    if (m.image) {
+                    // Handle one or multiple images
+                    if (m.images && Array.isArray(m.images)) {
+                        m.images.forEach(url => {
+                            const img = document.createElement('img');
+                            img.src = url;
+                            img.alt = "Chat image";
+                            img.className = 'message-image';
+                            content.appendChild(img);
+                        });
+                    } else if (m.image) { // For backward compatibility
                         const img = document.createElement('img');
                         img.src = m.image;
                         img.alt = "Chat image";
@@ -1462,7 +1504,7 @@
                     }
                     console.error("Signup error:", error);
                 } finally {
-                     signupButton.disabled = false; signupButton.textContent = 'Sign Up';
+                    signupButton.disabled = false; signupButton.textContent = 'Sign Up';
                 }
             });
 
@@ -1498,7 +1540,13 @@
             const fileNameDisplay = document.getElementById('file-name-display');
             if (photoUploadInput && fileNameDisplay) {
                 photoUploadInput.addEventListener('change', function() {
-                    fileNameDisplay.textContent = this.files && this.files.length > 0 ? this.files[0].name : 'No file chosen';
+                    if (this.files && this.files.length > 1) {
+                        fileNameDisplay.textContent = `${this.files.length} files chosen`;
+                    } else if (this.files && this.files.length === 1) {
+                        fileNameDisplay.textContent = this.files[0].name;
+                    } else {
+                        fileNameDisplay.textContent = 'No file chosen';
+                    }
                 });
             }
 
@@ -1517,25 +1565,26 @@
 
                 const activity = activitySelect.value;
                 const pointsVal = parseInt(pointsInputEl.value);
-                const file = photoUpload.files[0];
+                const files = photoUpload.files;
 
                 if (!activity) { showCustomAlert("Please select an activity."); return; }
                 if (isNaN(pointsVal) || pointsVal <= 0) { showCustomAlert("Please enter a valid positive value for your score."); return; }
-                if (!file) { showCustomAlert("An image upload is required as proof for your workout."); return; }
+                if (!files || files.length === 0) { showCustomAlert("An image upload is required as proof for your workout."); return; }
 
                 confirmButton.disabled = true; confirmButton.textContent = 'Submitting...';
 
                 try {
-                    let imageUrl = null;
-                    const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
-                    const snapshot = await uploadBytes(storageRef, file);
-                    imageUrl = await getDownloadURL(snapshot.ref);
+                    const uploadPromises = Array.from(files).map(file => {
+                        const storageRef = ref(storage, `workout_images/${currentFirebaseUser.uid}/${Date.now()}_${file.name}`);
+                        return uploadBytes(storageRef, file).then(snapshot => getDownloadURL(snapshot.ref));
+                    });
+                    const imageUrls = await Promise.all(uploadPromises);
 
                     const workoutData = {
                         activity,
                         points: pointsVal,
                         date: Timestamp.now(),
-                        image: imageUrl
+                        images: imageUrls
                     };
 
                     const userRef = doc(db, "users", currentFirebaseUser.uid);
@@ -1546,7 +1595,7 @@
                         user: currentAppUsername,
                         activity: workoutData.activity,
                         points: workoutData.points,
-                        image: workoutData.image,
+                        images: workoutData.images,
                         time: Timestamp.now()
                     });
 
@@ -1776,12 +1825,12 @@
 
             // Initial panel display logic is handled by onAuthStateChanged
              const initialPanelCheck = () => {
-                if (!auth.currentUser) {
-                    const activePanel = document.querySelector('.panel:not(.hidden)');
-                    if (!activePanel) { // If no panel is active (e.g., direct load)
-                        show('password-panel');
-                    }
-                }
+                 if (!auth.currentUser) {
+                     const activePanel = document.querySelector('.panel:not(.hidden)');
+                     if (!activePanel) { // If no panel is active (e.g., direct load)
+                         show('password-panel');
+                     }
+                 }
              };
              // Give onAuthStateChanged a moment to run first
              setTimeout(initialPanelCheck, 150);
@@ -1789,4 +1838,5 @@
         });
     </script>
 </body>
+
 </html>
