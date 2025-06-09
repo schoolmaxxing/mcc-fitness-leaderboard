@@ -617,6 +617,28 @@
             word-break: break-all;
         }
 
+        /* New Styles for Challenge Info */
+        .challenge-info {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .challenge-info p {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+
+        .challenge-info strong {
+            color: #81c784;
+            font-size: 1.1em;
+        }
+
 
         @media (max-width: 500px) {
             body {
@@ -709,6 +731,10 @@
 
         <div id="menu-panel" class="panel hidden">
             <h2>Welcome, <span id="current-user-display"></span>!</h2>
+             <div class="challenge-info">
+                <p>Days Left in Challenge: <strong id="days-left-counter">--</strong></p>
+                <p>Team Total: <strong id="team-total-meters">0 / 20,000,000 m</strong></p>
+            </div>
             <div class="button-group vertical">
                 <button id="rules-button">Rules</button>
                 <button id="add-workout-score-button">Add Workout Score</button>
@@ -723,6 +749,7 @@
             <h2>Leaderboards</h2>
             <div class="button-group vertical">
                 <button id="all-workouts-button">All Workouts Leaderboard</button>
+                 <button id="daily-leaderboard-button">Daily Leaderboard</button>
                 <button id="erging-button">Erging Leaderboard</button>
                 <button id="running-button">Running Leaderboard</button>
                 <button id="biking-button">Biking Leaderboard</button>
@@ -736,6 +763,14 @@
         <div id="all-workouts-panel" class="panel hidden">
             <h2>All Workouts Leaderboard</h2>
             <ul id="all-workouts-list" class="leaderboard"></ul>
+            <div class="button-group">
+                <button class="back-to-leaderboard">Back</button>
+            </div>
+        </div>
+        
+        <div id="daily-leaderboard-panel" class="panel hidden">
+            <h2>Daily Leaderboard</h2>
+            <ul id="daily-leaderboard-list" class="leaderboard"></ul>
             <div class="button-group">
                 <button class="back-to-leaderboard">Back</button>
             </div>
@@ -959,10 +994,10 @@
 
         // IMPORTANT: Replace with your actual Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo", 
+            apiKey: "AIzaSyDbL_-yIxKgL_6lu0TOWZpGuF3KeT7iluo",
             authDomain: "mcc-summer-leaderboard.firebaseapp.com",
             projectId: "mcc-summer-leaderboard",
-            storageBucket: "mcc-summer-leaderboard.firebasestorage.app",
+            storageBucket: "mcc-summer-leaderboard.appspot.com",
             messagingSenderId: "376614411221",
             appId: "1:376614411221:web:9afe27edc84cf5de3b7b5c",
             measurementId: "G-SKPNS56ZDN"
@@ -984,6 +1019,41 @@
         function showCustomAlert(message) {
             // For simplicity, using browser's alert. Replace with a custom modal in a real app.
             alert(message);
+        }
+
+        function updateChallengeInfo() {
+            // Days Left Countdown
+            const daysLeftEl = document.getElementById('days-left-counter');
+            if (daysLeftEl) {
+                const now = new Date();
+                const endDate = new Date(now.getFullYear(), 7, 31); // August 31st
+                const diffTime = Math.max(0, endDate.getTime() - now.getTime());
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                daysLeftEl.textContent = diffDays;
+            }
+
+            // Team Total Meters
+            updateTeamTotal();
+        }
+
+        async function updateTeamTotal() {
+            const teamTotalEl = document.getElementById('team-total-meters');
+            if (!teamTotalEl) return;
+
+            teamTotalEl.textContent = 'Calculating...';
+            const usersRef = collection(db, "users");
+            const querySnapshot = await getDocs(usersRef);
+
+            let grandTotal = 0;
+            querySnapshot.forEach(docSnap => {
+                const userData = docSnap.data();
+                if (userData.activities && Array.isArray(userData.activities)) {
+                    grandTotal += userData.activities.reduce((sum, a) => sum + (Number(a.points) || 0), 0);
+                }
+            });
+            
+            const goal = 20000000;
+            teamTotalEl.textContent = `${grandTotal.toLocaleString()} / ${goal.toLocaleString()} m`;
         }
 
 
@@ -1043,6 +1113,10 @@
                 console.warn(`Panel with ID ${newPanelId} not found. Defaulting to password-panel.`);
                 const passwordPanel = document.getElementById('password-panel');
                 if (passwordPanel) passwordPanel.classList.remove('hidden');
+            }
+
+            if (newPanelId === 'menu-panel') {
+                updateChallengeInfo();
             }
 
             if (newPanelId !== 'chat-panel' && unsubscribeChat) {
@@ -1125,7 +1199,7 @@
                     'rules-panel', // Public info
                     'leaderboard-menu-panel', 'all-workouts-panel', 'erging-panel', // Leaderboards
                     'running-panel', 'biking-panel', 'swimming-panel',
-                    'lifting-panel', 'otw-rowing-panel',
+                    'lifting-panel', 'otw-rowing-panel', 'daily-leaderboard-panel',
                     'profile-panel' // Profile panel is now guest-accessible
                 ];
 
@@ -1149,7 +1223,66 @@
             updateLeaderboard('swimming-list', 'Swim');
             updateLeaderboard('lifting-list', 'Lift');
             updateLeaderboard('otw-rowing-list', 'OTW');
+            updateDailyLeaderboard();
         }
+
+        async function updateDailyLeaderboard() {
+            const listId = 'daily-leaderboard-list';
+            const list = document.getElementById(listId);
+            if (!list) return;
+
+            list.innerHTML = '<li>Loading...</li>';
+
+            const now = new Date();
+            const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+            const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+
+            const startOfDayTimestamp = Timestamp.fromDate(startOfDay);
+            const endOfDayTimestamp = Timestamp.fromDate(endOfDay);
+            
+            const usersRef = collection(db, "users");
+            const querySnapshot = await getDocs(usersRef);
+
+            let leaderboardData = [];
+            querySnapshot.forEach(docSnap => {
+                const userData = docSnap.data();
+                if (userData.activities && Array.isArray(userData.activities)) {
+                    const dailyScore = userData.activities
+                        .filter(a => a.date && a.date >= startOfDayTimestamp && a.date <= endOfDayTimestamp)
+                        .reduce((sum, a) => sum + (Number(a.points) || 0), 0);
+
+                    if (dailyScore > 0) {
+                        leaderboardData.push({ name: userData.username, score: dailyScore, uid: docSnap.id });
+                    }
+                }
+            });
+
+            leaderboardData.sort((a, b) => b.score - a.score);
+            list.innerHTML = ''; // Clear loading
+
+            if (leaderboardData.length === 0) {
+                list.innerHTML = `<li>No meters recorded today yet.</li>`;
+            } else {
+                leaderboardData.forEach((user, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span class="name" data-username="${user.name}" data-uid="${user.uid}">${user.name}</span>
+                        <span class="score">${user.score.toLocaleString()} m</span>`;
+                    if (index === 0) li.classList.add('gold');
+                    else if (index === 1) li.classList.add('silver');
+                    else if (index === 2) li.classList.add('bronze');
+                    list.appendChild(li);
+                });
+            }
+             document.querySelectorAll(`#${listId} .name`).forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const username = e.target.getAttribute('data-username');
+                    const userUID = e.target.getAttribute('data-uid');
+                    showUserProfile(userUID, username);
+                });
+            });
+        }
+
 
         async function updateLeaderboard(listId, activityType) {
             const list = document.getElementById(listId);
@@ -1202,7 +1335,7 @@
                     const li = document.createElement('li');
                     li.innerHTML = `
                         <span class="name" data-username="${user.name}" data-uid="${user.uid}">${user.name}</span>
-                        <span class="score">${user.score} m</span>`;
+                        <span class="score">${user.score.toLocaleString()} m</span>`;
                     if (index === 0) li.classList.add('gold');
                     else if (index === 1) li.classList.add('silver');
                     else if (index === 2) li.classList.add('bronze');
@@ -1239,7 +1372,7 @@
             const activities = user.activities || [];
             const totalOverallScoreValue = activities.reduce((sum, a) => sum + (Number(a.points) || 0), 0);
             const profileTotalScoreEl = document.getElementById('profile-total-score');
-            if(profileTotalScoreEl) profileTotalScoreEl.textContent = totalOverallScoreValue;
+            if(profileTotalScoreEl) profileTotalScoreEl.textContent = totalOverallScoreValue.toLocaleString();
 
             const highestScores = {};
             const totalsByActivityScore = {};
@@ -1267,7 +1400,7 @@
                 highestScoresContainer.innerHTML = allActivityTypes.map(act => `
                     <div class="stat-item">
                         <span class="activity-type">${act}:</span>
-                        <span class="activity-value">${highestScores[act] || 0} m</span>
+                        <span class="activity-value">${(highestScores[act] || 0).toLocaleString()} m</span>
                     </div>
                 `).join('');
             }
@@ -1294,7 +1427,7 @@
                         <div class="stat-item">
                             <div>
                                 <span class="activity-type">${workout.activity}:</span>
-                                <span class="activity-value">${Number(workout.points) || 0} m</span>
+                                <span class="activity-value">${(Number(workout.points) || 0).toLocaleString()} m</span>
                             </div>
                             <div class="activity-date">${workout.date ? workout.date.toDate().toLocaleString() : 'N/A'}</div>
                             ${renderWorkoutImages(workout)}
@@ -1311,7 +1444,7 @@
                 activityTotalsContainer.innerHTML = allActivityTypes.map(act => `
                     <div class="stat-item">
                         <span class="activity-type">${act}:</span>
-                        <span class="activity-value">${totalsByActivityScore[act] || 0} m</span>
+                        <span class="activity-value">${(totalsByActivityScore[act] || 0).toLocaleString()} m</span>
                     </div>
                 `).join('');
             }
@@ -1364,7 +1497,7 @@
                     if (m.text) {
                         body.textContent = m.text;
                     } else if (m.activity && typeof m.points !== 'undefined') {
-                        body.innerHTML = `Added <strong>${m.points} m</strong> from <strong>${m.activity}</strong>`;
+                        body.innerHTML = `Added <strong>${m.points.toLocaleString()} m</strong> from <strong>${m.activity}</strong>`;
                     }
                     content.appendChild(body);
 
@@ -1445,6 +1578,7 @@
             });
 
             document.getElementById('all-workouts-button').addEventListener('click', () => { updateLeaderboard('all-workouts-list', 'total'); show('all-workouts-panel'); });
+            document.getElementById('daily-leaderboard-button').addEventListener('click', () => { updateDailyLeaderboard(); show('daily-leaderboard-panel'); });
             document.getElementById('erging-button').addEventListener('click', () => { updateLeaderboard('erging-list', 'Erg'); show('erging-panel'); });
             document.getElementById('running-button').addEventListener('click', () => { updateLeaderboard('running-list', 'Run'); show('running-panel'); });
             document.getElementById('biking-button').addEventListener('click', () => { updateLeaderboard('biking-list', 'Bike'); show('biking-panel'); });
@@ -1600,6 +1734,7 @@
                     });
 
                     updateAllLeaderboards();
+                    updateTeamTotal(); // Update the team total immediately
                     show('menu-panel');
 
                     pointsInputEl.value = '';
